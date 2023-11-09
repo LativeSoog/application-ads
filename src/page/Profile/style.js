@@ -52,7 +52,8 @@ export const MainMenuFormBtn = styled.button`
 `
 
 export const MainTitleH2 = styled.h2`
-  font-style: normal;
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+  font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 40px;
   line-height: 42px;
