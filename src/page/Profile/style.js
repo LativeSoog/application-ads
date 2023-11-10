@@ -40,6 +40,8 @@ export const MainMenuForm = styled.form`
   width: 100%;
 `
 
+export const MainMenuFormBtnLink = styled(Link)``
+
 export const MainMenuFormBtn = styled.button`
   width: 241px;
   height: 50px;
@@ -49,6 +51,7 @@ export const MainMenuFormBtn = styled.button`
   font-size: 16px;
   line-height: 1;
   color: #ffffff;
+  cursor: pointer;
 `
 
 export const MainTitleH2 = styled.h2`
@@ -162,6 +165,7 @@ export const ProfileSettingsDivInput = styled.input`
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   padding: 13px 19px;
+  width: ${(props) => props.width};
 
   &::placeholder {
     background-color: transparent;

@@ -6,11 +6,13 @@ export const ProfilePage = () => {
     <S.MainContainer>
       <S.MainCenterBlock>
         <S.MainMenu>
-          <S.MainMenuLogoLink>
+          <S.MainMenuLogoLink to={'/'}>
             <S.MainMenuLogoImg src="/img/logo.png" />
           </S.MainMenuLogoLink>
           <S.MainMenuForm>
-            <S.MainMenuFormBtn>Вернуться на&nbsp;главную</S.MainMenuFormBtn>
+            <S.MainMenuFormBtnLink to={'/'}>
+              <S.MainMenuFormBtn>Вернуться на&nbsp;главную</S.MainMenuFormBtn>
+            </S.MainMenuFormBtnLink>
           </S.MainMenuForm>
         </S.MainMenu>
 
@@ -35,26 +37,38 @@ export const ProfilePage = () => {
                 <S.ProfileSettingsForm>
                   <S.ProfileSettingsDiv>
                     <S.ProfileSettingsDivLabel>Имя</S.ProfileSettingsDivLabel>
-                    <S.ProfileSettingsDivInput placeholder="Укажите имя" />
+                    <S.ProfileSettingsDivInput
+                      width={'300px'}
+                      placeholder="Укажите имя"
+                    />
                   </S.ProfileSettingsDiv>
 
                   <S.ProfileSettingsDiv>
                     <S.ProfileSettingsDivLabel>
                       Фамилия
                     </S.ProfileSettingsDivLabel>
-                    <S.ProfileSettingsDivInput placeholder="Укажите фамилию" />
+                    <S.ProfileSettingsDivInput
+                      width={'300px'}
+                      placeholder="Укажите фамилию"
+                    />
                   </S.ProfileSettingsDiv>
 
                   <S.ProfileSettingsDiv>
                     <S.ProfileSettingsDivLabel>Город</S.ProfileSettingsDivLabel>
-                    <S.ProfileSettingsDivInput placeholder="Укажите город" />
+                    <S.ProfileSettingsDivInput
+                      width={'300px'}
+                      placeholder="Укажите город"
+                    />
                   </S.ProfileSettingsDiv>
 
                   <S.ProfileSettingsDiv>
                     <S.ProfileSettingsDivLabel>
                       Телефон
                     </S.ProfileSettingsDivLabel>
-                    <S.ProfileSettingsDivInput placeholder="+79161234567" />
+                    <S.ProfileSettingsDivInput
+                      width={'614px'}
+                      placeholder="+79161234567"
+                    />
                   </S.ProfileSettingsDiv>
                   <S.ProfileSettingsBtn>Сохранить</S.ProfileSettingsBtn>
                 </S.ProfileSettingsForm>
