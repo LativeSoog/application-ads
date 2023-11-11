@@ -19,7 +19,7 @@ export const ModalBlock = styled.div`
   position: absolute;
   z-index: 2;
   left: calc(50% - (366px / 2));
-  top: calc(50% - (439px / 2));
+  top: calc(50% - (${(props) => props.$height} / 2));
   opacity: 1;
 `
 
@@ -35,7 +35,7 @@ export const ModalBlockClosedSvg = styled.svg`
 
 export const ModalFormLogin = styled.form`
   width: 366px;
-  height: 439px;
+  height: ${(props) => props.$height};
   background-color: #ffffff;
   border-radius: 12px;
   display: -webkit-box;
@@ -71,6 +71,7 @@ export const ModalFormInput = styled.input`
   border-bottom: 1px solid #d0cece;
   padding: 8px 1px;
   margin-top: ${(props) => props.$marginTop};
+  margin-bottom: ${(props) => props.$marginBottom};
 
   &::placeholder {
     font-style: normal;
@@ -87,8 +88,9 @@ export const ModalFormButtonEnter = styled.button`
   height: 52px;
   background-color: #009ee4;
   border-radius: 6px;
-  margin-top: 60px;
-  margin-bottom: 20px;
+  margin-top: ${(props) => props.$marginTop};
+  margin-bottom: ${(props) =>
+    props.$marginBottom ? props.$marginBottom : '20px'};
   border: none;
   display: -webkit-box;
   display: -ms-flexbox;
