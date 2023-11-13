@@ -1,3 +1,4 @@
+import { AdvertImageBar } from '../../components/AdvertImageBar/AdvertImageBar'
 import * as S from './style'
 
 export const AdvertPage = () => {
@@ -25,29 +26,12 @@ export const AdvertPage = () => {
               </S.AdvertLeftImgBlock>
 
               <S.AdvertImgBar>
-                <S.AdvertImgBarDiv>
-                  <S.AdvertImgBarImage />
-                </S.AdvertImgBarDiv>
-
-                <S.AdvertImgBarDiv>
-                  <S.AdvertImgBarImage />
-                </S.AdvertImgBarDiv>
-
-                <S.AdvertImgBarDiv>
-                  <S.AdvertImgBarImage />
-                </S.AdvertImgBarDiv>
-
-                <S.AdvertImgBarDiv>
-                  <S.AdvertImgBarImage />
-                </S.AdvertImgBarDiv>
-
-                <S.AdvertImgBarDiv>
-                  <S.AdvertImgBarImage />
-                </S.AdvertImgBarDiv>
-
-                <S.AdvertImgBarDiv>
-                  <S.AdvertImgBarImage />
-                </S.AdvertImgBarDiv>
+                <AdvertImageBar />
+                <AdvertImageBar />
+                <AdvertImageBar />
+                <AdvertImageBar />
+                <AdvertImageBar />
+                <AdvertImageBar />
               </S.AdvertImgBar>
             </S.AdvertLeftFillImg>
           </S.AdvertLeft>
