@@ -93,9 +93,11 @@ export const AdvertPage = () => {
                     </S.AdvertRightBlockAuthorImgBlock>
 
                     <S.AdvertRightBlockAuthorContact>
-                      <S.AdvertRightBlockAuthorContactName>
-                        Кирилл
-                      </S.AdvertRightBlockAuthorContactName>
+                      <S.MainMenuFormBtnLink to="/profile-seller">
+                        <S.AdvertRightBlockAuthorContactName>
+                          Кирилл
+                        </S.AdvertRightBlockAuthorContactName>
+                      </S.MainMenuFormBtnLink>
                       <S.AdvertRightBlockAuthorContactAbout>
                         Продает товары с августа 2021
                       </S.AdvertRightBlockAuthorContactAbout>
