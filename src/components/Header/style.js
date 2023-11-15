@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 export const Header = styled.header`
   background-color: #009ee4;
-`;
+`
 
 export const HeaderNav = styled.nav`
   max-width: 1178px;
@@ -18,10 +19,12 @@ export const HeaderNav = styled.nav`
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: end;
-`;
+`
+
+export const HeaderButtonLink = styled(Link)``
 
 export const HeaderButtonMain = styled.button`
-  width: 224px;
+  width: ${(props) => props.$width};
   height: 40px;
   border: 1px solid #ffffff;
   border-radius: 6px;
@@ -29,4 +32,5 @@ export const HeaderButtonMain = styled.button`
   color: #ffffff;
   font-size: 16px;
   line-height: 1;
-`;
+  margin-left: ${(props) => props.$marginLeft};
+`

@@ -4,6 +4,7 @@ import * as S from './style'
 
 export const Header = () => {
   const [openAuthForm, setOpenAuthForm] = useState(false)
+  const [isLogin, setIsLogin] = useState(true)
 
   const handleAuthMode = () => {
     setOpenAuthForm(true)
@@ -20,9 +21,24 @@ export const Header = () => {
       {openAuthForm ? <Authorization closeWindow={closeWindow} /> : ''}
       <S.Header>
         <S.HeaderNav>
-          <S.HeaderButtonMain onClick={handleAuthMode}>
-            Вход в личный кабинет
-          </S.HeaderButtonMain>
+          {isLogin ? (
+            <>
+              <S.HeaderButtonLink to="/profile">
+                <S.HeaderButtonMain $width="232px">
+                  Разместить объявление
+                </S.HeaderButtonMain>
+              </S.HeaderButtonLink>
+              <S.HeaderButtonLink to="/profile">
+                <S.HeaderButtonMain $width="173px" $marginLeft="10px">
+                  Личный кабинет
+                </S.HeaderButtonMain>
+              </S.HeaderButtonLink>
+            </>
+          ) : (
+            <S.HeaderButtonMain onClick={handleAuthMode} $width="224px">
+              Вход в личный кабинет
+            </S.HeaderButtonMain>
+          )}
         </S.HeaderNav>
       </S.Header>
     </>

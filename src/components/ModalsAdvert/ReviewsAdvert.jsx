@@ -1,4 +1,4 @@
-import * as S from './style'
+import * as S from './ReviewsAdvertStyle'
 
 export const ReviewsAdvert = ({ closeWindow }) => {
   return (
