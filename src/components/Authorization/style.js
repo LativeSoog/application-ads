@@ -13,6 +13,7 @@ export const ContainerEnter = styled.div`
   margin: 0 auto;
   position: absolute;
   background-color: rgb(244 245 246 / 70%);
+  z-index: 6;
 `
 
 export const ModalBlock = styled.div`

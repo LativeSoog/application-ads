@@ -1,17 +1,17 @@
-import * as S from './style';
+import * as S from './style'
 
 export const CardItem = () => {
   return (
     <S.CardsItem>
       <S.CardsCard>
         <S.CardImage>
-          <S.CardLink>
+          <S.CardLink to="/advert">
             <S.CardImageImg />
           </S.CardLink>
         </S.CardImage>
 
         <S.CardContent>
-          <S.CardLink>
+          <S.CardLink to="/advert">
             <S.CardContentTitle>
               Ракетка для большого тенниса Triumph Pro ST
             </S.CardContentTitle>
@@ -23,5 +23,5 @@ export const CardItem = () => {
         </S.CardContent>
       </S.CardsCard>
     </S.CardsItem>
-  );
-};
+  )
+}
