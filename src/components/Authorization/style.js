@@ -84,6 +84,10 @@ export const ModalFormInput = styled.input`
   }
 `
 
+export const ModalFormErrorMessage = styled.p`
+  color: #750000;
+`
+
 export const ModalFormButtonEnter = styled.button`
   width: 278px;
   height: 52px;

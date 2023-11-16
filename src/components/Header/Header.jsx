@@ -6,7 +6,7 @@ import { AddAdvert } from '../ModalsAdvert/AddAdvert'
 export const Header = () => {
   const [openAuthForm, setOpenAuthForm] = useState(false)
   const [openAddAdvert, setOpenAddAdvert] = useState(false)
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(false)
 
   const handleAuthMode = () => {
     setOpenAuthForm(true)
