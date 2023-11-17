@@ -3,10 +3,9 @@ import { Authorization } from '../Authorization/Authorization'
 import * as S from './style'
 import { AddAdvert } from '../ModalsAdvert/AddAdvert'
 
-export const Header = () => {
+export const Header = ({ setUser, user }) => {
   const [openAuthForm, setOpenAuthForm] = useState(false)
   const [openAddAdvert, setOpenAddAdvert] = useState(false)
-  const [isLogin, setIsLogin] = useState(false)
 
   const handleAuthMode = () => {
     setOpenAuthForm(true)
@@ -26,11 +25,15 @@ export const Header = () => {
 
   return (
     <>
-      {openAuthForm ? <Authorization closeWindow={closeWindow} /> : ''}
+      {openAuthForm ? (
+        <Authorization closeWindow={closeWindow} setUser={setUser} />
+      ) : (
+        ''
+      )}
       {openAddAdvert ? <AddAdvert closeWindow={closeWindow} /> : ''}
       <S.Header>
         <S.HeaderNav>
-          {isLogin ? (
+          {user ? (
             <>
               <S.HeaderButtonMain $width="232px" onClick={handleAddAdvert}>
                 Разместить объявление

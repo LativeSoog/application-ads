@@ -2,7 +2,7 @@ import { useState } from 'react'
 import * as S from './style'
 import { useAuthRegistrationMutation } from '../../services/user'
 
-export const Authorization = ({ closeWindow }) => {
+export const Authorization = ({ closeWindow, setUser }) => {
   const [regMode, setRegMode] = useState(false)
 
   const [errorMessage, setErrorMessage] = useState(false)
@@ -25,6 +25,7 @@ export const Authorization = ({ closeWindow }) => {
         userCity,
       })
       closeWindow()
+      setUser('username')
     } catch (error) {
       setErrorMessage(errorUserRegistration)
     } finally {
@@ -46,6 +47,17 @@ export const Authorization = ({ closeWindow }) => {
       return
     } else {
       checkAndRegistration()
+    }
+  }
+
+  const handleLogin = () => {
+    if (!email) {
+      setErrorMessage('Укажите email адрес')
+      return
+    }
+    if (!password) {
+      setErrorMessage('Укажите пароль')
+      return
     }
   }
 
@@ -141,13 +153,32 @@ export const Authorization = ({ closeWindow }) => {
               </>
             ) : (
               <>
-                <S.ModalFormInput type="text" placeholder="email" />
+                <S.ModalFormInput
+                  type="text"
+                  placeholder="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                  }}
+                />
                 <S.ModalFormInput
                   type="password"
                   placeholder="Пароль"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                  }}
                   $marginTop={'30px'}
                 />
-                <S.ModalFormButtonEnter $marginTop={'60px'}>
+                {errorMessage && (
+                  <S.ModalFormErrorMessage>
+                    {errorMessage}
+                  </S.ModalFormErrorMessage>
+                )}
+                <S.ModalFormButtonEnter
+                  $marginTop={'60px'}
+                  onClick={handleLogin}
+                >
                   <S.ModalFormButtonEnterLink>Войти</S.ModalFormButtonEnterLink>
                 </S.ModalFormButtonEnter>
                 <S.ModalFormButtonSignUp>
