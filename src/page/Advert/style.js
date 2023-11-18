@@ -164,7 +164,7 @@ export const AdvertImgBarImage = styled.img`
 `
 
 export const AdvertRight = styled.div`
-  max-width: 621px;
+  width: 621px;
 `
 export const AdvertRightBlock = styled.div`
   display: -webkit-box;
