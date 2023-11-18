@@ -5,7 +5,7 @@ import { AddAdvert } from '../ModalsAdvert/AddAdvert'
 import { currentUser } from '../../store/selectors/users'
 import { useSelector } from 'react-redux'
 
-export const Header = ({ setUser, user }) => {
+export const Header = () => {
   const [openAuthForm, setOpenAuthForm] = useState(false)
   const [openAddAdvert, setOpenAddAdvert] = useState(false)
   const isUser = useSelector(currentUser)
@@ -29,7 +29,7 @@ export const Header = ({ setUser, user }) => {
   return (
     <>
       {openAuthForm ? (
-        <Authorization closeWindow={closeWindow} setUser={setUser} />
+        <Authorization closeWindow={closeWindow} />
       ) : (
         ''
       )}

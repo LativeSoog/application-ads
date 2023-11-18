@@ -6,10 +6,10 @@ import { AdvertPage } from './page/Advert/AdvertPage'
 import { ProfileSellerPage } from './page/Profile-Seller/ProfileSellerPage'
 import { MyAdvertPage } from './page/My-Advert/MyAdvertPage'
 
-export const AppRoutes = ({ setUser, user }) => {
+export const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<PageLayout setUser={setUser} user={user} />}>
+      <Route path="/" element={<PageLayout />}>
         <Route index element={<MainPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile-seller" element={<ProfileSellerPage />} />

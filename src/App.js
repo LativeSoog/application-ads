@@ -10,12 +10,11 @@ function App() {
   if (localStorage.getItem('user')) {
     dispatch(setUserData(JSON.parse(localStorage.getItem('user'))))
   }
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
   return (
     <>
       <StyleGlobal />
-      <AppRoutes setUser={setUser} user={user} />
+      <AppRoutes />
     </>
   )
 }

@@ -2,11 +2,11 @@ import { Outlet } from 'react-router-dom'
 import * as S from './style'
 import { Header } from '../Header/Header'
 
-export const PageLayout = ({ setUser, user }) => {
+export const PageLayout = () => {
   return (
     <S.Wrapper>
       <S.Container>
-        <Header setUser={setUser} user={user} />
+        <Header />
 
         <Outlet />
       </S.Container>
