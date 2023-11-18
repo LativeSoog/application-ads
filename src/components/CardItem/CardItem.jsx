@@ -1,6 +1,7 @@
 import * as S from './style'
 
 export const CardItem = ({
+  linkItem,
   nameItem,
   priceItem,
   cityItem,
@@ -13,13 +14,13 @@ export const CardItem = ({
     <S.CardsItem>
       <S.CardsCard>
         <S.CardImage>
-          <S.CardLink to="/advert">
+          <S.CardLink to={linkItem}>
             <S.CardImageImg src={imgItemLink} />
           </S.CardLink>
         </S.CardImage>
 
         <S.CardContent>
-          <S.CardLink to="/advert">
+          <S.CardLink to={linkItem}>
             <S.CardContentTitle>{nameItem}</S.CardContentTitle>
           </S.CardLink>
 

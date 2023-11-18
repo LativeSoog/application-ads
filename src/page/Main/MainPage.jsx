@@ -73,6 +73,7 @@ export const MainPage = () => {
                 return (
                   <CardItem
                     key={advert.id}
+                    linkItem={`/advert/${advert.id}`}
                     nameItem={advert.title}
                     priceItem={advert.price}
                     cityItem={advert.user.city}

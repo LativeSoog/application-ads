@@ -2,9 +2,13 @@ import { useState } from 'react'
 import { AdvertImageBar } from '../../components/AdvertImageBar/AdvertImageBar'
 import * as S from './style'
 import { ReviewsAdvert } from '../../components/ModalsAdvert/ReviewsAdvert'
+import { useParams } from 'react-router-dom'
 
 export const AdvertPage = () => {
   const [openReviews, setOpenReviews] = useState(false)
+
+  const params = useParams()
+  console.log(params)
 
   const handleOpenReview = () => {
     setOpenReviews(true)
