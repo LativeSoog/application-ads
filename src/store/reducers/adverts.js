@@ -1,10 +1,14 @@
-import { SET_FILTER_ADVERTS } from '../actions/type/adverts'
+import {
+  SET_FILTER_ADVERTS,
+  SET_FILTER_ADVERTS_LIST,
+} from '../actions/type/adverts'
 
 export const initialState = {
   filteredAdverts: {
     status: false,
     textSearchAdvert: false,
   },
+  filteredListAdverts: {},
 }
 
 export default function AdvertsReducer(state = initialState, action) {
@@ -12,10 +16,13 @@ export default function AdvertsReducer(state = initialState, action) {
     case SET_FILTER_ADVERTS:
       return {
         ...state,
-        filteredAdverts: {
-          status: true,
-          textSearchAdvert: action.payload,
-        },
+        filteredAdverts: action.payload,
+      }
+
+    case SET_FILTER_ADVERTS_LIST:
+      return {
+        ...state,
+        filteredListAdverts: action.payload,
       }
 
     default:
