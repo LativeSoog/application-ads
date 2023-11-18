@@ -1,9 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as S from './style'
-import { useAuthRegistrationMutation } from '../../services/user'
+import {
+  useAuthLoginMutation,
+  useAuthRegistrationMutation,
+  useGetCurrentUserQuery,
+} from '../../services/user'
 
 export const Authorization = ({ closeWindow, setUser }) => {
   const [regMode, setRegMode] = useState(false)
+  const [token, setToken] = useState(false)
 
   const [errorMessage, setErrorMessage] = useState(false)
   const [isFormProcess, setIsFormProcess] = useState(false)
@@ -13,6 +18,15 @@ export const Authorization = ({ closeWindow, setUser }) => {
   const [userName, setUserName] = useState('')
   const [userSurname, setUserSurname] = useState('')
   const [userCity, setUserCity] = useState('')
+
+  const [userRegistration, { error: errorUserRegistration }] =
+    useAuthRegistrationMutation()
+  const [userLogin] = useAuthLoginMutation()
+  const { data: userData } = useGetCurrentUserQuery(token)
+
+  useEffect(() => {
+    setUser(userData)
+  }, [userData])
 
   const checkAndRegistration = async () => {
     try {
@@ -25,7 +39,6 @@ export const Authorization = ({ closeWindow, setUser }) => {
         userCity,
       })
       closeWindow()
-      setUser('username')
     } catch (error) {
       setErrorMessage(errorUserRegistration)
     } finally {
@@ -50,6 +63,29 @@ export const Authorization = ({ closeWindow, setUser }) => {
     }
   }
 
+  const checkAndLogin = async () => {
+    try {
+      const result = await userLogin({ email, password })
+
+      if (result.data) {
+        const token = result.data.access_token
+        setToken(token)
+      }
+
+      if (result.error) {
+        switch (result.error.status) {
+          case 401:
+            throw new Error('Данный пользователь не зарегистрирован')
+
+          case 422:
+            throw new Error('Пожалуйста, укажите корректный Email')
+        }
+      }
+    } catch (error) {
+      setErrorMessage(error.message)
+    }
+  }
+
   const handleLogin = () => {
     if (!email) {
       setErrorMessage('Укажите email адрес')
@@ -58,15 +94,14 @@ export const Authorization = ({ closeWindow, setUser }) => {
     if (!password) {
       setErrorMessage('Укажите пароль')
       return
+    } else {
+      checkAndLogin()
     }
   }
 
   const switchButtonRegMode = () => {
     setRegMode(true)
   }
-
-  const [userRegistration, { error: errorUserRegistration }] =
-    useAuthRegistrationMutation()
 
   return (
     <S.Wrapper>

@@ -3,7 +3,7 @@ import { AppRoutes } from './routes'
 import { useState } from 'react'
 
 function App() {
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState(false)
 
   return (
     <>
