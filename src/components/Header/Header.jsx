@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { Authorization } from '../Authorization/Authorization'
 import * as S from './style'
 import { AddAdvert } from '../ModalsAdvert/AddAdvert'
+import { currentUser } from '../../store/selectors/users'
+import { useSelector } from 'react-redux'
 
 export const Header = () => {
   const [openAuthForm, setOpenAuthForm] = useState(false)
   const [openAddAdvert, setOpenAddAdvert] = useState(false)
-  const [isLogin, setIsLogin] = useState(true)
+  const isUser = useSelector(currentUser)
 
   const handleAuthMode = () => {
     setOpenAuthForm(true)
@@ -26,11 +28,15 @@ export const Header = () => {
 
   return (
     <>
-      {openAuthForm ? <Authorization closeWindow={closeWindow} /> : ''}
+      {openAuthForm ? (
+        <Authorization closeWindow={closeWindow} />
+      ) : (
+        ''
+      )}
       {openAddAdvert ? <AddAdvert closeWindow={closeWindow} /> : ''}
       <S.Header>
         <S.HeaderNav>
-          {isLogin ? (
+          {isUser ? (
             <>
               <S.HeaderButtonMain $width="232px" onClick={handleAddAdvert}>
                 Разместить объявление

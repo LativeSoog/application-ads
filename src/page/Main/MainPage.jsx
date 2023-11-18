@@ -1,7 +1,10 @@
 import { CardItem } from '../../components/CardItem/CardItem'
+import { useGetAllAdvertsQuery } from '../../services/advert'
 import * as S from './style'
 
 export const MainPage = () => {
+  const { data: advertList, error: advertError } = useGetAllAdvertsQuery()
+
   return (
     <S.Main>
       <S.MainSearch>
@@ -19,11 +22,18 @@ export const MainPage = () => {
         <S.MainTitle>Объявления</S.MainTitle>
         <S.MainContent>
           <S.Cards>
-            <CardItem />
-            <CardItem />
-            <CardItem />
-            <CardItem />
-            <CardItem />
+            {advertList?.map((advert) => {
+              return (
+                <CardItem
+                  key={advert.id}
+                  nameItem={advert.title}
+                  priceItem={advert.price}
+                  cityItem={advert.user.city}
+                  dateItem={advert.created_on}
+                  imgItem={advert.images[0]?.url}
+                />
+              )
+            })}
           </S.Cards>
         </S.MainContent>
       </S.MainContainer>
