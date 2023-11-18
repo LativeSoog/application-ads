@@ -5,8 +5,11 @@ import {
   useAuthRegistrationMutation,
   useGetCurrentUserQuery,
 } from '../../services/user'
+import { setUserData } from '../../store/actions/creators/users'
+import { useDispatch } from 'react-redux'
 
-export const Authorization = ({ closeWindow, setUser }) => {
+export const Authorization = ({ closeWindow }) => {
+  const dispatch = useDispatch()
   const [regMode, setRegMode] = useState(false)
   const [token, setToken] = useState(false)
 
@@ -25,7 +28,11 @@ export const Authorization = ({ closeWindow, setUser }) => {
   const { data: userData } = useGetCurrentUserQuery(token)
 
   useEffect(() => {
-    setUser(userData)
+    if (token) {
+      dispatch(setUserData(userData))
+      localStorage.setItem('user', JSON.stringify(userData))
+      closeWindow()
+    }
   }, [userData])
 
   const checkAndRegistration = async () => {
@@ -65,15 +72,15 @@ export const Authorization = ({ closeWindow, setUser }) => {
 
   const checkAndLogin = async () => {
     try {
-      const result = await userLogin({ email, password })
+      const responseLogin = await userLogin({ email, password })
 
-      if (result.data) {
-        const token = result.data.access_token
+      if (responseLogin.data) {
+        const token = responseLogin.data.access_token
         setToken(token)
       }
 
-      if (result.error) {
-        switch (result.error.status) {
+      if (responseLogin.error) {
+        switch (responseLogin.error.status) {
           case 401:
             throw new Error('Данный пользователь не зарегистрирован')
 
