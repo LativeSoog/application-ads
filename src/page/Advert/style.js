@@ -202,6 +202,10 @@ export const AdvertRightBlockPrice = styled.p`
   line-height: 39px;
   font-weight: 700;
   margin-bottom: 20px;
+
+  &::after {
+    content: ' ₽';
+  }
 `
 
 export const AdvertRightBlockBtn = styled.button`
