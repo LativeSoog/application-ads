@@ -1,0 +1,1 @@
+export const SET_FILTER_ADVERTS = 'SET_FILTER_ADVERTS'
