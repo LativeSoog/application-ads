@@ -4,6 +4,7 @@ import * as S from './style'
 import { ReviewsAdvert } from '../../components/ModalsAdvert/ReviewsAdvert'
 import { useParams } from 'react-router-dom'
 import { useGetCurrentAdvertQuery } from '../../services/advert'
+import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
 
 export const AdvertPage = () => {
   const host = 'http://127.0.0.1:8090/'
@@ -103,12 +104,9 @@ export const AdvertPage = () => {
                         {currentAdvertData.price}
                       </S.AdvertRightBlockPrice>
 
-                      <S.AdvertRightBlockBtn>
-                        Показать&nbsp;телефон
-                        <S.AdvertRightBlockBtnSpan>
-                          8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
-                        </S.AdvertRightBlockBtnSpan>
-                      </S.AdvertRightBlockBtn>
+                      <ButtonPhone
+                        userPhoneNumber={currentAdvertData.user.phone}
+                      />
 
                       <S.AdvertRightBlockAuthor>
                         <S.AdvertRightBlockAuthorImgBlock>
