@@ -3,12 +3,17 @@ import { AdvertImageBar } from '../../components/AdvertImageBar/AdvertImageBar'
 import * as S from './style'
 import { ReviewsAdvert } from '../../components/ModalsAdvert/ReviewsAdvert'
 import { useParams } from 'react-router-dom'
+import { useGetCurrentAdvertQuery } from '../../services/advert'
 
 export const AdvertPage = () => {
+  const host = 'http://127.0.0.1:8090/'
+  const params = useParams()
   const [openReviews, setOpenReviews] = useState(false)
 
-  const params = useParams()
-  console.log(params)
+  const { data: currentAdvertData, isLoading: currentAdvertLoading } =
+    useGetCurrentAdvertQuery(params.id)
+
+  console.log(currentAdvertData)
 
   const handleOpenReview = () => {
     setOpenReviews(true)
@@ -41,92 +46,109 @@ export const AdvertPage = () => {
             </S.MainMenu>
           </S.MainContainer>
 
-          <S.MainAdvert>
-            <S.AdvertContent>
-              <S.AdvertLeft>
-                <S.AdvertLeftFillImg>
-                  <S.AdvertLeftImgBlock>
-                    <S.AdvertLeftImgBlockImage />
-                  </S.AdvertLeftImgBlock>
+          {currentAdvertLoading ? (
+            'Идёт загрузка'
+          ) : (
+            <>
+              <S.MainAdvert>
+                <S.AdvertContent>
+                  <S.AdvertLeft>
+                    <S.AdvertLeftFillImg>
+                      <S.AdvertLeftImgBlock>
+                        <S.AdvertLeftImgBlockImage
+                          src={
+                            currentAdvertData.images[0]
+                              ? host + currentAdvertData.images[0].url
+                              : ''
+                          }
+                        />
+                      </S.AdvertLeftImgBlock>
 
-                  <S.AdvertImgBar>
-                    <AdvertImageBar />
-                    <AdvertImageBar />
-                    <AdvertImageBar />
-                    <AdvertImageBar />
-                    <AdvertImageBar />
-                    <AdvertImageBar />
-                  </S.AdvertImgBar>
-                </S.AdvertLeftFillImg>
-              </S.AdvertLeft>
+                      <S.AdvertImgBar>
+                        {currentAdvertData?.images.map((image) => {
+                          return (
+                            <AdvertImageBar
+                              key={image.id}
+                              link={host + image.url}
+                            />
+                          )
+                        })}
+                      </S.AdvertImgBar>
+                    </S.AdvertLeftFillImg>
+                  </S.AdvertLeft>
 
-              <S.AdvertRight>
-                <S.AdvertRightBlock>
-                  <S.AdvertRightBlockTitle>
-                    Ракетка для большого тениса Triumph Pro STC
-                  </S.AdvertRightBlockTitle>
-                  <S.AdvertRightBlockInfo>
-                    <S.AdvertRightBlockInfoItem $color="#5F5F5F">
-                      Сегодня в 10:45
-                    </S.AdvertRightBlockInfoItem>
-                    <S.AdvertRightBlockInfoItem $color="#5F5F5F">
-                      Санкт-Петеребург
-                    </S.AdvertRightBlockInfoItem>
-                    <S.AdvertRightBlockInfoLink>
-                      <S.AdvertRightBlockInfoItem
-                        $color="#009EE4"
-                        onClick={handleOpenReview}
-                      >
-                        23 отзыва
-                      </S.AdvertRightBlockInfoItem>
-                    </S.AdvertRightBlockInfoLink>
-                  </S.AdvertRightBlockInfo>
+                  <S.AdvertRight>
+                    <S.AdvertRightBlock>
+                      <S.AdvertRightBlockTitle>
+                        {currentAdvertData.title}
+                      </S.AdvertRightBlockTitle>
+                      <S.AdvertRightBlockInfo>
+                        <S.AdvertRightBlockInfoItem $color="#5F5F5F">
+                          {currentAdvertData.created_on}
+                        </S.AdvertRightBlockInfoItem>
+                        <S.AdvertRightBlockInfoItem $color="#5F5F5F">
+                          {currentAdvertData.user.city}
+                        </S.AdvertRightBlockInfoItem>
+                        <S.AdvertRightBlockInfoLink>
+                          <S.AdvertRightBlockInfoItem
+                            $color="#009EE4"
+                            onClick={handleOpenReview}
+                          >
+                            23 отзыва
+                          </S.AdvertRightBlockInfoItem>
+                        </S.AdvertRightBlockInfoLink>
+                      </S.AdvertRightBlockInfo>
 
-                  <S.AdvertRightBlockPrice>2 200₽</S.AdvertRightBlockPrice>
+                      <S.AdvertRightBlockPrice>
+                        {currentAdvertData.price}
+                      </S.AdvertRightBlockPrice>
 
-                  <S.AdvertRightBlockBtn>
-                    Показать&nbsp;телефон
-                    <S.AdvertRightBlockBtnSpan>
-                      8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
-                    </S.AdvertRightBlockBtnSpan>
-                  </S.AdvertRightBlockBtn>
+                      <S.AdvertRightBlockBtn>
+                        Показать&nbsp;телефон
+                        <S.AdvertRightBlockBtnSpan>
+                          8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
+                        </S.AdvertRightBlockBtnSpan>
+                      </S.AdvertRightBlockBtn>
 
-                  <S.AdvertRightBlockAuthor>
-                    <S.AdvertRightBlockAuthorImgBlock>
-                      <S.AdvertRightBlockAuthorImgBlockImage />
-                    </S.AdvertRightBlockAuthorImgBlock>
+                      <S.AdvertRightBlockAuthor>
+                        <S.AdvertRightBlockAuthorImgBlock>
+                          <S.AdvertRightBlockAuthorImgBlockImage
+                            src={
+                              currentAdvertData.user.avatar
+                                ? host + currentAdvertData.user.avatar
+                                : ''
+                            }
+                          />
+                        </S.AdvertRightBlockAuthorImgBlock>
 
-                    <S.AdvertRightBlockAuthorContact>
-                      <S.MainMenuFormBtnLink to="/profile-seller">
-                        <S.AdvertRightBlockAuthorContactName>
-                          Кирилл
-                        </S.AdvertRightBlockAuthorContactName>
-                      </S.MainMenuFormBtnLink>
-                      <S.AdvertRightBlockAuthorContactAbout>
-                        Продает товары с августа 2021
-                      </S.AdvertRightBlockAuthorContactAbout>
-                    </S.AdvertRightBlockAuthorContact>
-                  </S.AdvertRightBlockAuthor>
-                </S.AdvertRightBlock>
-              </S.AdvertRight>
-            </S.AdvertContent>
-          </S.MainAdvert>
+                        <S.AdvertRightBlockAuthorContact>
+                          <S.MainMenuFormBtnLink to="/profile-seller">
+                            <S.AdvertRightBlockAuthorContactName>
+                              {currentAdvertData.user.name}
+                            </S.AdvertRightBlockAuthorContactName>
+                          </S.MainMenuFormBtnLink>
+                          <S.AdvertRightBlockAuthorContactAbout>
+                            Продает товары с{currentAdvertData.user.sells_from}
+                          </S.AdvertRightBlockAuthorContactAbout>
+                        </S.AdvertRightBlockAuthorContact>
+                      </S.AdvertRightBlockAuthor>
+                    </S.AdvertRightBlock>
+                  </S.AdvertRight>
+                </S.AdvertContent>
+              </S.MainAdvert>
+              <S.MainContainer>
+                <S.MainTitle>Описание товара</S.MainTitle>
 
-          <S.MainContainer>
-            <S.MainTitle>Описание товара</S.MainTitle>
-
-            <S.MainContent>
-              <S.MainText>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </S.MainText>
-            </S.MainContent>
-          </S.MainContainer>
+                <S.MainContent>
+                  <S.MainText>
+                    {currentAdvertData.description
+                      ? currentAdvertData.description
+                      : 'Пользователь не указал описание к данному объявлению'}
+                  </S.MainText>
+                </S.MainContent>
+              </S.MainContainer>
+            </>
+          )}
         </>
       )}
     </>
