@@ -5,6 +5,7 @@ import { ReviewsAdvert } from '../../components/ModalsAdvert/ReviewsAdvert'
 import { useParams } from 'react-router-dom'
 import { useGetCurrentAdvertQuery } from '../../services/advert'
 import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
+import { formatDate } from '../../helper'
 
 export const AdvertPage = () => {
   const host = 'http://127.0.0.1:8090/'
@@ -126,7 +127,8 @@ export const AdvertPage = () => {
                             </S.AdvertRightBlockAuthorContactName>
                           </S.MainMenuFormBtnLink>
                           <S.AdvertRightBlockAuthorContactAbout>
-                            Продает товары с{currentAdvertData.user.sells_from}
+                            Продает товары с{' '}
+                            {formatDate(currentAdvertData.user.sells_from)}
                           </S.AdvertRightBlockAuthorContactAbout>
                         </S.AdvertRightBlockAuthorContact>
                       </S.AdvertRightBlockAuthor>
