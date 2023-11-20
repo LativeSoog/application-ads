@@ -1,7 +1,10 @@
+import { useParams } from 'react-router-dom'
 import { CardItem } from '../../components/CardItem/CardItem'
 import * as S from './style'
 
 export const ProfileSellerPage = () => {
+  const params = useParams()
+
   return (
     <S.MainContainer>
       <S.MainCenterBlock>

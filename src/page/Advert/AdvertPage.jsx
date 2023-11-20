@@ -121,7 +121,9 @@ export const AdvertPage = () => {
                         </S.AdvertRightBlockAuthorImgBlock>
 
                         <S.AdvertRightBlockAuthorContact>
-                          <S.MainMenuFormBtnLink to="/profile-seller">
+                          <S.MainMenuFormBtnLink
+                            to={`/profile-seller/${currentAdvertData.user.id}`}
+                          >
                             <S.AdvertRightBlockAuthorContactName>
                               {currentAdvertData.user.name}
                             </S.AdvertRightBlockAuthorContactName>
