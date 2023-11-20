@@ -1,9 +1,9 @@
 import * as S from './style'
 
-export const AdvertImageBar = () => {
+export const AdvertImageBar = ({ link }) => {
   return (
     <S.AdvertImgBarDiv>
-      <S.AdvertImgBarImage />
+      <S.AdvertImgBarImage src={link} />
     </S.AdvertImgBarDiv>
   )
 }

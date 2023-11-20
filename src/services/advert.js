@@ -15,7 +15,15 @@ export const advertApi = createApi({
       }),
       providesTags: (result = []) => [DATA_TAG],
     }),
+
+    getCurrentAdvert: build.query({
+      query: (id) => ({
+        url: `ads/${id}`,
+        method: 'GET',
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
   }),
 })
 
-export const { useGetAllAdvertsQuery } = advertApi
+export const { useGetAllAdvertsQuery, useGetCurrentAdvertQuery } = advertApi
