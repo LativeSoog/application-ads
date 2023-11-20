@@ -1,7 +1,34 @@
+import { useParams } from 'react-router-dom'
 import { CardItem } from '../../components/CardItem/CardItem'
 import * as S from './style'
+import { useGetAllAdvertsQuery } from '../../services/advert'
+import { useEffect, useState } from 'react'
+import { formatDate } from '../../helper'
+import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
 
 export const ProfileSellerPage = () => {
+  const host = 'http://127.0.0.1:8090/'
+  const params = useParams()
+  const [profileSeller, setProfileSeller] = useState(false)
+  const [advertsSeller, setAdvertsSeller] = useState([])
+
+  const { data: allAdvertsData, isLoading: loadingAdverts } =
+    useGetAllAdvertsQuery()
+
+  useEffect(() => {
+    if (allAdvertsData) {
+      const findUser = allAdvertsData.find(
+        (user) => String(user.user.id) === params.id,
+      )
+      setProfileSeller(findUser.user)
+
+      const findUserAdverts = allAdvertsData.filter(
+        (userAdverts) => String(userAdverts.user_id) === params.id,
+      )
+      setAdvertsSeller(findUserAdverts)
+    }
+  }, [allAdvertsData])
+
   return (
     <S.MainContainer>
       <S.MainCenterBlock>
@@ -24,24 +51,25 @@ export const ProfileSellerPage = () => {
               <S.ProfileSellerLeft>
                 <S.ProfileSellerImgBlock>
                   <S.ProfileLink>
-                    <S.ProfileSellerImgBlockImage src="" />
+                    <S.ProfileSellerImgBlockImage
+                      src={
+                        profileSeller.avatar ? host + profileSeller.avatar : ''
+                      }
+                    />
                   </S.ProfileLink>
                 </S.ProfileSellerImgBlock>
               </S.ProfileSellerLeft>
 
               <S.ProfileSellerRight>
-                <S.ProfileSellerTitle>Кирилл Матвеев</S.ProfileSellerTitle>
-                <S.ProfileSellerCity>Астана</S.ProfileSellerCity>
+                <S.ProfileSellerTitle>
+                  {profileSeller.name}
+                </S.ProfileSellerTitle>
+                <S.ProfileSellerCity>{profileSeller.city}</S.ProfileSellerCity>
                 <S.ProfileSellerInfo>
-                  Продает товары с августа 2021
+                  Продает товары с {formatDate(profileSeller.sells_from)}
                 </S.ProfileSellerInfo>
 
-                <S.ProfileSellerBtn>
-                  Показать&nbsp;телефон
-                  <S.ProfileSellerBtnSpan>
-                    8&nbsp;905&nbsp;ХХХ&nbsp;ХХ&nbsp;ХХ
-                  </S.ProfileSellerBtnSpan>
-                </S.ProfileSellerBtn>
+                <ButtonPhone userPhoneNumber={profileSeller.phone} />
               </S.ProfileSellerRight>
             </S.ProfileSeller>
           </S.ProfileContent>
@@ -52,11 +80,19 @@ export const ProfileSellerPage = () => {
 
       <S.MainContent>
         <S.ContentCards>
-          <CardItem />
-          <CardItem />
-          <CardItem />
-          <CardItem />
-          <CardItem />
+          {advertsSeller.map((advert) => {
+            return (
+              <CardItem
+                key={advert.id}
+                linkItem={`/advert/${advert.id}`}
+                nameItem={advert.title}
+                priceItem={advert.price}
+                cityItem={advert.user.city}
+                dateItem={advert.created_on}
+                imgItem={advert.images[0]?.url}
+              />
+            )
+          })}
         </S.ContentCards>
       </S.MainContent>
     </S.MainContainer>
