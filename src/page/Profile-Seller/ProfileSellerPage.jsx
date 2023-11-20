@@ -10,19 +10,24 @@ export const ProfileSellerPage = () => {
   const host = 'http://127.0.0.1:8090/'
   const params = useParams()
   const [profileSeller, setProfileSeller] = useState(false)
+  const [advertsSeller, setAdvertsSeller] = useState([])
 
-  const { data: usersAdvertData } = useGetAllAdvertsQuery()
+  const { data: allAdvertsData, isLoading: loadingAdverts } =
+    useGetAllAdvertsQuery()
 
   useEffect(() => {
-    if (usersAdvertData) {
-      const findUser = usersAdvertData.find(
-        (userAdvert) => String(userAdvert.user.id) === params.id,
+    if (allAdvertsData) {
+      const findUser = allAdvertsData.find(
+        (user) => String(user.user.id) === params.id,
       )
       setProfileSeller(findUser.user)
-    }
-  })
 
-  console.log(profileSeller)
+      const findUserAdverts = allAdvertsData.filter(
+        (userAdverts) => String(userAdverts.user_id) === params.id,
+      )
+      setAdvertsSeller(findUserAdverts)
+    }
+  }, [allAdvertsData])
 
   return (
     <S.MainContainer>
@@ -75,11 +80,19 @@ export const ProfileSellerPage = () => {
 
       <S.MainContent>
         <S.ContentCards>
-          <CardItem />
-          <CardItem />
-          <CardItem />
-          <CardItem />
-          <CardItem />
+          {advertsSeller.map((advert) => {
+            return (
+              <CardItem
+                key={advert.id}
+                linkItem={`/advert/${advert.id}`}
+                nameItem={advert.title}
+                priceItem={advert.price}
+                cityItem={advert.user.city}
+                dateItem={advert.created_on}
+                imgItem={advert.images[0]?.url}
+              />
+            )
+          })}
         </S.ContentCards>
       </S.MainContent>
     </S.MainContainer>
