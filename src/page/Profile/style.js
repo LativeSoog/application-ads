@@ -178,6 +178,9 @@ export const ProfileSettingsDivInput = styled.input`
 `
 
 export const ProfileSettingsBtn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 16px;
   line-height: 1;
   color: #ffffff;
