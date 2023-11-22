@@ -1,17 +1,73 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { CardItem } from '../../components/CardItem/CardItem'
 import * as S from './style'
 import { currentUser } from '../../store/selectors/users'
 import { useState } from 'react'
+import {
+  useEditCurrentUserMutation,
+  useUpdateUserTokenMutation,
+} from '../../services/user'
+import { setUserData } from '../../store/actions/creators/users'
 
 export const ProfilePage = () => {
-  const [userName, setNameUser] = useState('')
-  const [userSurname, setSurnameUser] = useState('')
-  const [userCity, setCityUser] = useState('')
-  const [userPhone, setPhoneUser] = useState('')
-
+  const dispatch = useDispatch()
   const user = useSelector(currentUser)
-  console.log(user)
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem('token_user')),
+  )
+  const [userName, setNameUser] = useState(user.name)
+  const [userSurname, setSurnameUser] = useState(user.surname)
+  const [userCity, setCityUser] = useState(user.city)
+  const [userPhone, setPhoneUser] = useState(user.phone)
+
+  const [updateUserToken] = useUpdateUserTokenMutation()
+  const [editUserProfile] = useEditCurrentUserMutation()
+
+  const saveButtonChanges = () => {
+    getNewUserToken()
+    updateUserProfileData()
+  }
+
+  const getNewUserToken = async () => {
+    try {
+      const responseNewToken = await updateUserToken({
+        accessToken: token.access_token,
+        refreshToken: token.refresh_token,
+      })
+
+      if (responseNewToken.data) {
+        localStorage.setItem(
+          'token_user',
+          JSON.stringify(responseNewToken.data),
+        )
+        setToken(responseNewToken.data)
+      }
+
+      if (responseNewToken.error) {
+        throw new Error(responseNewToken.error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const updateUserProfileData = async () => {
+    try {
+      const responseUpdateData = await editUserProfile({
+        userName,
+        userSurname,
+        userCity,
+        userPhone,
+        token: token.access_token,
+      })
+
+      if (responseUpdateData.data) {
+        dispatch(setUserData(responseUpdateData.data))
+        localStorage.setItem('user', JSON.stringify(responseUpdateData.data))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <S.MainContainer>
@@ -89,7 +145,9 @@ export const ProfilePage = () => {
                       onChange={(e) => setPhoneUser(e.target.value)}
                     />
                   </S.ProfileSettingsDiv>
-                  <S.ProfileSettingsBtn>Сохранить</S.ProfileSettingsBtn>
+                  <S.ProfileSettingsBtn onClick={saveButtonChanges}>
+                    Сохранить
+                  </S.ProfileSettingsBtn>
                 </S.ProfileSettingsForm>
               </S.ProfileSettingsRight>
             </S.ProfileSettings>

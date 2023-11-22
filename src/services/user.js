@@ -1,11 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const userAccessToken = () => {
-  const accessToken = localStorage.getItem('userTokenAccess')
-  console.log(accessToken)
-  return accessToken
-}
-
 const DATA_TAG = { type: 'Users', id: 'LIST' }
 
 export const userApi = createApi({
@@ -47,6 +41,21 @@ export const userApi = createApi({
       providesTags: (result = []) => [DATA_TAG],
     }),
 
+    updateUserToken: build.mutation({
+      query: ({ accessToken, refreshToken }) => ({
+        url: 'auth/login/',
+        method: 'PUT',
+        body: JSON.stringify({
+          access_token: accessToken,
+          refresh_token: refreshToken,
+        }),
+        headers: {
+          'content-type': 'application/json',
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
     getCurrentUser: build.query({
       query: (token) => ({
         url: 'user/',
@@ -59,11 +68,18 @@ export const userApi = createApi({
     }),
 
     editCurrentUser: build.mutation({
-      query: ({ userName, userSurname, userCity, userPhone }) => ({
+      query: ({ userName, userSurname, userPhone, userCity, token }) => ({
         url: 'user/',
         method: 'PATCH',
+        body: JSON.stringify({
+          name: userName,
+          surname: userSurname,
+          phone: userPhone,
+          city: userCity,
+        }),
         headers: {
           Authorization: `Bearer ${token}`,
+          'content-type': 'application/json',
         },
       }),
       providesTags: (result = []) => [DATA_TAG],
@@ -74,5 +90,7 @@ export const userApi = createApi({
 export const {
   useAuthRegistrationMutation,
   useAuthLoginMutation,
+  useUpdateUserTokenMutation,
   useGetCurrentUserQuery,
+  useEditCurrentUserMutation,
 } = userApi
