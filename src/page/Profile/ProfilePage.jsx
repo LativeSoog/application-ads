@@ -2,12 +2,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CardItem } from '../../components/CardItem/CardItem'
 import * as S from './style'
 import { currentUser } from '../../store/selectors/users'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   useEditCurrentUserMutation,
   useUpdateUserTokenMutation,
 } from '../../services/user'
 import { setUserData } from '../../store/actions/creators/users'
+import {
+  useGetAdvertsCurrentUserQuery,
+  useGetAllAdvertsQuery,
+} from '../../services/advert'
 
 export const ProfilePage = () => {
   const dispatch = useDispatch()
@@ -19,9 +23,12 @@ export const ProfilePage = () => {
   const [userSurname, setSurnameUser] = useState(user.surname)
   const [userCity, setCityUser] = useState(user.city)
   const [userPhone, setPhoneUser] = useState(user.phone)
+  const [myAdverts, setMyAdverts] = useState([])
 
   const [updateUserToken] = useUpdateUserTokenMutation()
   const [editUserProfile] = useEditCurrentUserMutation()
+  const { data: allAdvertsData, isLoading: loadingAdverts } =
+    useGetAllAdvertsQuery()
 
   const saveButtonChanges = () => {
     getNewUserToken()
@@ -48,8 +55,10 @@ export const ProfilePage = () => {
       }
     } catch (error) {
       console.log(error)
+      localStorage.clear()
     }
   }
+
   const updateUserProfileData = async () => {
     try {
       const responseUpdateData = await editUserProfile({
@@ -68,6 +77,15 @@ export const ProfilePage = () => {
       console.log(error)
     }
   }
+
+  useEffect(() => {
+    if (allAdvertsData) {
+      const findUserAdverts = allAdvertsData.filter(
+        (userAdverts) => String(userAdverts.user_id) === user.id,
+      )
+      setMyAdverts(findUserAdverts)
+    }
+  }, [allAdvertsData])
 
   return (
     <S.MainContainer>
@@ -159,11 +177,21 @@ export const ProfilePage = () => {
 
       <S.MainContent>
         <S.ContentCards>
-          <CardItem />
-          <CardItem />
-          <CardItem />
-          <CardItem />
-          <CardItem />
+          {myAdverts.length > 0
+            ? myAdverts.map((advert) => {
+                return (
+                  <CardItem
+                    key={advert.id}
+                    linkItem={`/advert/${advert.id}`}
+                    nameItem={advert.title}
+                    priceItem={advert.price}
+                    cityItem={advert.user.city}
+                    dateItem={advert.created_on}
+                    imgItem={advert.images[0]?.url}
+                  />
+                )
+              })
+            : 'Товары не найдены'}
         </S.ContentCards>
       </S.MainContent>
     </S.MainContainer>
