@@ -177,7 +177,7 @@ export const ProfileSettingsDivInput = styled.input`
   }
 `
 
-export const ProfileSettingsBtn = styled.button`
+export const ProfileSettingsBtn = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
