@@ -5,10 +5,10 @@ import { currentUser } from '../../store/selectors/users'
 import { useState } from 'react'
 
 export const ProfilePage = () => {
-  const [nameUser, setNameUser] = useState('')
-  const [surnameUser, setSurnameUser] = useState('')
-  const [cityUser, setCityUser] = useState('')
-  const [phoneUser, setPhoneUser] = useState('')
+  const [userName, setNameUser] = useState('')
+  const [userSurname, setSurnameUser] = useState('')
+  const [userCity, setCityUser] = useState('')
+  const [userPhone, setPhoneUser] = useState('')
 
   const user = useSelector(currentUser)
   console.log(user)

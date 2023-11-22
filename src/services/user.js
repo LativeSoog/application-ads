@@ -57,6 +57,17 @@ export const userApi = createApi({
       }),
       providesTags: (result = []) => [DATA_TAG],
     }),
+
+    editCurrentUser: build.mutation({
+      query: ({ userName, userSurname, userCity, userPhone }) => ({
+        url: 'user/',
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
   }),
 })
 
