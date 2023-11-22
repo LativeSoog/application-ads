@@ -75,8 +75,8 @@ export const Authorization = ({ closeWindow }) => {
       const responseLogin = await userLogin({ email, password })
 
       if (responseLogin.data) {
-        const token = responseLogin.data.access_token
-        setToken(token)
+        setToken(responseLogin.data.access_token)
+        localStorage.setItem('token_user', JSON.stringify(responseLogin.data))
       }
 
       if (responseLogin.error) {
