@@ -3,7 +3,7 @@ import { CardItem } from '../../components/CardItem/CardItem'
 import * as S from './style'
 import { useGetAllAdvertsQuery } from '../../services/advert'
 import { useEffect, useState } from 'react'
-import { formatDate } from '../../helper'
+import { formatDateSells } from '../../helper'
 import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
 
 export const ProfileSellerPage = () => {
@@ -66,7 +66,7 @@ export const ProfileSellerPage = () => {
                 </S.ProfileSellerTitle>
                 <S.ProfileSellerCity>{profileSeller.city}</S.ProfileSellerCity>
                 <S.ProfileSellerInfo>
-                  Продает товары с {formatDate(profileSeller.sells_from)}
+                  Продает товары с {formatDateSells(profileSeller.sells_from)}
                 </S.ProfileSellerInfo>
 
                 <ButtonPhone userPhoneNumber={profileSeller.phone} />

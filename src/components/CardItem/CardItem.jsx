@@ -1,3 +1,4 @@
+import { formatDateAndTime } from '../../helper'
 import * as S from './style'
 
 export const CardItem = ({
@@ -26,7 +27,7 @@ export const CardItem = ({
 
           <S.CardContentPrice>{priceItem}&nbsp;₽</S.CardContentPrice>
           <S.CardContentPlace>{cityItem}</S.CardContentPlace>
-          <S.CardContentDate>{dateItem}</S.CardContentDate>
+          <S.CardContentDate>{formatDateAndTime(dateItem)}</S.CardContentDate>
         </S.CardContent>
       </S.CardsCard>
     </S.CardsItem>

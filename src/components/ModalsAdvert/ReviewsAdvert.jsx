@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { host } from '../../helper'
+import { formatDateAndTime, host } from '../../helper'
 import {
   useAddCommentAdvertMutation,
   useGetCommentsAdvertQuery,
@@ -155,7 +155,9 @@ export const Review = ({ imgUser, nameUser, dateComment, textComment }) => {
         <S.ReviewItemRight>
           <S.ReviewItemRightName>
             {nameUser}
-            <S.ReviewItemRightNameSpan>{dateComment}</S.ReviewItemRightNameSpan>
+            <S.ReviewItemRightNameSpan>
+              {formatDateAndTime(dateComment)}
+            </S.ReviewItemRightNameSpan>
           </S.ReviewItemRightName>
           <S.ReviewItemRightTitle>Комментарий</S.ReviewItemRightTitle>
           <S.ReviewItemRightText>{textComment}</S.ReviewItemRightText>
