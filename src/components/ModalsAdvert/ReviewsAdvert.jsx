@@ -1,11 +1,66 @@
+import { useEffect, useState } from 'react'
 import { host } from '../../helper'
-import { useGetCommentsAdvertQuery } from '../../services/advert'
+import {
+  useAddCommentAdvertMutation,
+  useGetCommentsAdvertQuery,
+} from '../../services/advert'
 import * as S from './ReviewsAdvertStyle'
+import { useUpdateUserTokenMutation } from '../../services/user'
 
 export const ReviewsAdvert = ({ closeWindow, params }) => {
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem('token_user')),
+  )
+  const [textAddComment, setTextAddComment] = useState(false)
   const { data: advertComments, isLoading: advertCommentsLoading } =
     useGetCommentsAdvertQuery(params.id)
 
+  const [updateUserToken] = useUpdateUserTokenMutation()
+  const [addComment] = useAddCommentAdvertMutation()
+
+  useEffect(() => {
+    const getUpdateUserToken = async () => {
+      try {
+        const responseNewToken = await updateUserToken({
+          accessToken: token.access_token,
+          refreshToken: token.refresh_token,
+        })
+
+        if (responseNewToken.data) {
+          localStorage.setItem(
+            'token_user',
+            JSON.stringify(responseNewToken.data),
+          )
+          setToken(responseNewToken.data)
+        }
+
+        if (responseNewToken.error) {
+          switch (responseNewToken.error.status) {
+            case 401:
+              throw new Error(
+                'Произошла ошибка. Пожалуйста, авторизируйтесь заново',
+              )
+            //localStorage.clear()
+          }
+        }
+      } catch (error) {
+        setErrorMessage(error.message)
+      }
+    }
+    getUpdateUserToken()
+  }, [])
+
+  const handleAddComment = async () => {
+    try {
+      const responseAddComment = await addComment({
+        textAddComment,
+        id: params.id,
+        token: token.access_token,
+      })
+
+      console.log(responseAddComment)
+    } catch (error) {}
+  }
   return (
     <S.Wrapper>
       <S.ContainerBg>
@@ -28,9 +83,14 @@ export const ReviewsAdvert = ({ closeWindow, params }) => {
                     cols="auto"
                     rows="5"
                     placeholder="Введите описание"
+                    onChange={(e) => {
+                      setTextAddComment(e.target.value)
+                    }}
                   />
                 </S.ModalFormNewRewBlock>
-                <S.ModalFormNewRewBtn>Опубликовать</S.ModalFormNewRewBtn>
+                <S.ModalFormNewRewBtn onClick={handleAddComment}>
+                  Опубликовать
+                </S.ModalFormNewRewBtn>
               </S.ModalFormNewRew>
 
               <S.ModalReviews>
