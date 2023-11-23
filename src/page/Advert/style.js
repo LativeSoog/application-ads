@@ -208,6 +208,28 @@ export const AdvertRightBlockPrice = styled.p`
   }
 `
 
+export const AdvertRightButtonBlock = styled.div`
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+`
+
+export const AdvertRightButton = styled.button`
+  width: ${(props) => props.$width};
+  background-color: #009ee4;
+  border-radius: 6px;
+  border: 1px solid #009ee4;
+  height: 50px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  color: #ffffff;
+  margin-bottom: 10px;
+  margin-right: ${(props) => props.$marginRight};
+`
+
 export const AdvertRightBlockAuthor = styled.div`
   margin-top: 34px;
   margin-bottom: 20px;
@@ -228,6 +250,7 @@ export const AdvertRightBlockAuthorImgBlock = styled.div`
   height: 40px;
   background-color: #f0f0f0;
   border-radius: 50%;
+  overflow: hidden;
 `
 
 export const AdvertRightBlockAuthorImgBlockImage = styled.img`

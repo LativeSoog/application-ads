@@ -9,21 +9,27 @@ import {
 } from '../../services/advert'
 import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
 import { formatDateAndTime, formatDateSells } from '../../helper'
+import { useSelector } from 'react-redux'
+import { currentUser } from '../../store/selectors/users'
 
 export const AdvertPage = () => {
   const host = 'http://127.0.0.1:8090/'
   const params = useParams()
+  const user = useSelector(currentUser)
   const [openReviews, setOpenReviews] = useState(false)
+  const [openEditAdvert, setOpenEditAdvert] = useState(false)
 
   const { data: currentAdvertData, isLoading: currentAdvertLoading } =
     useGetCurrentAdvertQuery(params.id)
   const { data: advertComments } = useGetCommentsAdvertQuery(params.id)
 
-  console.log(currentAdvertData)
-
   const handleOpenReview = () => {
     setOpenReviews(true)
     document.body.style.overflow = 'hidden'
+  }
+
+  const handleOpenEdit = () => {
+    setOpenEditAdvert(true)
   }
 
   const closeWindow = () => {
@@ -108,10 +114,25 @@ export const AdvertPage = () => {
                       <S.AdvertRightBlockPrice>
                         {currentAdvertData.price}
                       </S.AdvertRightBlockPrice>
-
-                      <ButtonPhone
-                        userPhoneNumber={currentAdvertData.user.phone}
-                      />
+                      {currentAdvertData.user_id === user.id &&
+                      currentAdvertData.user.email === user.email ? (
+                        <S.AdvertRightButtonBlock>
+                          <S.AdvertRightButton
+                            $width="189px"
+                            $marginRight="10px"
+                            onClick={handleOpenEdit}
+                          >
+                            Редактировать
+                          </S.AdvertRightButton>
+                          <S.AdvertRightButton $width="225px">
+                            Снять с публикации
+                          </S.AdvertRightButton>
+                        </S.AdvertRightButtonBlock>
+                      ) : (
+                        <ButtonPhone
+                          userPhoneNumber={currentAdvertData.user.phone}
+                        />
+                      )}
 
                       <S.AdvertRightBlockAuthor>
                         <S.AdvertRightBlockAuthorImgBlock>
