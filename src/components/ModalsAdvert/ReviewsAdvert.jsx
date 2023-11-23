@@ -11,7 +11,8 @@ export const ReviewsAdvert = ({ closeWindow, params }) => {
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem('token_user')),
   )
-  const [textAddComment, setTextAddComment] = useState(false)
+  const [errorMessageComment, setErrorMessageComment] = useState(false)
+  const [textAddComment, setTextAddComment] = useState('')
   const {
     data: advertComments,
     isLoading: advertCommentsLoading,
@@ -54,20 +55,32 @@ export const ReviewsAdvert = ({ closeWindow, params }) => {
   }, [])
 
   const handleAddComment = async () => {
-    try {
-      const responseAddComment = await addComment({
-        textAddComment,
-        id: params.id,
-        token: token.access_token,
-      })
+    if (textAddComment.length > 1) {
+      try {
+        const responseAddComment = await addComment({
+          textAddComment,
+          id: params.id,
+          token: token.access_token,
+        })
 
-      if (responseAddComment.data) {
-        await advertCommentsRefetch()
+        if (responseAddComment.data) {
+          await advertCommentsRefetch()
+          setTextAddComment('')
+        }
+
+        if (responseAddComment.error) {
+          throw new Error('Произошла ошибка, попробуйте позже')
+        }
+      } catch (error) {
+        setErrorMessageComment(error.message)
       }
-
-      console.log(responseAddComment)
-    } catch (error) {}
+    } else {
+      setErrorMessageComment(
+        'Комментарий не должен быть пустым или содержать менее 2-х символов',
+      )
+    }
   }
+
   return (
     <S.Wrapper>
       <S.ContainerBg>
@@ -84,6 +97,7 @@ export const ReviewsAdvert = ({ closeWindow, params }) => {
                   <S.ModalFormNewRewLabel htmlFor="formArea">
                     Добавить отзыв
                   </S.ModalFormNewRewLabel>
+                  {errorMessageComment}
                   <S.ModalFormNewRewArea
                     name="text"
                     id="formArea"
@@ -93,9 +107,13 @@ export const ReviewsAdvert = ({ closeWindow, params }) => {
                     onChange={(e) => {
                       setTextAddComment(e.target.value)
                     }}
+                    value={textAddComment}
                   />
                 </S.ModalFormNewRewBlock>
-                <S.ModalFormNewRewBtn onClick={handleAddComment}>
+                <S.ModalFormNewRewBtn
+                  onClick={handleAddComment}
+                  $buttonActive={textAddComment}
+                >
                   Опубликовать
                 </S.ModalFormNewRewBtn>
               </S.ModalFormNewRew>

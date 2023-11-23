@@ -209,12 +209,17 @@ export const ModalFormNewRewBtn = styled.div`
   align-items: center;
   width: 181px;
   height: 50px;
-  background: #d9d9d9;
-  border: 1px solid #d9d9d9;
+  background: ${(props) => (props.$buttonActive ? '#009EE4' : '#D9D9D9')};
+  border: 1px solid ${(props) => (props.$buttonActive ? '#009EE4' : '#D9D9D9')};
   border-radius: 6px;
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
+  cursor: pointer;
+
+  &:hover {
+    background: ${(props) => (props.$buttonActive ? '#0080C1' : '#D9D9D9')};
+  }
 `
 
 export const ModalReviews = styled.div`
