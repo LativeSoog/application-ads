@@ -112,6 +112,7 @@ export const ProfileSettingsImg = styled.div`
   height: 170px;
   border-radius: 50%;
   background-color: #f0f0f0;
+  overflow: hidden;
 `
 
 export const ProfileLink = styled(Link)``
@@ -140,22 +141,6 @@ export const ProfileSettingsPhotoBlock = styled.div`
 `
 
 export const ProfileSettingsPhotoUpload = styled.input``
-
-export const ProfileSettingsPhotoUploadButton = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  width: 110px;
-  height: 30px;
-  margin: 10px 7px 0;
-  background-color: #009ee4;
-  border-radius: 6px;
-  border: 1px solid #009ee4;
-  cursor: pointer;
-`
 
 export const ProfileSettingsRight = styled.div`
   width: 630px;

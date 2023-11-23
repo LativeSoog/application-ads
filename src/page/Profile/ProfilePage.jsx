@@ -6,14 +6,13 @@ import { useEffect, useRef, useState } from 'react'
 import {
   useEditCurrentUserMutation,
   useUpdateUserTokenMutation,
+  useUploadUserPhotoMutation,
 } from '../../services/user'
 import { setUserData } from '../../store/actions/creators/users'
-import {
-  useGetAdvertsCurrentUserQuery,
-  useGetAllAdvertsQuery,
-} from '../../services/advert'
+import { useGetAdvertsCurrentUserQuery } from '../../services/advert'
 
 export const ProfilePage = () => {
+  const host = 'http://127.0.0.1:8090/'
   const dispatch = useDispatch()
   const user = useSelector(currentUser)
   const refFile = useRef(false)
@@ -29,10 +28,9 @@ export const ProfilePage = () => {
 
   const [updateUserToken] = useUpdateUserTokenMutation()
   const [editUserProfile] = useEditCurrentUserMutation()
+  const [uploadAvatarProfile] = useUploadUserPhotoMutation()
   const { data: advertsCurrentUser, isLoading: loadingAdvertsUser } =
-    useGetAdvertsCurrentUserQuery(token.access_token)
-
-  console.log(refFile)
+    useGetAdvertsCurrentUserQuery(token?.access_token)
 
   useEffect(() => {
     const getUpdateUserToken = async () => {
@@ -95,6 +93,36 @@ export const ProfilePage = () => {
     }
   }
 
+  const uploadAvatarUser = async () => {
+    const file = refFile?.current.files[0]
+    const formData = new FormData()
+    formData.append('file', file)
+
+    try {
+      const responseUpload = await uploadAvatarProfile({
+        image: formData,
+        token: token.access_token,
+      })
+
+      if (responseUpload.data) {
+        dispatch(setUserData(responseUpload.data))
+        localStorage.setItem('user', JSON.stringify(responseUpload.data))
+        setIsUploadPhoto(!isUploadPhoto)
+      }
+
+      if (responseUpload.error) {
+        switch (responseUpload.error.status) {
+          case 401:
+            throw new Error(
+              'Превышено время ожидания. Пожалуйста, авторизируйтесь заново и повторите попытку',
+            )
+        }
+      }
+    } catch (error) {
+      setErrorMessage(error.message)
+    }
+  }
+
   return (
     <S.MainContainer>
       <S.MainCenterBlock>
@@ -118,7 +146,9 @@ export const ProfilePage = () => {
               <S.ProfileSettingsLeft>
                 <S.ProfileSettingsImg>
                   <S.ProfileLink>
-                    <S.ProfileSettingsImgImage />
+                    <S.ProfileSettingsImgImage
+                      src={user.avatar ? host + user.avatar : ''}
+                    />
                   </S.ProfileLink>
                 </S.ProfileSettingsImg>
                 <S.ProfileSettingsChangePhoto
@@ -127,10 +157,11 @@ export const ProfilePage = () => {
                   Заменить
                 </S.ProfileSettingsChangePhoto>
                 <S.ProfileSettingsPhotoBlock $uploadPhoto={isUploadPhoto}>
-                  <S.ProfileSettingsPhotoUpload type="file" ref={refFile} />
-                  <S.ProfileSettingsPhotoUploadButton>
-                    Загрузить
-                  </S.ProfileSettingsPhotoUploadButton>
+                  <S.ProfileSettingsPhotoUpload
+                    type="file"
+                    ref={refFile}
+                    onChange={uploadAvatarUser}
+                  />
                 </S.ProfileSettingsPhotoBlock>
               </S.ProfileSettingsLeft>
 

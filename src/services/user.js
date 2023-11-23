@@ -84,6 +84,17 @@ export const userApi = createApi({
       }),
       providesTags: (result = []) => [DATA_TAG],
     }),
+
+    uploadUserPhoto: build.mutation({
+      query: ({ image, token }) => ({
+        url: 'user/avatar/',
+        method: 'POST',
+        body: image,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+    }),
   }),
 })
 
@@ -93,4 +104,5 @@ export const {
   useUpdateUserTokenMutation,
   useGetCurrentUserQuery,
   useEditCurrentUserMutation,
+  useUploadUserPhotoMutation,
 } = userApi
