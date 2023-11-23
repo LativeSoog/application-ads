@@ -16,6 +16,17 @@ export const advertApi = createApi({
       providesTags: (result = []) => [DATA_TAG],
     }),
 
+    getAdvertsCurrentUser: build.query({
+      query: (token) => ({
+        url: 'ads/me/',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
     getCurrentAdvert: build.query({
       query: (id) => ({
         url: `ads/${id}`,
@@ -26,4 +37,8 @@ export const advertApi = createApi({
   }),
 })
 
-export const { useGetAllAdvertsQuery, useGetCurrentAdvertQuery } = advertApi
+export const {
+  useGetAllAdvertsQuery,
+  useGetAdvertsCurrentUserQuery,
+  useGetCurrentAdvertQuery,
+} = advertApi

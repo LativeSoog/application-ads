@@ -112,6 +112,7 @@ export const ProfileSettingsImg = styled.div`
   height: 170px;
   border-radius: 50%;
   background-color: #f0f0f0;
+  overflow: hidden;
 `
 
 export const ProfileLink = styled(Link)``
@@ -124,14 +125,22 @@ export const ProfileSettingsImgImage = styled.img`
   object-fit: cover;
 `
 
-export const ProfileSettingsChangePhoto = styled(Link)`
+export const ProfileSettingsChangePhoto = styled.div`
   margin-top: 10px;
   margin-bottom: 30px;
   text-decoration: none;
   font-size: 16px;
   line-height: 24px;
   color: #009ee4;
+  cursor: pointer;
 `
+export const ProfileSettingsPhotoBlock = styled.div`
+  display: ${(props) => (props.$uploadPhoto ? 'flex' : 'none')};
+  flex-direction: column;
+  align-items: center;
+`
+
+export const ProfileSettingsPhotoUpload = styled.input``
 
 export const ProfileSettingsRight = styled.div`
   width: 630px;
@@ -177,7 +186,10 @@ export const ProfileSettingsDivInput = styled.input`
   }
 `
 
-export const ProfileSettingsBtn = styled.button`
+export const ProfileSettingsBtn = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 16px;
   line-height: 1;
   color: #ffffff;
