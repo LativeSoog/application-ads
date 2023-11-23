@@ -1,6 +1,11 @@
+import { host } from '../../helper'
+import { useGetCommentsAdvertQuery } from '../../services/advert'
 import * as S from './ReviewsAdvertStyle'
 
-export const ReviewsAdvert = ({ closeWindow }) => {
+export const ReviewsAdvert = ({ closeWindow, params }) => {
+  const { data: advertComments, isLoading: advertCommentsLoading } =
+    useGetCommentsAdvertQuery(params.id)
+
   return (
     <S.Wrapper>
       <S.ContainerBg>
@@ -29,11 +34,21 @@ export const ReviewsAdvert = ({ closeWindow }) => {
               </S.ModalFormNewRew>
 
               <S.ModalReviews>
-                <Review />
-                <Review />
-                <Review />
-                <Review />
-                <Review />
+                {advertCommentsLoading
+                  ? 'Комментарии загружаются, пожалуйста подождите'
+                  : advertComments.length > 0
+                  ? advertComments.map((comment) => {
+                      return (
+                        <Review
+                          key={comment.id}
+                          imgUser={`${host}${comment.author.avatar}`}
+                          nameUser={comment.author.name}
+                          dateComment={comment.created_on}
+                          textComment={comment.text}
+                        />
+                      )
+                    })
+                  : 'Комментариев нет'}
               </S.ModalReviews>
             </S.ModalScroll>
           </S.ModalContent>
@@ -43,22 +58,22 @@ export const ReviewsAdvert = ({ closeWindow }) => {
   )
 }
 
-export const Review = () => {
+export const Review = ({ imgUser, nameUser, dateComment, textComment }) => {
   return (
     <S.Review>
       <S.ReviewItem>
         <S.ReviewItemLeft>
           <S.ReviewItemLeftImgBlock>
-            <S.ReviewItemLeftImage />
+            <S.ReviewItemLeftImage src={imgUser} />
           </S.ReviewItemLeftImgBlock>
         </S.ReviewItemLeft>
         <S.ReviewItemRight>
           <S.ReviewItemRightName>
-            Олег
-            <S.ReviewItemRightNameSpan>14 августа</S.ReviewItemRightNameSpan>
+            {nameUser}
+            <S.ReviewItemRightNameSpan>{dateComment}</S.ReviewItemRightNameSpan>
           </S.ReviewItemRightName>
           <S.ReviewItemRightTitle>Комментарий</S.ReviewItemRightTitle>
-          <S.ReviewItemRightText>Lorem ipsum</S.ReviewItemRightText>
+          <S.ReviewItemRightText>{textComment}</S.ReviewItemRightText>
         </S.ReviewItemRight>
       </S.ReviewItem>
     </S.Review>

@@ -20,3 +20,5 @@ export const formatDate = (currentDate) => {
 
   return formattedDate
 }
+
+export const host = 'http://127.0.0.1:8090/'
