@@ -3,7 +3,10 @@ import { AdvertImageBar } from '../../components/AdvertImageBar/AdvertImageBar'
 import * as S from './style'
 import { ReviewsAdvert } from '../../components/ModalsAdvert/ReviewsAdvert'
 import { useParams } from 'react-router-dom'
-import { useGetCurrentAdvertQuery } from '../../services/advert'
+import {
+  useGetCommentsAdvertQuery,
+  useGetCurrentAdvertQuery,
+} from '../../services/advert'
 import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
 import { formatDate } from '../../helper'
 
@@ -14,6 +17,7 @@ export const AdvertPage = () => {
 
   const { data: currentAdvertData, isLoading: currentAdvertLoading } =
     useGetCurrentAdvertQuery(params.id)
+  const { data: advertComments } = useGetCommentsAdvertQuery(params.id)
 
   console.log(currentAdvertData)
 
@@ -30,7 +34,7 @@ export const AdvertPage = () => {
   return (
     <>
       {openReviews ? (
-        <ReviewsAdvert closeWindow={closeWindow} />
+        <ReviewsAdvert closeWindow={closeWindow} params={params} />
       ) : (
         <>
           <S.MainContainer>
@@ -96,7 +100,7 @@ export const AdvertPage = () => {
                             $color="#009EE4"
                             onClick={handleOpenReview}
                           >
-                            23 отзыва
+                            {advertComments?.length} отзыва
                           </S.AdvertRightBlockInfoItem>
                         </S.AdvertRightBlockInfoLink>
                       </S.AdvertRightBlockInfo>

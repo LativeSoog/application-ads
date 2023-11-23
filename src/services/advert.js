@@ -73,6 +73,28 @@ export const advertApi = createApi({
       }),
       providesTags: (result = []) => [DATA_TAG],
     }),
+
+    getCommentsAdvert: build.query({
+      query: (id) => ({
+        url: `ads/${id}/comments`,
+        method: 'GET',
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
+    addCommentAdvert: build.mutation({
+      query: ({ id, textAddComment, token }) => ({
+        url: `ads/${id}/comments`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: {
+          text: textAddComment,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
   }),
 })
 
@@ -82,4 +104,6 @@ export const {
   useGetCurrentAdvertQuery,
   useAddTextAdvertMutation,
   useAddImgAdvertMutation,
+  useGetCommentsAdvertQuery,
+  useAddCommentAdvertMutation,
 } = advertApi
