@@ -1,9 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as S from './AddAdvertStyle'
 import { useSelector } from 'react-redux'
 import { currentUser } from '../../store/selectors/users'
 import { useUpdateUserTokenMutation } from '../../services/user'
-import { useAddTextAdvertMutation } from '../../services/advert'
+import {
+  useAddImgAdvertMutation,
+  useAddTextAdvertMutation,
+} from '../../services/advert'
 
 export const AddAdvert = ({ closeWindow }) => {
   const user = useSelector(currentUser)
@@ -18,6 +21,7 @@ export const AddAdvert = ({ closeWindow }) => {
 
   const [updateUserToken] = useUpdateUserTokenMutation()
   const [addTextAdvert] = useAddTextAdvertMutation()
+  // const [addImgAdvert] = useAddImgAdvertMutation()
 
   useEffect(() => {
     const getUpdateUserToken = async () => {
@@ -79,6 +83,31 @@ export const AddAdvert = ({ closeWindow }) => {
     }
   }
 
+  //Функционал добавления объявления с фото будет реализован позже
+  // const postImgAdvert = async () => {
+  //   const file = refFiles?.current.files[0]
+  //   const formData = new FormData()
+  //   formData.append('file', file)
+
+  //   try {
+  //     const responsePostAdvert = addImgAdvert({
+  //       titleAdvert,
+  //       descriptionAdvert,
+  //       priceAdvert,
+  //       images: formData,
+  //       token: token.access_token,
+  //     })
+
+  //     if (responsePostAdvert.error) {
+  //       console.log(responsePostAdvert.error)
+  //     }
+
+  //     console.log(responsePostAdvert)
+  //   } catch (error) {
+  //     console.log(error.message)
+  //   }
+  // }
+
   return (
     <S.Wrapper>
       <S.ContainerBg>
@@ -135,6 +164,7 @@ export const AddAdvert = ({ closeWindow }) => {
                       <AddAdvertPhoto />
                       <AddAdvertPhoto />
                     </S.ModalFormNewAdvBarImg>
+                    {/* <S.ModalFormNewAdvPhotoUpload type="file" /> */}
                   </S.ModalFormNewAdvBlock>
 
                   <S.ModalFormNewAdvBlockPrice>
@@ -150,7 +180,7 @@ export const AddAdvert = ({ closeWindow }) => {
                     <S.ModalFormNewAdvInputPriceCover />
                   </S.ModalFormNewAdvBlockPrice>
 
-                  <S.Changed the style of the button element onClick={postTextAdvert}>
+                  <S.ModalFormNewAdvBtn onClick={postTextAdvert}>
                     Опубликовать
                   </S.ModalFormNewAdvBtn>
                 </S.ModalFormNewAdv>

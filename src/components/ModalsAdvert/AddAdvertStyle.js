@@ -211,6 +211,8 @@ export const ModalFormNewAdvImgBlockImage = styled.img`
   z-index: 2;
 `
 
+export const ModalFormNewAdvPhotoUpload = styled.input``
+
 export const ModalFormNewAdvImgBlockImageCover = styled.div`
   position: absolute;
   width: 100%;
