@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CardItem } from '../../components/CardItem/CardItem'
 import * as S from './style'
 import { currentUser } from '../../store/selectors/users'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   useEditCurrentUserMutation,
   useUpdateUserTokenMutation,
@@ -16,6 +16,7 @@ import {
 export const ProfilePage = () => {
   const dispatch = useDispatch()
   const user = useSelector(currentUser)
+  const refFile = useRef(false)
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem('token_user')),
   )
@@ -24,12 +25,14 @@ export const ProfilePage = () => {
   const [userSurname, setSurnameUser] = useState(user.surname)
   const [userCity, setCityUser] = useState(user.city)
   const [userPhone, setPhoneUser] = useState(user.phone)
-  const [myAdverts, setMyAdverts] = useState([])
+  const [isUploadPhoto, setIsUploadPhoto] = useState(false)
 
   const [updateUserToken] = useUpdateUserTokenMutation()
   const [editUserProfile] = useEditCurrentUserMutation()
   const { data: advertsCurrentUser, isLoading: loadingAdvertsUser } =
     useGetAdvertsCurrentUserQuery(token.access_token)
+
+  console.log(refFile)
 
   useEffect(() => {
     const getUpdateUserToken = async () => {
@@ -118,9 +121,17 @@ export const ProfilePage = () => {
                     <S.ProfileSettingsImgImage />
                   </S.ProfileLink>
                 </S.ProfileSettingsImg>
-                <S.ProfileSettingsChangePhoto>
+                <S.ProfileSettingsChangePhoto
+                  onClick={() => setIsUploadPhoto(!isUploadPhoto)}
+                >
                   Заменить
                 </S.ProfileSettingsChangePhoto>
+                <S.ProfileSettingsPhotoBlock $uploadPhoto={isUploadPhoto}>
+                  <S.ProfileSettingsPhotoUpload type="file" ref={refFile} />
+                  <S.ProfileSettingsPhotoUploadButton>
+                    Загрузить
+                  </S.ProfileSettingsPhotoUploadButton>
+                </S.ProfileSettingsPhotoBlock>
               </S.ProfileSettingsLeft>
 
               <S.ProfileSettingsRight>
@@ -184,7 +195,7 @@ export const ProfilePage = () => {
         <S.ContentCards>
           {loadingAdvertsUser
             ? 'Объявления пользователя загружаются, пожалуйста подождите'
-            : advertsCurrentUser.length > 0
+            : advertsCurrentUser?.length > 0
             ? advertsCurrentUser.map((advert) => {
                 return (
                   <CardItem

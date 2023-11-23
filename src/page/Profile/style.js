@@ -124,13 +124,37 @@ export const ProfileSettingsImgImage = styled.img`
   object-fit: cover;
 `
 
-export const ProfileSettingsChangePhoto = styled(Link)`
+export const ProfileSettingsChangePhoto = styled.div`
   margin-top: 10px;
   margin-bottom: 30px;
   text-decoration: none;
   font-size: 16px;
   line-height: 24px;
   color: #009ee4;
+  cursor: pointer;
+`
+export const ProfileSettingsPhotoBlock = styled.div`
+  display: ${(props) => (props.$uploadPhoto ? 'flex' : 'none')};
+  flex-direction: column;
+  align-items: center;
+`
+
+export const ProfileSettingsPhotoUpload = styled.input``
+
+export const ProfileSettingsPhotoUploadButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  color: #ffffff;
+  width: 110px;
+  height: 30px;
+  margin: 10px 7px 0;
+  background-color: #009ee4;
+  border-radius: 6px;
+  border: 1px solid #009ee4;
+  cursor: pointer;
 `
 
 export const ProfileSettingsRight = styled.div`
