@@ -34,6 +34,45 @@ export const advertApi = createApi({
       }),
       providesTags: (result = []) => [DATA_TAG],
     }),
+
+    addTextAdvert: build.mutation({
+      query: ({ titleAdvert, descriptionAdvert, priceAdvert, token }) => ({
+        url: 'adstext/',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: {
+          title: titleAdvert,
+          description: descriptionAdvert,
+          price: priceAdvert,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
+    addImgAdvert: build.mutation({
+      query: ({
+        titleAdvert,
+        descriptionAdvert,
+        priceAdvert,
+        images,
+        token,
+      }) => ({
+        url: 'ads/',
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: {
+          title: titleAdvert,
+          description: descriptionAdvert,
+          price: priceAdvert,
+          files: images,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
   }),
 })
 
@@ -41,4 +80,6 @@ export const {
   useGetAllAdvertsQuery,
   useGetAdvertsCurrentUserQuery,
   useGetCurrentAdvertQuery,
+  useAddTextAdvertMutation,
+  useAddImgAdvertMutation,
 } = advertApi
