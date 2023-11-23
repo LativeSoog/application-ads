@@ -203,7 +203,10 @@ export const ModalFormNewRewArea = styled.textarea`
   }
 `
 
-export const ModalFormNewRewBtn = styled.button`
+export const ModalFormNewRewBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 181px;
   height: 50px;
   background: #d9d9d9;
