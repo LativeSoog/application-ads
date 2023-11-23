@@ -12,8 +12,11 @@ export const ReviewsAdvert = ({ closeWindow, params }) => {
     JSON.parse(localStorage.getItem('token_user')),
   )
   const [textAddComment, setTextAddComment] = useState(false)
-  const { data: advertComments, isLoading: advertCommentsLoading } =
-    useGetCommentsAdvertQuery(params.id)
+  const {
+    data: advertComments,
+    isLoading: advertCommentsLoading,
+    refetch: advertCommentsRefetch,
+  } = useGetCommentsAdvertQuery(params.id)
 
   const [updateUserToken] = useUpdateUserTokenMutation()
   const [addComment] = useAddCommentAdvertMutation()
@@ -57,6 +60,10 @@ export const ReviewsAdvert = ({ closeWindow, params }) => {
         id: params.id,
         token: token.access_token,
       })
+
+      if (responseAddComment.data) {
+        await advertCommentsRefetch()
+      }
 
       console.log(responseAddComment)
     } catch (error) {}
