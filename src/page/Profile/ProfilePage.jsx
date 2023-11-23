@@ -19,6 +19,7 @@ export const ProfilePage = () => {
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem('token_user')),
   )
+  const [errorMessage, setErrorMessage] = useState('')
   const [userName, setNameUser] = useState(user.name)
   const [userSurname, setSurnameUser] = useState(user.surname)
   const [userCity, setCityUser] = useState(user.city)
@@ -27,39 +28,42 @@ export const ProfilePage = () => {
 
   const [updateUserToken] = useUpdateUserTokenMutation()
   const [editUserProfile] = useEditCurrentUserMutation()
-  const { data: allAdvertsData, isLoading: loadingAdverts } =
-    useGetAllAdvertsQuery()
+  const { data: advertsCurrentUser, isLoading: loadingAdvertsUser } =
+    useGetAdvertsCurrentUserQuery(token.access_token)
 
-  const saveButtonChanges = () => {
-    getNewUserToken()
-    updateUserProfileData()
-  }
+  useEffect(() => {
+    const getUpdateUserToken = async () => {
+      try {
+        const responseNewToken = await updateUserToken({
+          accessToken: token.access_token,
+          refreshToken: token.refresh_token,
+        })
 
-  const getNewUserToken = async () => {
-    try {
-      const responseNewToken = await updateUserToken({
-        accessToken: token.access_token,
-        refreshToken: token.refresh_token,
-      })
+        if (responseNewToken.data) {
+          localStorage.setItem(
+            'token_user',
+            JSON.stringify(responseNewToken.data),
+          )
+          setToken(responseNewToken.data)
+        }
 
-      if (responseNewToken.data) {
-        localStorage.setItem(
-          'token_user',
-          JSON.stringify(responseNewToken.data),
-        )
-        setToken(responseNewToken.data)
+        if (responseNewToken.error) {
+          switch (responseNewToken.error.status) {
+            case 401:
+              throw new Error(
+                'Произошла ошибка. Пожалуйста, авторизируйтесь заново',
+              )
+            //localStorage.clear()
+          }
+        }
+      } catch (error) {
+        setErrorMessage(error.message)
       }
-
-      if (responseNewToken.error) {
-        throw new Error(responseNewToken.error)
-      }
-    } catch (error) {
-      console.log(error)
-      localStorage.clear()
     }
-  }
+    getUpdateUserToken()
+  }, [])
 
-  const updateUserProfileData = async () => {
+  const saveProfileChanges = async () => {
     try {
       const responseUpdateData = await editUserProfile({
         userName,
@@ -73,19 +77,20 @@ export const ProfilePage = () => {
         dispatch(setUserData(responseUpdateData.data))
         localStorage.setItem('user', JSON.stringify(responseUpdateData.data))
       }
+
+      if (responseUpdateData.error) {
+        switch (responseUpdateData.error.status) {
+          case 401:
+            throw new Error(
+              'Превышено время ожидания. Пожалуйста, авторизируйтесь заново и повторите попытку',
+            )
+          //localStorage.clear()
+        }
+      }
     } catch (error) {
-      console.log(error)
+      setErrorMessage(error.message)
     }
   }
-
-  useEffect(() => {
-    if (allAdvertsData) {
-      const findUserAdverts = allAdvertsData.filter(
-        (userAdverts) => String(userAdverts.user_id) === user.id,
-      )
-      setMyAdverts(findUserAdverts)
-    }
-  }, [allAdvertsData])
 
   return (
     <S.MainContainer>
@@ -163,7 +168,7 @@ export const ProfilePage = () => {
                       onChange={(e) => setPhoneUser(e.target.value)}
                     />
                   </S.ProfileSettingsDiv>
-                  <S.ProfileSettingsBtn onClick={saveButtonChanges}>
+                  <S.ProfileSettingsBtn onClick={saveProfileChanges}>
                     Сохранить
                   </S.ProfileSettingsBtn>
                 </S.ProfileSettingsForm>
@@ -177,8 +182,10 @@ export const ProfilePage = () => {
 
       <S.MainContent>
         <S.ContentCards>
-          {myAdverts.length > 0
-            ? myAdverts.map((advert) => {
+          {loadingAdvertsUser
+            ? 'Объявления пользователя загружаются, пожалуйста подождите'
+            : advertsCurrentUser.length > 0
+            ? advertsCurrentUser.map((advert) => {
                 return (
                   <CardItem
                     key={advert.id}
@@ -191,7 +198,7 @@ export const ProfilePage = () => {
                   />
                 )
               })
-            : 'Товары не найдены'}
+            : 'Объявления не найдены'}
         </S.ContentCards>
       </S.MainContent>
     </S.MainContainer>
