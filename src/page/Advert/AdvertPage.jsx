@@ -8,7 +8,7 @@ import {
   useGetCurrentAdvertQuery,
 } from '../../services/advert'
 import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
-import { formatDate } from '../../helper'
+import { formatDateSells } from '../../helper'
 
 export const AdvertPage = () => {
   const host = 'http://127.0.0.1:8090/'
@@ -134,7 +134,7 @@ export const AdvertPage = () => {
                           </S.MainMenuFormBtnLink>
                           <S.AdvertRightBlockAuthorContactAbout>
                             Продает товары с{' '}
-                            {formatDate(currentAdvertData.user.sells_from)}
+                            {formatDateSells(currentAdvertData.user.sells_from)}
                           </S.AdvertRightBlockAuthorContactAbout>
                         </S.AdvertRightBlockAuthorContact>
                       </S.AdvertRightBlockAuthor>

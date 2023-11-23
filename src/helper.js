@@ -12,7 +12,7 @@ const monthNames = [
   'декабря',
 ]
 
-export const formatDate = (currentDate) => {
+export const formatDateSells = (currentDate) => {
   const date = new Date(currentDate)
   const monthIndex = date.getMonth()
   const dateYear = date.getFullYear()
