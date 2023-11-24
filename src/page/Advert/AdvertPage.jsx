@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AdvertImageBar } from '../../components/AdvertImageBar/AdvertImageBar'
 import * as S from './style'
 import { ReviewsAdvert } from '../../components/ModalsAdvert/ReviewsAdvert'
 import { useParams } from 'react-router-dom'
 import {
+  useDeleteAdvertMutation,
   useGetCommentsAdvertQuery,
   useGetCurrentAdvertQuery,
 } from '../../services/advert'
@@ -11,17 +12,65 @@ import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
 import { formatDateAndTime, formatDateSells } from '../../helper'
 import { useSelector } from 'react-redux'
 import { currentUser } from '../../store/selectors/users'
+import { useUpdateUserTokenMutation } from '../../services/user'
 
 export const AdvertPage = () => {
   const host = 'http://127.0.0.1:8090/'
   const params = useParams()
   const user = useSelector(currentUser)
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem('token_user')),
+  )
   const [openReviews, setOpenReviews] = useState(false)
   const [openEditAdvert, setOpenEditAdvert] = useState(false)
 
+  const [deleteAdvert] = useDeleteAdvertMutation()
+  const [updateUserToken] = useUpdateUserTokenMutation()
   const { data: currentAdvertData, isLoading: currentAdvertLoading } =
     useGetCurrentAdvertQuery(params.id)
   const { data: advertComments } = useGetCommentsAdvertQuery(params.id)
+
+  useEffect(() => {
+    const getUpdateUserToken = async () => {
+      try {
+        const responseNewToken = await updateUserToken({
+          accessToken: token.access_token,
+          refreshToken: token.refresh_token,
+        })
+
+        if (responseNewToken.data) {
+          localStorage.setItem(
+            'token_user',
+            JSON.stringify(responseNewToken.data),
+          )
+          setToken(responseNewToken.data)
+        }
+
+        if (responseNewToken.error) {
+          switch (responseNewToken.error.status) {
+            case 401:
+              throw new Error(
+                ' Произошла ошибка. Пожалуйста, авторизируйтесь заново',
+              )
+          }
+        }
+      } catch (error) {
+        setErrorMessage(error.message)
+      }
+    }
+    getUpdateUserToken()
+  }, [])
+
+  const handleDeleteAdvert = async () => {
+    try {
+      const responseDelAdvert = await deleteAdvert({
+        id: params.id,
+        token: token.access_token,
+      })
+
+      console.log(responseDelAdvert)
+    } catch (error) {}
+  }
 
   const handleOpenReview = () => {
     setOpenReviews(true)
@@ -124,7 +173,10 @@ export const AdvertPage = () => {
                           >
                             Редактировать
                           </S.AdvertRightButton>
-                          <S.AdvertRightButton $width="225px">
+                          <S.AdvertRightButton
+                            $width="225px"
+                            onClick={handleDeleteAdvert}
+                          >
                             Снять с публикации
                           </S.AdvertRightButton>
                         </S.AdvertRightButtonBlock>
