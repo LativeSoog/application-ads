@@ -74,9 +74,25 @@ export const advertApi = createApi({
       providesTags: (result = []) => [DATA_TAG],
     }),
 
+    editAdvert: build.mutation({
+      query: ({ id, token, titleAdvert, descriptionAdvert, priceAdvert }) => ({
+        url: `ads/${id}`,
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: {
+          title: titleAdvert,
+          description: descriptionAdvert,
+          price: priceAdvert,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
     deleteAdvert: build.mutation({
       query: ({ id, token }) => ({
-        url: `/ads/${id}`,
+        url: `ads/${id}`,
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -115,6 +131,7 @@ export const {
   useGetCurrentAdvertQuery,
   useAddTextAdvertMutation,
   useAddImgAdvertMutation,
+  useEditAdvertMutation,
   useDeleteAdvertMutation,
   useGetCommentsAdvertQuery,
   useAddCommentAdvertMutation,

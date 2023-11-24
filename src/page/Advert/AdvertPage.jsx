@@ -13,6 +13,7 @@ import { formatDateAndTime, formatDateSells } from '../../helper'
 import { useSelector } from 'react-redux'
 import { currentUser } from '../../store/selectors/users'
 import { useUpdateUserTokenMutation } from '../../services/user'
+import { EditAdvert } from '../../components/ModalsAdvert/EditAdvert'
 
 export const AdvertPage = () => {
   const host = 'http://127.0.0.1:8090/'
@@ -21,8 +22,8 @@ export const AdvertPage = () => {
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem('token_user')),
   )
-  const [openReviews, setOpenReviews] = useState(false)
-  const [openEditAdvert, setOpenEditAdvert] = useState(false)
+  const [modalWindowReview, setModalWindowReview] = useState(false)
+  const [modalWindowEditAdvert, setModalWindowEditAdvert] = useState(false)
 
   const [deleteAdvert] = useDeleteAdvertMutation()
   const [updateUserToken] = useUpdateUserTokenMutation()
@@ -73,22 +74,39 @@ export const AdvertPage = () => {
   }
 
   const handleOpenReview = () => {
-    setOpenReviews(true)
+    setModalWindowReview(true)
     document.body.style.overflow = 'hidden'
   }
 
   const handleOpenEdit = () => {
-    setOpenEditAdvert(true)
+    setModalWindowEditAdvert(true)
   }
 
   const closeWindow = () => {
-    setOpenReviews(false)
-    document.body.style.overflow = 'unset'
+    if (modalWindowReview) {
+      setModalWindowReview(false)
+      document.body.style.overflow = 'unset'
+    }
+
+    if (modalWindowEditAdvert) {
+      setModalWindowEditAdvert(false)
+      document.body.style.overflow = 'unset'
+    }
   }
 
   return (
     <>
-      {openReviews ? (
+      {modalWindowEditAdvert && (
+        <EditAdvert
+          closeWindow={closeWindow}
+          token={token}
+          id={params.id}
+          currentTitle={currentAdvertData.title}
+          currentDescription={currentAdvertData.description}
+          currentPrice={currentAdvertData.price}
+        />
+      )}
+      {modalWindowReview ? (
         <ReviewsAdvert closeWindow={closeWindow} params={params} />
       ) : (
         <>

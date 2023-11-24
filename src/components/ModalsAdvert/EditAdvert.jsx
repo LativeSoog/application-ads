@@ -1,12 +1,40 @@
+import { useState } from 'react'
 import * as S from './EditAdvertStyle'
+import { useEditAdvertMutation } from '../../services/advert'
 
-export const EditAdvert = ({ closeWindow }) => {
+export const EditAdvert = ({
+  closeWindow,
+  token,
+  id,
+  currentTitle,
+  currentDescription,
+  currentPrice,
+}) => {
+  const [titleAdvert, setTitleAdvert] = useState(currentTitle)
+  const [descriptionAdvert, setDescriptionAdvert] = useState(currentDescription)
+  const [priceAdvert, setPriceAdvert] = useState(currentPrice)
+  const [editAdvert] = useEditAdvertMutation()
+
+  const handleAdvertEdit = async () => {
+    try {
+      const responseAdvertEdit = await editAdvert({
+        id,
+        token: token.access_token,
+        titleAdvert,
+        descriptionAdvert,
+        priceAdvert,
+      })
+
+      console.log(responseAdvertEdit)
+    } catch (error) {}
+  }
+
   return (
     <S.Wrapper>
       <S.ContainerBg>
         <S.ModalBlock>
           <S.ModalContent>
-            <S.ModalContentTitle>Редактировать обхявление</S.ModalContentTitle>
+            <S.ModalContentTitle>Редактировать объявление</S.ModalContentTitle>
             <S.ModalContentBtnClose onClick={closeWindow}>
               <S.ModalContentBtnCloseLine />
             </S.ModalContentBtnClose>
@@ -20,6 +48,10 @@ export const EditAdvert = ({ closeWindow }) => {
                   type="text"
                   id="formName"
                   placeholder="Введите название"
+                  value={titleAdvert}
+                  onChange={(e) => {
+                    setTitleAdvert(e.target.value)
+                  }}
                 />
               </S.ModalFormEditAdvBlock>
 
@@ -32,6 +64,10 @@ export const EditAdvert = ({ closeWindow }) => {
                   cols="auto"
                   rows="10"
                   placeholder="Введите описание"
+                  value={descriptionAdvert}
+                  onChange={(e) => {
+                    setDescriptionAdvert(e.target.value)
+                  }}
                 />
               </S.ModalFormEditAdvBlock>
 
@@ -59,11 +95,17 @@ export const EditAdvert = ({ closeWindow }) => {
                   type="text"
                   name="price"
                   id="formPrice"
+                  value={priceAdvert}
+                  onChange={(e) => {
+                    setPriceAdvert(e.target.value)
+                  }}
                 />
                 <S.ModalFormEditAdvInputPriceCover />
               </S.ModalFormEditAdvBlockPrice>
 
-              <S.ModalFormEditAdvBtn>Опубликовать</S.ModalFormEditAdvBtn>
+              <S.ModalFormEditAdvBtn onClick={handleAdvertEdit}>
+                Сохранить
+              </S.ModalFormEditAdvBtn>
             </S.ModalFormEditAdv>
           </S.ModalContent>
         </S.ModalBlock>

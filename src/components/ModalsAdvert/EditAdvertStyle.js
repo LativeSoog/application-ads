@@ -289,7 +289,10 @@ export const ModalFormEditAdvInputPriceCover = styled.div`
   }
 `
 
-export const ModalFormEditAdvBtn = styled.button`
+export const ModalFormEditAdvBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 10px;
   width: 181px;
   height: 50px;
@@ -299,4 +302,5 @@ export const ModalFormEditAdvBtn = styled.button`
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
+  cursor: pointer;
 `
