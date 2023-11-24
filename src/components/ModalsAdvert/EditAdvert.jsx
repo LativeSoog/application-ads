@@ -88,11 +88,16 @@ export const EditAdvert = ({
                 <S.ModalFormEditAdvBarImg>
                   {imagesAdvert.map((image) => {
                     return (
-                      <AddAdvertPhoto key={image.id} link={host + image.url} />
+                      <AddAdvertPhoto
+                        mode="viewPhoto"
+                        key={image.id}
+                        link={host + image.url}
+                      />
                     )
                   })}
                   {imagesAdvert.length < 5 && (
                     <AddAdvertPhoto
+                      mode="uploadPhoto"
                       id={id}
                       token={token}
                       advertDataRefetch={advertDataRefetch}
@@ -131,6 +136,7 @@ export const EditAdvert = ({
 }
 
 export const AddAdvertPhoto = ({
+  mode,
   id,
   token,
   link,
@@ -164,19 +170,22 @@ export const AddAdvertPhoto = ({
     <>
       <S.FileInput
         type="file"
+        accept="image/*"
         ref={fileImageUploadRef}
         onChange={handleUploadImage}
       />
 
-      {imagesAdvert?.length < 5 ? (
-        <S.ModalFormEditAdvImgBlock
-          onClick={() => fileImageUploadRef.current.click()}
-        >
+      {mode === 'viewPhoto' && (
+        <S.ModalFormEditAdvImgBlock>
           <S.ModalFormEditAdvImgBlockImage src={link} />
           <S.ModalFormEditAdvImgBlockImageCover />
         </S.ModalFormEditAdvImgBlock>
-      ) : (
-        <S.ModalFormEditAdvImgBlock>
+      )}
+
+      {mode === 'uploadPhoto' && imagesAdvert.length < 5 && (
+        <S.ModalFormEditAdvImgBlock
+          onClick={() => fileImageUploadRef.current.click()}
+        >
           <S.ModalFormEditAdvImgBlockImage src={link} />
           <S.ModalFormEditAdvImgBlockImageCover />
         </S.ModalFormEditAdvImgBlock>
