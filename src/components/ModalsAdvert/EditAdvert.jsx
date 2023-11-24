@@ -1,6 +1,10 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import * as S from './EditAdvertStyle'
-import { useEditAdvertMutation } from '../../services/advert'
+import {
+  useEditAdvertMutation,
+  useUploadPhotoAdvertMutation,
+} from '../../services/advert'
+import { host } from '../../helper'
 
 export const EditAdvert = ({
   closeWindow,
@@ -9,10 +13,13 @@ export const EditAdvert = ({
   currentTitle,
   currentDescription,
   currentPrice,
+  currentImages,
+  advertDataRefetch,
 }) => {
   const [titleAdvert, setTitleAdvert] = useState(currentTitle)
   const [descriptionAdvert, setDescriptionAdvert] = useState(currentDescription)
   const [priceAdvert, setPriceAdvert] = useState(currentPrice)
+  const [imagesAdvert, setImagesAdvert] = useState(currentImages)
   const [editAdvert] = useEditAdvertMutation()
 
   const handleAdvertEdit = async () => {
@@ -79,11 +86,20 @@ export const EditAdvert = ({
                   </S.ModalEditAdvPhotoSpan>
                 </S.ModalFormEditAdvPhoto>
                 <S.ModalFormEditAdvBarImg>
-                  <AddAdvertPhoto />
-                  <AddAdvertPhoto />
-                  <AddAdvertPhoto />
-                  <AddAdvertPhoto />
-                  <AddAdvertPhoto />
+                  {imagesAdvert.map((image) => {
+                    return (
+                      <AddAdvertPhoto key={image.id} link={host + image.url} />
+                    )
+                  })}
+                  {imagesAdvert.length < 5 && (
+                    <AddAdvertPhoto
+                      id={id}
+                      token={token}
+                      advertDataRefetch={advertDataRefetch}
+                      setImagesAdvert={setImagesAdvert}
+                      imagesAdvert={imagesAdvert}
+                    />
+                  )}
                 </S.ModalFormEditAdvBarImg>
               </S.ModalFormEditAdvBlock>
 
@@ -114,11 +130,57 @@ export const EditAdvert = ({
   )
 }
 
-export const AddAdvertPhoto = () => {
+export const AddAdvertPhoto = ({
+  id,
+  token,
+  link,
+  advertDataRefetch,
+  imagesAdvert,
+  setImagesAdvert,
+}) => {
+  const [uploadImageAdvert] = useUploadPhotoAdvertMutation()
+  const fileImageUploadRef = useRef(false)
+
+  const handleUploadImage = async () => {
+    const image = fileImageUploadRef?.current.files[0]
+    const formData = new FormData()
+    formData.append('file', image)
+
+    try {
+      const responseUploadPhoto = await uploadImageAdvert({
+        id,
+        token: token.access_token,
+        image: formData,
+      })
+
+      if (responseUploadPhoto.data) {
+        await advertDataRefetch()
+        setImagesAdvert(responseUploadPhoto.data.images)
+      }
+    } catch (error) {}
+  }
+
   return (
-    <S.ModalFormEditAdvImgBlock>
-      <S.ModalFormEditAdvImgBlockImage src="" />
-      <S.ModalFormEditAdvImgBlockImageCover />
-    </S.ModalFormEditAdvImgBlock>
+    <>
+      <S.FileInput
+        type="file"
+        ref={fileImageUploadRef}
+        onChange={handleUploadImage}
+      />
+
+      {imagesAdvert?.length < 5 ? (
+        <S.ModalFormEditAdvImgBlock
+          onClick={() => fileImageUploadRef.current.click()}
+        >
+          <S.ModalFormEditAdvImgBlockImage src={link} />
+          <S.ModalFormEditAdvImgBlockImageCover />
+        </S.ModalFormEditAdvImgBlock>
+      ) : (
+        <S.ModalFormEditAdvImgBlock>
+          <S.ModalFormEditAdvImgBlockImage src={link} />
+          <S.ModalFormEditAdvImgBlockImageCover />
+        </S.ModalFormEditAdvImgBlock>
+      )}
+    </>
   )
 }

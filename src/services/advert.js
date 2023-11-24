@@ -90,6 +90,18 @@ export const advertApi = createApi({
       providesTags: (result = []) => [DATA_TAG],
     }),
 
+    uploadPhotoAdvert: build.mutation({
+      query: ({ id, token, image }) => ({
+        url: `ads/${id}/image`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: image,
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
     deleteAdvert: build.mutation({
       query: ({ id, token }) => ({
         url: `ads/${id}`,
@@ -132,6 +144,7 @@ export const {
   useAddTextAdvertMutation,
   useAddImgAdvertMutation,
   useEditAdvertMutation,
+  useUploadPhotoAdvertMutation,
   useDeleteAdvertMutation,
   useGetCommentsAdvertQuery,
   useAddCommentAdvertMutation,

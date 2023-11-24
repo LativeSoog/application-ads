@@ -304,3 +304,7 @@ export const ModalFormEditAdvBtn = styled.div`
   color: #ffffff;
   cursor: pointer;
 `
+
+export const FileInput = styled.input`
+  display: none;
+`

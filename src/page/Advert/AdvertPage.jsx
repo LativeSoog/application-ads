@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux'
 import { currentUser } from '../../store/selectors/users'
 import { useUpdateUserTokenMutation } from '../../services/user'
 import { EditAdvert } from '../../components/ModalsAdvert/EditAdvert'
+import { current } from '@reduxjs/toolkit'
 
 export const AdvertPage = () => {
   const host = 'http://127.0.0.1:8090/'
@@ -27,8 +28,11 @@ export const AdvertPage = () => {
 
   const [deleteAdvert] = useDeleteAdvertMutation()
   const [updateUserToken] = useUpdateUserTokenMutation()
-  const { data: currentAdvertData, isLoading: currentAdvertLoading } =
-    useGetCurrentAdvertQuery(params.id)
+  const {
+    data: currentAdvertData,
+    isLoading: currentAdvertLoading,
+    refetch: currentAdvertDataRefetch,
+  } = useGetCurrentAdvertQuery(params.id)
   const { data: advertComments } = useGetCommentsAdvertQuery(params.id)
 
   useEffect(() => {
@@ -104,6 +108,8 @@ export const AdvertPage = () => {
           currentTitle={currentAdvertData.title}
           currentDescription={currentAdvertData.description}
           currentPrice={currentAdvertData.price}
+          currentImages={currentAdvertData.images}
+          advertDataRefetch={currentAdvertDataRefetch}
         />
       )}
       {modalWindowReview ? (
