@@ -244,6 +244,21 @@ export const ModalFormEditAdvImgBlockImageCover = styled.div`
   }
 `
 
+export const ModalFormEditAdvImgBlockDel = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  color: #0080C1;
+  opacity: 0;
+  cursor: pointer;
+
+  ${ModalFormEditAdvImgBlock}:hover & {
+    opacity: 1;
+  }
+`
+
 export const ModalFormEditAdvBlockPrice = styled(ModalFormEditAdvBlock)`
   position: relative;
 `

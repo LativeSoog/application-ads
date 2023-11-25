@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import * as S from './EditAdvertStyle'
 import {
+  useDeletePhotoAdvertMutation,
   useEditAdvertMutation,
   useUploadPhotoAdvertMutation,
 } from '../../services/advert'
@@ -90,8 +91,14 @@ export const EditAdvert = ({
                     return (
                       <AddAdvertPhoto
                         mode="viewPhoto"
+                        id={id}
+                        token={token}
+                        advertDataRefetch={advertDataRefetch}
+                        setImagesAdvert={setImagesAdvert}
                         key={image.id}
                         link={host + image.url}
+                        imageId={image.id}
+                        imageUrl={image.url}
                       />
                     )
                   })}
@@ -140,11 +147,14 @@ export const AddAdvertPhoto = ({
   id,
   token,
   link,
+  imageId,
+  imageUrl,
   advertDataRefetch,
   imagesAdvert,
   setImagesAdvert,
 }) => {
   const [uploadImageAdvert] = useUploadPhotoAdvertMutation()
+  const [deleteImageAdvert] = useDeletePhotoAdvertMutation()
   const fileImageUploadRef = useRef(false)
 
   const handleUploadImage = async () => {
@@ -153,15 +163,30 @@ export const AddAdvertPhoto = ({
     formData.append('file', image)
 
     try {
-      const responseUploadPhoto = await uploadImageAdvert({
+      const responseUploadImage = await uploadImageAdvert({
         id,
         token: token.access_token,
         image: formData,
       })
 
-      if (responseUploadPhoto.data) {
+      if (responseUploadImage.data) {
         await advertDataRefetch()
-        setImagesAdvert(responseUploadPhoto.data.images)
+        setImagesAdvert(responseUploadImage.data.images)
+      }
+    } catch (error) {}
+  }
+
+  const handleDeleteImage = async () => {
+    try {
+      const responseDeleteImage = await deleteImageAdvert({
+        id,
+        token: token.access_token,
+        imageUrl: imageUrl,
+      })
+
+      if (responseDeleteImage.data) {
+        await advertDataRefetch()
+        setImagesAdvert(responseDeleteImage.data.images)
       }
     } catch (error) {}
   }
@@ -179,6 +204,9 @@ export const AddAdvertPhoto = ({
         <S.ModalFormEditAdvImgBlock>
           <S.ModalFormEditAdvImgBlockImage src={link} />
           <S.ModalFormEditAdvImgBlockImageCover />
+          <S.ModalFormEditAdvImgBlockDel onClick={handleDeleteImage}>
+            ✖
+          </S.ModalFormEditAdvImgBlockDel>
         </S.ModalFormEditAdvImgBlock>
       )}
 
