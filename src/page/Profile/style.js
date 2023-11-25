@@ -2,6 +2,12 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { BtnHoverMixin, BtnRegularMixin } from '../../style/AppStyle'
 
+export const MainWrapper = styled.div`
+  position: relative;
+  height: 90vh;
+  overflow: ${(props) => (props.$isModalChangePassword ? 'hidden' : 'auto')};
+`
+
 export const MainContainer = styled.div`
   max-width: 1178px;
   margin: 0 auto;
@@ -21,7 +27,6 @@ export const MainMenu = styled.div`
   -ms-flex-pack: start;
   justify-content: start;
   padding: 11px 0;
-  width: 100%;
   padding: 31px 10px 64px;
 `
 
