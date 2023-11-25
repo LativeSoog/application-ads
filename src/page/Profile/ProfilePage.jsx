@@ -200,6 +200,12 @@ export const ProfilePage = () => {
                   </S.ProfileSettingsDiv>
 
                   <S.ProfileSettingsDiv>
+                    <S.ProfileSettingsDivBtn>
+                      Сменить пароль
+                    </S.ProfileSettingsDivBtn>
+                  </S.ProfileSettingsDiv>
+
+                  <S.ProfileSettingsDiv>
                     <S.ProfileSettingsDivLabel>
                       Телефон
                     </S.ProfileSettingsDivLabel>

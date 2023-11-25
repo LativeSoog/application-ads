@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { BtnHoverMixin, BtnRegularMixin } from '../../style/AppStyle'
 
 export const MainContainer = styled.div`
   max-width: 1178px;
@@ -186,19 +187,26 @@ export const ProfileSettingsDivInput = styled.input`
   }
 `
 
+export const ProfileSettingsDivBtn = styled.div`
+  ${BtnRegularMixin}
+  width: 300px;
+  height: 44px;
+  margin: 28px 0 0;
+
+  &:hover {
+    ${BtnHoverMixin}
+  }
+`
+
 export const ProfileSettingsBtn = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
+  ${BtnRegularMixin}
   width: 154px;
   height: 50px;
   margin: 10px 7px 0;
-  background-color: #009ee4;
-  border-radius: 6px;
-  border: 1px solid #009ee4;
+
+  &:hover {
+    ${BtnHoverMixin}
+  }
 `
 
 export const MainContent = styled.div`
