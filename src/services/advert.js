@@ -74,6 +74,56 @@ export const advertApi = createApi({
       providesTags: (result = []) => [DATA_TAG],
     }),
 
+    editAdvert: build.mutation({
+      query: ({ id, token, titleAdvert, descriptionAdvert, priceAdvert }) => ({
+        url: `ads/${id}`,
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: {
+          title: titleAdvert,
+          description: descriptionAdvert,
+          price: priceAdvert,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
+    uploadPhotoAdvert: build.mutation({
+      query: ({ id, token, image }) => ({
+        url: `ads/${id}/image`,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: image,
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
+    deletePhotoAdvert: build.mutation({
+      query: ({ id, token, imageUrl }) => ({
+        url: `ads/${id}/image?file_url=${imageUrl}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
+    deleteAdvert: build.mutation({
+      query: ({ id, token }) => ({
+        url: `ads/${id}`,
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
     getCommentsAdvert: build.query({
       query: (id) => ({
         url: `ads/${id}/comments`,
@@ -104,6 +154,10 @@ export const {
   useGetCurrentAdvertQuery,
   useAddTextAdvertMutation,
   useAddImgAdvertMutation,
+  useEditAdvertMutation,
+  useUploadPhotoAdvertMutation,
+  useDeletePhotoAdvertMutation,
+  useDeleteAdvertMutation,
   useGetCommentsAdvertQuery,
   useAddCommentAdvertMutation,
 } = advertApi

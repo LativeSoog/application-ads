@@ -244,6 +244,21 @@ export const ModalFormEditAdvImgBlockImageCover = styled.div`
   }
 `
 
+export const ModalFormEditAdvImgBlockDel = styled.span`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 100px;
+  color: #0080C1;
+  opacity: 0;
+  cursor: pointer;
+
+  ${ModalFormEditAdvImgBlock}:hover & {
+    opacity: 1;
+  }
+`
+
 export const ModalFormEditAdvBlockPrice = styled(ModalFormEditAdvBlock)`
   position: relative;
 `
@@ -289,7 +304,10 @@ export const ModalFormEditAdvInputPriceCover = styled.div`
   }
 `
 
-export const ModalFormEditAdvBtn = styled.button`
+export const ModalFormEditAdvBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 10px;
   width: 181px;
   height: 50px;
@@ -299,4 +317,9 @@ export const ModalFormEditAdvBtn = styled.button`
   font-size: 16px;
   line-height: 24px;
   color: #ffffff;
+  cursor: pointer;
+`
+
+export const FileInput = styled.input`
+  display: none;
 `
