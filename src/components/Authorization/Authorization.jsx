@@ -22,9 +22,8 @@ export const Authorization = ({ closeModalWindow }) => {
   const [userSurname, setUserSurname] = useState('')
   const [userCity, setUserCity] = useState('')
 
-  const [userRegistration, { error: errorUserRegistration }] =
-    useAuthRegistrationMutation()
   const [userLogin] = useAuthLoginMutation()
+  const [userRegistration] = useAuthRegistrationMutation()
   const { data: userData } = useGetCurrentUserQuery(token)
 
   useEffect(() => {
@@ -35,79 +34,86 @@ export const Authorization = ({ closeModalWindow }) => {
     }
   }, [userData])
 
-  const checkAndRegistration = async () => {
+  const handleLogin = async () => {
+    if (!email) {
+      setErrorMessage('Укажите email')
+      return
+    }
+
+    if (!password) {
+      setErrorMessage('Укажите пароль')
+      return
+    }
+
+    try {
+      const response = await userLogin({ email, password })
+
+      if (response.data) {
+        setToken(response.data.access_token)
+        localStorage.setItem('token_user', JSON.stringify(response.data))
+      }
+
+      if (response.error) {
+        switch (response.error.status) {
+          case 401:
+            throw new Error('Пользователь не зарегистрирован')
+
+          case 422:
+            throw new Error('Укажите корректный e-mail')
+        }
+      }
+    } catch (error) {
+      console.error(error)
+      setErrorMessage(error.message)
+    }
+  }
+
+  const handleRegistration = async () => {
+    if (!email) {
+      setErrorMessage('Укажите email')
+      return
+    }
+
+    if (!password) {
+      setErrorMessage('Укажите пароль')
+      return
+    }
+
+    if (password !== repeatPassword) {
+      setErrorMessage('Указанные пароли не совпадают')
+      return
+    }
+
     try {
       setIsFormProcess(true)
-      await userRegistration({
+      const response = await userRegistration({
         email,
         password,
         userName,
         userSurname,
         userCity,
       })
-      closeWindow()
-    } catch (error) {
-      setErrorMessage(errorUserRegistration)
-    } finally {
-      setIsFormProcess(false)
-    }
-  }
 
-  const handleRegister = () => {
-    if (!email) {
-      setErrorMessage('Укажите email адрес')
-      return
-    }
-    if (!password) {
-      setErrorMessage('Укажите пароль')
-      return
-    }
-    if (password !== repeatPassword) {
-      setErrorMessage('Указанные пароли не совпадают')
-      return
-    } else {
-      checkAndRegistration()
-    }
-  }
-
-  const checkAndLogin = async () => {
-    try {
-      const responseLogin = await userLogin({ email, password })
-
-      if (responseLogin.data) {
-        setToken(responseLogin.data.access_token)
-        localStorage.setItem('token_user', JSON.stringify(responseLogin.data))
+      if (response.data) {
+        setRegMode(false)
+        handleLogin({ email, password })
       }
 
-      if (responseLogin.error) {
-        switch (responseLogin.error.status) {
-          case 401:
-            throw new Error('Данный пользователь не зарегистрирован')
+      if (response.error) {
+        switch (response.error.status) {
+          case 400:
+            throw new Error('Пользователь с данным e-mail уже зарегистрирован')
 
           case 422:
-            throw new Error('Пожалуйста, укажите корректный Email')
+            throw new Error('Укажите корректный e-mail')
         }
       }
     } catch (error) {
+      console.error(error)
       setErrorMessage(error.message)
+    } finally {
+      setIsFormProcess(false)
     }
-  }
-
-  const handleLogin = () => {
-    if (!email) {
-      setErrorMessage('Укажите email адрес')
-      return
-    }
-    if (!password) {
-      setErrorMessage('Укажите пароль')
-      return
-    } else {
-      checkAndLogin()
-    }
-  }
-
-  const switchButtonRegMode = () => {
-    setRegMode(true)
   }
 
   return (
@@ -182,7 +188,7 @@ export const Authorization = ({ closeModalWindow }) => {
               </S.ModalInfoMessage>
             )}
             <S.ModalBtnEnter
-              onClick={handleRegister}
+              onClick={handleRegistration}
               disabled={isFormProcess}
               $marginTop={'30px'}
               $marginBottom={'0'}
@@ -217,7 +223,11 @@ export const Authorization = ({ closeModalWindow }) => {
             <S.ModalBtnEnter $marginTop={'60px'} onClick={handleLogin}>
               Войти
             </S.ModalBtnEnter>
-            <S.ModalBtnSignUp onClick={switchButtonRegMode}>
+            <S.ModalBtnSignUp
+              onClick={() => {
+                setRegMode(true)
+              }}
+            >
               Зарегистрироваться
             </S.ModalBtnSignUp>
           </>
