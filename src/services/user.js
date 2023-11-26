@@ -94,6 +94,22 @@ export const userApi = createApi({
           Authorization: `Bearer ${token}`,
         },
       }),
+      providesTags: (result = []) => [DATA_TAG],
+    }),
+
+    changeUserPassword: build.mutation({
+      query: ({ currentPassword, newPassword, token }) => ({
+        url: 'user/password/',
+        method: 'PUT',
+        body: {
+          password_1: currentPassword,
+          password_2: newPassword,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }),
+      providesTags: (result = []) => [DATA_TAG],
     }),
   }),
 })
@@ -105,4 +121,5 @@ export const {
   useGetCurrentUserQuery,
   useEditCurrentUserMutation,
   useUploadUserPhotoMutation,
+  useChangeUserPasswordMutation,
 } = userApi
