@@ -11,6 +11,7 @@ import {
 import { setUserData } from '../../store/actions/creators/users'
 import { useGetAdvertsCurrentUserQuery } from '../../services/advert'
 import { ChangePassword } from '../../components/ChangePassword/ChangePassword'
+import { MainMenu } from '../../components/MainMenu/MainMenu'
 
 export const ProfilePage = () => {
   const host = 'http://127.0.0.1:8090/'
@@ -140,16 +141,7 @@ export const ProfilePage = () => {
             <ChangePassword closeModalWindow={closeModalWindow} token={token} />
           )}
 
-          <S.MainMenu>
-            <S.MainMenuLogoLink to={'/'}>
-              <S.MainMenuLogoImg src="/img/logo.png" />
-            </S.MainMenuLogoLink>
-            <S.MainMenuForm>
-              <S.MainMenuFormBtnLink to={'/'}>
-                <S.MainMenuFormBtn>Вернуться на&nbsp;главную</S.MainMenuFormBtn>
-              </S.MainMenuFormBtnLink>
-            </S.MainMenuForm>
-          </S.MainMenu>
+          <MainMenu />
 
           <S.MainTitleH2>Здравствуйте, {user.name}</S.MainTitleH2>
 

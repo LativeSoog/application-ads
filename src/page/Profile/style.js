@@ -15,50 +15,6 @@ export const MainContainer = styled.div`
 `
 export const MainCenterBlock = styled.div``
 
-export const MainMenu = styled.div`
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: start;
-  padding: 11px 0;
-  padding: 31px 10px 64px;
-`
-
-export const MainMenuLogoLink = styled(Link)`
-  width: 54;
-  height: 50px;
-`
-
-export const MainMenuLogoImg = styled.img`
-  width: 54px;
-  height: auto;
-`
-
-export const MainMenuForm = styled.form`
-  margin-left: 60px;
-  max-width: 1044px;
-  width: 100%;
-`
-
-export const MainMenuFormBtnLink = styled(Link)``
-
-export const MainMenuFormBtn = styled.button`
-  width: 241px;
-  height: 50px;
-  background-color: #009ee4;
-  border: 1px solid #009ee4;
-  border-radius: 6px;
-  font-size: 16px;
-  line-height: 1;
-  color: #ffffff;
-  cursor: pointer;
-`
 
 export const MainTitleH2 = styled.h2`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
