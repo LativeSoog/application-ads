@@ -8,7 +8,7 @@ import {
 import { setUserData } from '../../store/actions/creators/users'
 import { useDispatch } from 'react-redux'
 
-export const Authorization = ({ closeWindow }) => {
+export const Authorization = ({ closeModalWindow }) => {
   const dispatch = useDispatch()
   const [regMode, setRegMode] = useState(false)
   const [token, setToken] = useState(false)
@@ -114,7 +114,7 @@ export const Authorization = ({ closeWindow }) => {
     <S.Wrapper>
       <S.ContainerEnter>
         <S.ModalBlock $height={regMode ? '647px' : '439px'}>
-          <S.ModalBlockClosedSvg onClick={closeWindow}>
+          <S.ModalBlockClosedSvg onClick={closeModalWindow}>
             <use xlinkHref="img/icon/sprite.svg#icon-close"></use>
           </S.ModalBlockClosedSvg>
           <S.ModalFormLogin $height={regMode ? '647px' : '439px'}>

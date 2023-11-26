@@ -6,39 +6,45 @@ import { currentUser } from '../../store/selectors/users'
 import { useSelector } from 'react-redux'
 
 export const Header = () => {
-  const [openAuthForm, setOpenAuthForm] = useState(false)
-  const [openAddAdvert, setOpenAddAdvert] = useState(false)
+  const [isModalAuth, setIsModalAuth] = useState(false)
+  const [isModalAddAdvert, setIsModalAddAdvert] = useState(false)
   const isUser = useSelector(currentUser)
 
-  const handleAuthMode = () => {
-    setOpenAuthForm(true)
+  const handleOpenModalAuth = () => {
+    setIsModalAuth(true)
     document.body.style.overflow = 'hidden'
   }
 
-  const handleAddAdvert = () => {
-    setOpenAddAdvert(true)
+  const handleOpenModalAddAdv = () => {
+    setIsModalAddAdvert(true)
     document.body.style.overflow = 'hidden'
   }
 
-  const closeWindow = () => {
-    setOpenAuthForm(false)
-    setOpenAddAdvert(false)
-    document.body.style.overflow = 'unset'
+  const closeModalWindow = () => {
+    if (isModalAuth) {
+      setIsModalAuth(false)
+      document.body.style.overflow = 'unset'
+    }
+
+    if (isModalAddAdvert) {
+      setIsModalAddAdvert(false)
+      document.body.style.overflow = 'unset'
+    }
   }
 
   return (
     <>
-      {openAuthForm ? (
-        <Authorization closeWindow={closeWindow} />
-      ) : (
-        ''
-      )}
-      {openAddAdvert ? <AddAdvert closeWindow={closeWindow} /> : ''}
+      {isModalAuth && <Authorization closeModalWindow={closeModalWindow} />}
+      {isModalAddAdvert && <AddAdvert closeModalWindow={closeModalWindow} />}
+
       <S.Header>
         <S.HeaderNav>
           {isUser ? (
             <>
-              <S.HeaderButtonMain $width="232px" onClick={handleAddAdvert}>
+              <S.HeaderButtonMain
+                $width="232px"
+                onClick={handleOpenModalAddAdv}
+              >
                 Разместить объявление
               </S.HeaderButtonMain>
               <S.HeaderButtonLink to="/profile">
@@ -48,7 +54,7 @@ export const Header = () => {
               </S.HeaderButtonLink>
             </>
           ) : (
-            <S.HeaderButtonMain onClick={handleAuthMode} $width="224px">
+            <S.HeaderButtonMain onClick={handleOpenModalAuth} $width="224px">
               Вход в личный кабинет
             </S.HeaderButtonMain>
           )}
