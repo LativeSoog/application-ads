@@ -5,14 +5,13 @@ import {
   useAuthRegistrationMutation,
   useGetCurrentUserQuery,
 } from '../../services/user'
-import { setUserData } from '../../store/actions/creators/users'
-import { useDispatch } from 'react-redux'
+import { setUserData, setUserToken } from '../../store/actions/creators/users'
+import { useDispatch, useSelector } from 'react-redux'
+import { userToken } from '../../store/selectors/users'
 
 export const Authorization = ({ closeModalWindow }) => {
   const dispatch = useDispatch()
   const [regMode, setRegMode] = useState(false)
-  const [token, setToken] = useState(false)
-
   const [errorMessage, setErrorMessage] = useState(false)
   const [isFormProcess, setIsFormProcess] = useState(false)
   const [email, setEmail] = useState('')
@@ -22,9 +21,10 @@ export const Authorization = ({ closeModalWindow }) => {
   const [userSurname, setUserSurname] = useState('')
   const [userCity, setUserCity] = useState('')
 
+  const token = useSelector(userToken)
   const [userLogin] = useAuthLoginMutation()
   const [userRegistration] = useAuthRegistrationMutation()
-  const { data: userData } = useGetCurrentUserQuery(token)
+  const { data: userData } = useGetCurrentUserQuery(token.access_token)
 
   useEffect(() => {
     if (token) {
@@ -49,7 +49,7 @@ export const Authorization = ({ closeModalWindow }) => {
       const response = await userLogin({ email, password })
 
       if (response.data) {
-        setToken(response.data.access_token)
+        dispatch(setUserToken(response.data))
         localStorage.setItem('token_user', JSON.stringify(response.data))
       }
 
