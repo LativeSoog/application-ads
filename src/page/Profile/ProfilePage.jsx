@@ -137,7 +137,7 @@ export const ProfilePage = () => {
       <S.MainContainer>
         <S.MainCenterBlock>
           {isModalChangePassword && (
-            <ChangePassword closeModalWindow={closeModalWindow} />
+            <ChangePassword closeModalWindow={closeModalWindow} token={token} />
           )}
 
           <S.MainMenu>

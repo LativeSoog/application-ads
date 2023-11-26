@@ -79,7 +79,7 @@ export const ModalInput = styled.input`
 export const ModalInfoMessage = styled.p`
   font-size: 18px;
   margin-top: 38px;
-  color: #750000;
+  color: ${(props) => props.$colorText};
 `
 
 export const ModalBtnEnter = styled.div`
