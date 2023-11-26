@@ -31,7 +31,7 @@ export const Authorization = ({ closeModalWindow }) => {
     if (token) {
       dispatch(setUserData(userData))
       localStorage.setItem('user', JSON.stringify(userData))
-      closeWindow()
+      closeModalWindow()
     }
   }, [userData])
 
@@ -111,128 +111,118 @@ export const Authorization = ({ closeModalWindow }) => {
   }
 
   return (
-    <S.Wrapper>
-      <S.ContainerEnter>
-        <S.ModalBlock $height={regMode ? '647px' : '439px'}>
-          <S.ModalBlockClosedSvg onClick={closeModalWindow}>
-            <use xlinkHref="img/icon/sprite.svg#icon-close"></use>
-          </S.ModalBlockClosedSvg>
-          <S.ModalFormLogin $height={regMode ? '647px' : '439px'}>
-            <S.ModalFormLogo>
-              <S.ModalFormLogoImg src="/img/logo_modal.png" />
-            </S.ModalFormLogo>
-            {regMode ? (
-              <>
-                <S.ModalFormInput
-                  type="text"
-                  placeholder="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value)
-                  }}
-                  $marginBottom={'38px'}
-                />
-                <S.ModalFormInput
-                  type="password"
-                  placeholder="Пароль"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value)
-                  }}
-                  $marginBottom={'38px'}
-                />
-                <S.ModalFormInput
-                  type="password"
-                  placeholder="Повторите пароль"
-                  value={repeatPassword}
-                  onChange={(e) => {
-                    setRepeatPassword(e.target.value)
-                  }}
-                  $marginBottom={'38px'}
-                />
-                <S.ModalFormInput
-                  type="text"
-                  placeholder="Имя (необязательно)"
-                  value={userName}
-                  onChange={(e) => {
-                    setUserName(e.target.value)
-                  }}
-                  $marginBottom={'38px'}
-                />
-                <S.ModalFormInput
-                  type="text"
-                  placeholder="Фамилия (необязательно)"
-                  value={userSurname}
-                  onChange={(e) => {
-                    setUserSurname(e.target.value)
-                  }}
-                  $marginBottom={'38px'}
-                />
-                <S.ModalFormInput
-                  type="text"
-                  placeholder="Город (необязательно)"
-                  value={userCity}
-                  onChange={(e) => {
-                    setUserCity(e.target.value)
-                  }}
-                  $marginBottom={'38px'}
-                />
-                {errorMessage && (
-                  <S.ModalFormErrorMessage>
-                    {errorMessage}
-                  </S.ModalFormErrorMessage>
-                )}
-                <S.ModalFormButtonEnter
-                  onClick={handleRegister}
-                  disabled={isFormProcess}
-                  $marginTop={'30px'}
-                  $marginBottom={'0'}
-                >
-                  <S.ModalFormButtonEnterLink>
-                    {isFormProcess ? 'Регистрация...' : 'Зарегистрироваться'}
-                  </S.ModalFormButtonEnterLink>
-                </S.ModalFormButtonEnter>
-              </>
-            ) : (
-              <>
-                <S.ModalFormInput
-                  type="text"
-                  placeholder="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value)
-                  }}
-                />
-                <S.ModalFormInput
-                  type="password"
-                  placeholder="Пароль"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value)
-                  }}
-                  $marginTop={'30px'}
-                />
-                {errorMessage && (
-                  <S.ModalFormErrorMessage>
-                    {errorMessage}
-                  </S.ModalFormErrorMessage>
-                )}
-                <S.ModalFormButtonEnter
-                  $marginTop={'60px'}
-                  onClick={handleLogin}
-                >
-                  <S.ModalFormButtonEnterLink>Войти</S.ModalFormButtonEnterLink>
-                </S.ModalFormButtonEnter>
-                <S.ModalFormButtonSignUp>
-                  <S.ModalFormButtonSignUpLink onClick={switchButtonRegMode}>
-                    Зарегистрироваться
-                  </S.ModalFormButtonSignUpLink>
-                </S.ModalFormButtonSignUp>
-              </>
+    <S.ModalWrapper>
+      <S.ModalContent>
+        <S.ModalBtnClosedSvg onClick={closeModalWindow}>
+          <use xlinkHref="img/icon/sprite.svg#icon-close"></use>
+        </S.ModalBtnClosedSvg>
+
+        <S.ModalLogo>
+          <S.ModalLogoImg src="/img/logo_modal.png" />
+        </S.ModalLogo>
+        {regMode ? (
+          <>
+            <S.ModalInput
+              type="text"
+              placeholder="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value)
+              }}
+              $marginBottom={'38px'}
+            />
+            <S.ModalInput
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+              }}
+              $marginBottom={'38px'}
+            />
+            <S.ModalInput
+              type="password"
+              placeholder="Повторите пароль"
+              value={repeatPassword}
+              onChange={(e) => {
+                setRepeatPassword(e.target.value)
+              }}
+              $marginBottom={'38px'}
+            />
+            <S.ModalInput
+              type="text"
+              placeholder="Имя (необязательно)"
+              value={userName}
+              onChange={(e) => {
+                setUserName(e.target.value)
+              }}
+              $marginBottom={'38px'}
+            />
+            <S.ModalInput
+              type="text"
+              placeholder="Фамилия (необязательно)"
+              value={userSurname}
+              onChange={(e) => {
+                setUserSurname(e.target.value)
+              }}
+              $marginBottom={'38px'}
+            />
+            <S.ModalInput
+              type="text"
+              placeholder="Город (необязательно)"
+              value={userCity}
+              onChange={(e) => {
+                setUserCity(e.target.value)
+              }}
+              $marginBottom={'38px'}
+            />
+            {errorMessage && (
+              <S.ModalInfoMessage $colorText={'#750000'}>
+                {errorMessage}
+              </S.ModalInfoMessage>
             )}
-          </S.ModalFormLogin>
-        </S.ModalBlock>
-      </S.ContainerEnter>
-    </S.Wrapper>
+            <S.ModalBtnEnter
+              onClick={handleRegister}
+              disabled={isFormProcess}
+              $marginTop={'30px'}
+              $marginBottom={'0'}
+            >
+              {isFormProcess ? 'Регистрация...' : 'Зарегистрироваться'}
+            </S.ModalBtnEnter>
+          </>
+        ) : (
+          <>
+            <S.ModalInput
+              type="text"
+              placeholder="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value)
+              }}
+            />
+            <S.ModalInput
+              type="password"
+              placeholder="Пароль"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+              }}
+              $marginTop={'30px'}
+            />
+            {errorMessage && (
+              <S.ModalInfoMessage $colorText={`#750000`}>
+                {errorMessage}
+              </S.ModalInfoMessage>
+            )}
+            <S.ModalBtnEnter $marginTop={'60px'} onClick={handleLogin}>
+              Войти
+            </S.ModalBtnEnter>
+            <S.ModalBtnSignUp onClick={switchButtonRegMode}>
+              Зарегистрироваться
+            </S.ModalBtnSignUp>
+          </>
+        )}
+      </S.ModalContent>
+    </S.ModalWrapper>
   )
 }
