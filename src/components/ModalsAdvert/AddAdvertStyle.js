@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components'
-import { BtnHoverMixin, BtnRegularMixin } from '../../style/AppStyle'
+import {
+  BtnHoverMixin,
+  BtnNotActiveMixin,
+  BtnRegularMixin,
+} from '../../style/AppStyle'
 
 const ModalFormNewAdvInputMixin = css`
   padding: 13px 19px;
@@ -250,12 +254,36 @@ export const ModalFormNewAdvInputPriceCover = styled.div`
   }
 `
 
-export const ModalFormNewAdvBtn = styled.div`
+export const ModalSuccessBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+export const ModalSuccessBtn = styled.div`
   ${BtnRegularMixin}
   margin-top: 10px;
-  width: 181px;
   height: 50px;
+  width: 200px;
+
   &:hover {
     ${BtnHoverMixin}
   }
+`
+
+export const ModalInfoMessage = styled.p`
+  font-size: 18px;
+  margin: 20px 0;
+  color: ${(props) => props.$colorText};
+  text-align: center;
+`
+
+export const ModalFormNewAdvBtn = styled.div`
+  ${({ $condition }) => ($condition ? BtnRegularMixin : BtnNotActiveMixin)}
+  margin-top: 10px;
+  width: 181px;
+  height: 50px;
+
+  ${({ $condition }) => ($condition ? `&:hover { ${BtnHoverMixin} }` : null)}
 `

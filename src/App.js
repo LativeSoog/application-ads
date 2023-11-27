@@ -1,6 +1,5 @@
 import { StyleGlobal } from './style/AppStyle'
 import { AppRoutes } from './routes'
-import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setUserData, setUserToken } from './store/actions/creators/users'
 
