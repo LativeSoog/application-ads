@@ -35,36 +35,36 @@ export const AdvertPage = () => {
   } = useGetCurrentAdvertQuery(params.id)
   const { data: advertComments } = useGetCommentsAdvertQuery(params.id)
 
-  useEffect(() => {
-    const getUpdateUserToken = async () => {
-      try {
-        const responseNewToken = await updateUserToken({
-          accessToken: token.access_token,
-          refreshToken: token.refresh_token,
-        })
+  // useEffect(() => {
+  //   const getUpdateUserToken = async () => {
+  //     try {
+  //       const responseNewToken = await updateUserToken({
+  //         accessToken: token.access_token,
+  //         refreshToken: token.refresh_token,
+  //       })
 
-        if (responseNewToken.data) {
-          localStorage.setItem(
-            'token_user',
-            JSON.stringify(responseNewToken.data),
-          )
-          setToken(responseNewToken.data)
-        }
+  //       if (responseNewToken.data) {
+  //         localStorage.setItem(
+  //           'token_user',
+  //           JSON.stringify(responseNewToken.data),
+  //         )
+  //         setToken(responseNewToken.data)
+  //       }
 
-        if (responseNewToken.error) {
-          switch (responseNewToken.error.status) {
-            case 401:
-              throw new Error(
-                ' Произошла ошибка. Пожалуйста, авторизируйтесь заново',
-              )
-          }
-        }
-      } catch (error) {
-        setErrorMessage(error.message)
-      }
-    }
-    getUpdateUserToken()
-  }, [])
+  //       if (responseNewToken.error) {
+  //         switch (responseNewToken.error.status) {
+  //           case 401:
+  //             throw new Error(
+  //               ' Произошла ошибка. Пожалуйста, авторизируйтесь заново',
+  //             )
+  //         }
+  //       }
+  //     } catch (error) {
+  //       setErrorMessage(error.message)
+  //     }
+  //   }
+  //   getUpdateUserToken()
+  // }, [])
 
   const handleDeleteAdvert = async () => {
     try {
@@ -84,6 +84,7 @@ export const AdvertPage = () => {
 
   const handleOpenEdit = () => {
     setModalWindowEditAdvert(true)
+    document.body.style.overflow = 'hidden'
   }
 
   const closeModalWindow = () => {
@@ -102,7 +103,7 @@ export const AdvertPage = () => {
     <>
       {modalWindowEditAdvert && (
         <EditAdvert
-          closeWindow={closeModalWindow}
+          closeModalWindow={closeModalWindow}
           token={token}
           id={params.id}
           currentTitle={currentAdvertData.title}

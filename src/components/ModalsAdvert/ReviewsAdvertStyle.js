@@ -37,9 +37,13 @@ export const ModalContentTitle = styled.h3`
   color: #000000;
   margin-bottom: 15px;
 `
+export const ModalBtnClosedContainer = styled.div`
+  position: relative;
+  width: 100%;
+`
 
 export const ModalBtnClosedSvg = styled.svg`
-  position: relative;
+  position: absolute;
   left: 105%;
   top: -60px;
   width: 30px;

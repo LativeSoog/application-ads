@@ -83,9 +83,11 @@ export const ReviewsAdvert = ({ closeModalWindow, params }) => {
     <S.ModalWrapper>
       <S.ModalContent>
         <S.ModalContentTitle>Отзывы о товаре</S.ModalContentTitle>
-        <S.ModalBtnClosedSvg onClick={closeModalWindow}>
-          <use xlinkHref="/img/icon/sprite.svg#icon-close"></use>
-        </S.ModalBtnClosedSvg>
+        <S.ModalBtnClosedContainer>
+          <S.ModalBtnClosedSvg onClick={closeModalWindow}>
+            <use xlinkHref="/img/icon/sprite.svg#icon-close"></use>
+          </S.ModalBtnClosedSvg>
+        </S.ModalBtnClosedContainer>
 
         <S.ModalScroll>
           {user ? (

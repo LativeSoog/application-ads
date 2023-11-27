@@ -8,7 +8,7 @@ import {
 import { host } from '../../helper'
 
 export const EditAdvert = ({
-  closeWindow,
+  closeModalWindow,
   token,
   id,
   currentTitle,
@@ -38,107 +38,105 @@ export const EditAdvert = ({
   }
 
   return (
-    <S.Wrapper>
-      <S.ContainerBg>
-        <S.ModalBlock>
-          <S.ModalContent>
-            <S.ModalContentTitle>Редактировать объявление</S.ModalContentTitle>
-            <S.ModalContentBtnClose onClick={closeWindow}>
-              <S.ModalContentBtnCloseLine />
-            </S.ModalContentBtnClose>
+    <S.ModalWrapper>
+      <S.ModalContent>
+        <S.ModalContentTitle>Редактировать объявление</S.ModalContentTitle>
+        <S.ModalBtnClosedContainer>
+          <S.ModalBtnClosedSvg onClick={closeModalWindow}>
+            <use xlinkHref="/img/icon/sprite.svg#icon-close"></use>
+          </S.ModalBtnClosedSvg>
+        </S.ModalBtnClosedContainer>
 
-            <S.ModalFormEditAdv id="FormEditAdv">
-              <S.ModalFormEditAdvBlock>
-                <S.ModalFormEditAdvLabel htmlFor="formName">
-                  Название
-                </S.ModalFormEditAdvLabel>
-                <S.ModalFormEditAdvInput
-                  type="text"
-                  id="formName"
-                  placeholder="Введите название"
-                  value={titleAdvert}
-                  onChange={(e) => {
-                    setTitleAdvert(e.target.value)
-                  }}
+        <S.ModalFormEditAdv id="FormEditAdv">
+          <S.ModalFormEditAdvBlock>
+            <S.ModalFormEditAdvLabel htmlFor="formName">
+              Название
+            </S.ModalFormEditAdvLabel>
+            <S.ModalFormEditAdvInput
+              type="text"
+              id="formName"
+              placeholder="Введите название"
+              value={titleAdvert}
+              onChange={(e) => {
+                setTitleAdvert(e.target.value)
+              }}
+            />
+          </S.ModalFormEditAdvBlock>
+
+          <S.ModalFormEditAdvBlock>
+            <S.ModalFormEditAdvLabel htmlFor="formArea">
+              Описание
+            </S.ModalFormEditAdvLabel>
+            <S.ModalFormEditAdvArea
+              id="formArea"
+              cols="auto"
+              rows="10"
+              placeholder="Введите описание"
+              value={descriptionAdvert}
+              onChange={(e) => {
+                setDescriptionAdvert(e.target.value)
+              }}
+            />
+          </S.ModalFormEditAdvBlock>
+
+          <S.ModalFormEditAdvBlock>
+            <S.ModalFormEditAdvPhoto>
+              Фотографии товара
+              <S.ModalEditAdvPhotoSpan>
+                не более 5 фотографий
+              </S.ModalEditAdvPhotoSpan>
+            </S.ModalFormEditAdvPhoto>
+            <S.ModalFormEditAdvBarImg>
+              {imagesAdvert.map((image) => {
+                return (
+                  <AddAdvertPhoto
+                    mode="viewPhoto"
+                    id={id}
+                    token={token}
+                    advertDataRefetch={advertDataRefetch}
+                    setImagesAdvert={setImagesAdvert}
+                    key={image.id}
+                    link={host + image.url}
+                    imageId={image.id}
+                    imageUrl={image.url}
+                  />
+                )
+              })}
+              {imagesAdvert.length < 5 && (
+                <AddAdvertPhoto
+                  mode="uploadPhoto"
+                  id={id}
+                  token={token}
+                  advertDataRefetch={advertDataRefetch}
+                  setImagesAdvert={setImagesAdvert}
+                  imagesAdvert={imagesAdvert}
                 />
-              </S.ModalFormEditAdvBlock>
+              )}
+            </S.ModalFormEditAdvBarImg>
+          </S.ModalFormEditAdvBlock>
 
-              <S.ModalFormEditAdvBlock>
-                <S.ModalFormEditAdvLabel htmlFor="formArea">
-                  Описание
-                </S.ModalFormEditAdvLabel>
-                <S.ModalFormEditAdvArea
-                  id="formArea"
-                  cols="auto"
-                  rows="10"
-                  placeholder="Введите описание"
-                  value={descriptionAdvert}
-                  onChange={(e) => {
-                    setDescriptionAdvert(e.target.value)
-                  }}
-                />
-              </S.ModalFormEditAdvBlock>
+          <S.ModalFormEditAdvBlockPrice>
+            <S.ModalFormEditAdvLabel htmlFor="formPrice">
+              Цена
+            </S.ModalFormEditAdvLabel>
+            <S.ModalFormEditAdvInputPrice
+              type="text"
+              name="price"
+              id="formPrice"
+              value={priceAdvert}
+              onChange={(e) => {
+                setPriceAdvert(e.target.value)
+              }}
+            />
+            <S.ModalFormEditAdvInputPriceCover />
+          </S.ModalFormEditAdvBlockPrice>
 
-              <S.ModalFormEditAdvBlock>
-                <S.ModalFormEditAdvPhoto>
-                  Фотографии товара
-                  <S.ModalEditAdvPhotoSpan>
-                    не более 5 фотографий
-                  </S.ModalEditAdvPhotoSpan>
-                </S.ModalFormEditAdvPhoto>
-                <S.ModalFormEditAdvBarImg>
-                  {imagesAdvert.map((image) => {
-                    return (
-                      <AddAdvertPhoto
-                        mode="viewPhoto"
-                        id={id}
-                        token={token}
-                        advertDataRefetch={advertDataRefetch}
-                        setImagesAdvert={setImagesAdvert}
-                        key={image.id}
-                        link={host + image.url}
-                        imageId={image.id}
-                        imageUrl={image.url}
-                      />
-                    )
-                  })}
-                  {imagesAdvert.length < 5 && (
-                    <AddAdvertPhoto
-                      mode="uploadPhoto"
-                      id={id}
-                      token={token}
-                      advertDataRefetch={advertDataRefetch}
-                      setImagesAdvert={setImagesAdvert}
-                      imagesAdvert={imagesAdvert}
-                    />
-                  )}
-                </S.ModalFormEditAdvBarImg>
-              </S.ModalFormEditAdvBlock>
-
-              <S.ModalFormEditAdvBlockPrice>
-                <S.ModalFormEditAdvLabel htmlFor="formPrice">
-                  Цена
-                </S.ModalFormEditAdvLabel>
-                <S.ModalFormEditAdvInputPrice
-                  type="text"
-                  name="price"
-                  id="formPrice"
-                  value={priceAdvert}
-                  onChange={(e) => {
-                    setPriceAdvert(e.target.value)
-                  }}
-                />
-                <S.ModalFormEditAdvInputPriceCover />
-              </S.ModalFormEditAdvBlockPrice>
-
-              <S.ModalFormEditAdvBtn onClick={handleAdvertEdit}>
-                Сохранить
-              </S.ModalFormEditAdvBtn>
-            </S.ModalFormEditAdv>
-          </S.ModalContent>
-        </S.ModalBlock>
-      </S.ContainerBg>
-    </S.Wrapper>
+          <S.ModalFormEditAdvBtn onClick={handleAdvertEdit}>
+            Сохранить
+          </S.ModalFormEditAdvBtn>
+        </S.ModalFormEditAdv>
+      </S.ModalContent>
+    </S.ModalWrapper>
   )
 }
 
