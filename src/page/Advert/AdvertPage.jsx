@@ -15,6 +15,7 @@ import { currentUser } from '../../store/selectors/users'
 import { useUpdateUserTokenMutation } from '../../services/user'
 import { EditAdvert } from '../../components/ModalsAdvert/EditAdvert'
 import { current } from '@reduxjs/toolkit'
+import { RemovePublication } from '../../components/ModalsAdvert/RemovePublication'
 
 export const AdvertPage = () => {
   const host = 'http://127.0.0.1:8090/'
@@ -25,6 +26,7 @@ export const AdvertPage = () => {
   )
   const [modalWindowReview, setModalWindowReview] = useState(false)
   const [modalWindowEditAdvert, setModalWindowEditAdvert] = useState(false)
+  const [modalWindowPublication, setModalWindowPublication] = useState(false)
 
   const [deleteAdvert] = useDeleteAdvertMutation()
   const [updateUserToken] = useUpdateUserTokenMutation()
@@ -87,6 +89,11 @@ export const AdvertPage = () => {
     document.body.style.overflow = 'hidden'
   }
 
+  const handleOpenPublication = () => {
+    setModalWindowPublication(true)
+    document.body.style.overflow = 'hidden'
+  }
+
   const closeModalWindow = () => {
     if (modalWindowReview) {
       setModalWindowReview(false)
@@ -95,6 +102,11 @@ export const AdvertPage = () => {
 
     if (modalWindowEditAdvert) {
       setModalWindowEditAdvert(false)
+      document.body.style.overflow = 'unset'
+    }
+
+    if (modalWindowPublication) {
+      setModalWindowPublication(false)
       document.body.style.overflow = 'unset'
     }
   }
@@ -113,6 +125,10 @@ export const AdvertPage = () => {
           advertDataRefetch={currentAdvertDataRefetch}
         />
       )}
+      {modalWindowPublication && (
+        <RemovePublication closeModalWindow={closeModalWindow} />
+      )}
+
       {modalWindowReview ? (
         <ReviewsAdvert closeModalWindow={closeModalWindow} params={params} />
       ) : (
@@ -200,7 +216,7 @@ export const AdvertPage = () => {
                           </S.AdvertRightButton>
                           <S.AdvertRightButton
                             $width="225px"
-                            onClick={handleDeleteAdvert}
+                            onClick={handleOpenPublication}
                           >
                             Снять с публикации
                           </S.AdvertRightButton>
