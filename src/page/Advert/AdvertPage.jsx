@@ -28,8 +28,6 @@ export const AdvertPage = () => {
   const [modalWindowEditAdvert, setModalWindowEditAdvert] = useState(false)
   const [modalWindowPublication, setModalWindowPublication] = useState(false)
 
-  const [deleteAdvert] = useDeleteAdvertMutation()
-  const [updateUserToken] = useUpdateUserTokenMutation()
   const {
     data: currentAdvertData,
     isLoading: currentAdvertLoading,
@@ -67,17 +65,6 @@ export const AdvertPage = () => {
   //   }
   //   getUpdateUserToken()
   // }, [])
-
-  const handleDeleteAdvert = async () => {
-    try {
-      const responseDelAdvert = await deleteAdvert({
-        id: params.id,
-        token: token.access_token,
-      })
-
-      console.log(responseDelAdvert)
-    } catch (error) {}
-  }
 
   const handleOpenReview = () => {
     setModalWindowReview(true)
@@ -126,7 +113,7 @@ export const AdvertPage = () => {
         />
       )}
       {modalWindowPublication && (
-        <RemovePublication closeModalWindow={closeModalWindow} />
+        <RemovePublication closeModalWindow={closeModalWindow} id={params.id} />
       )}
 
       {modalWindowReview ? (
