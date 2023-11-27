@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as S from './EditAdvertStyle'
 import {
   useDeletePhotoAdvertMutation,
@@ -6,10 +6,13 @@ import {
   useUploadPhotoAdvertMutation,
 } from '../../services/advert'
 import { host } from '../../helper'
+import { useDispatch, useSelector } from 'react-redux'
+import { userToken } from '../../store/selectors/users'
+import { useUpdateToken } from '../../hooks/updateToken'
+import { setUserToken } from '../../store/actions/creators/users'
 
 export const EditAdvert = ({
   closeModalWindow,
-  token,
   id,
   currentTitle,
   currentDescription,
@@ -17,6 +20,12 @@ export const EditAdvert = ({
   currentImages,
   advertDataRefetch,
 }) => {
+  const dispatch = useDispatch()
+  const token = useSelector(userToken)
+  const updateToken = useUpdateToken()
+
+  const [errorToken, setErrorToken] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(false)
   const [titleAdvert, setTitleAdvert] = useState(currentTitle)
   const [descriptionAdvert, setDescriptionAdvert] = useState(currentDescription)
   const [priceAdvert, setPriceAdvert] = useState(currentPrice)
@@ -24,8 +33,20 @@ export const EditAdvert = ({
   const [editAdvert] = useEditAdvertMutation()
 
   const handleAdvertEdit = async () => {
+    if (!titleAdvert) {
+      return setErrorMessage('Укажите изменённое название')
+    }
+
+    if (!descriptionAdvert) {
+      return setErrorMessage('Укажите изменённое описание')
+    }
+
+    if (!priceAdvert) {
+      return setErrorMessage('Укажите изменённую стоимость')
+    }
+
     try {
-      const responseAdvertEdit = await editAdvert({
+      const response = await editAdvert({
         id,
         token: token.access_token,
         titleAdvert,
@@ -33,9 +54,45 @@ export const EditAdvert = ({
         priceAdvert,
       })
 
-      console.log(responseAdvertEdit)
-    } catch (error) {}
+      if (response.data) {
+        setErrorMessage(false)
+        await advertDataRefetch()
+        closeModalWindow()
+      }
+
+      if (response.error) {
+        switch (response.error.status) {
+          case 401:
+            setErrorToken(true)
+        }
+      }
+    } catch (error) {
+      console.error(error)
+      setErrorMessage(error.message)
+    }
   }
+
+  useEffect(() => {
+    if (errorToken) {
+      const handleUpdateToken = async () => {
+        try {
+          const response = await updateToken({
+            accessToken: token.access_token,
+            refreshToken: token.refresh_token,
+          })
+          if (response) {
+            dispatch(setUserToken(response))
+            handleAdvertEdit()
+          }
+        } catch (error) {
+          console.error('Ошибка обновления токена: ', error)
+        } finally {
+          setErrorToken(false)
+        }
+      }
+      handleUpdateToken()
+    }
+  }, [errorToken])
 
   return (
     <S.ModalWrapper>
@@ -46,6 +103,11 @@ export const EditAdvert = ({
             <use xlinkHref="/img/icon/sprite.svg#icon-close"></use>
           </S.ModalBtnClosedSvg>
         </S.ModalBtnClosedContainer>
+        {errorMessage && (
+          <S.ModalInfoMessage $colorText={'#750000'}>
+            {errorMessage}
+          </S.ModalInfoMessage>
+        )}
 
         <S.ModalFormEditAdv id="FormEditAdv">
           <S.ModalFormEditAdvBlock>
@@ -97,8 +159,8 @@ export const EditAdvert = ({
                     setImagesAdvert={setImagesAdvert}
                     key={image.id}
                     link={host + image.url}
-                    imageId={image.id}
                     imageUrl={image.url}
+                    updateToken={updateToken}
                   />
                 )
               })}
@@ -110,6 +172,7 @@ export const EditAdvert = ({
                   advertDataRefetch={advertDataRefetch}
                   setImagesAdvert={setImagesAdvert}
                   imagesAdvert={imagesAdvert}
+                  updateToken={updateToken}
                 />
               )}
             </S.ModalFormEditAdvBarImg>
@@ -120,7 +183,7 @@ export const EditAdvert = ({
               Цена
             </S.ModalFormEditAdvLabel>
             <S.ModalFormEditAdvInputPrice
-              type="text"
+              type="number"
               name="price"
               id="formPrice"
               value={priceAdvert}
@@ -145,15 +208,19 @@ export const AddAdvertPhoto = ({
   id,
   token,
   link,
-  imageId,
   imageUrl,
   advertDataRefetch,
   imagesAdvert,
   setImagesAdvert,
+  updateToken,
 }) => {
+  const dispatch = useDispatch()
+  const fileImageUploadRef = useRef(false)
+
+  const [errorToken, setErrorToken] = useState(false)
+
   const [uploadImageAdvert] = useUploadPhotoAdvertMutation()
   const [deleteImageAdvert] = useDeletePhotoAdvertMutation()
-  const fileImageUploadRef = useRef(false)
 
   const handleUploadImage = async () => {
     const image = fileImageUploadRef?.current.files[0]
@@ -161,33 +228,77 @@ export const AddAdvertPhoto = ({
     formData.append('file', image)
 
     try {
-      const responseUploadImage = await uploadImageAdvert({
+      const response = await uploadImageAdvert({
         id,
         token: token.access_token,
         image: formData,
       })
 
-      if (responseUploadImage.data) {
+      if (response.data) {
         await advertDataRefetch()
-        setImagesAdvert(responseUploadImage.data.images)
+        setImagesAdvert(response.data.images)
       }
-    } catch (error) {}
+
+      if (response.error) {
+        switch (response.error.status) {
+          case 401:
+            setErrorToken(true)
+        }
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const handleDeleteImage = async () => {
     try {
-      const responseDeleteImage = await deleteImageAdvert({
+      const response = await deleteImageAdvert({
         id,
         token: token.access_token,
         imageUrl: imageUrl,
       })
 
-      if (responseDeleteImage.data) {
+      if (response.data) {
         await advertDataRefetch()
-        setImagesAdvert(responseDeleteImage.data.images)
+        setImagesAdvert(response.data.images)
       }
-    } catch (error) {}
+
+      if (response.error) {
+        switch (response.error.status) {
+          case 401:
+            setErrorToken(true)
+        }
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
+
+  useEffect(() => {
+    if (errorToken) {
+      const handleUpdateToken = async () => {
+        try {
+          const response = await updateToken({
+            accessToken: token.access_token,
+            refreshToken: token.refresh_token,
+          })
+          if (response) {
+            dispatch(setUserToken(response))
+            if (mode === 'uploadPhoto') {
+              handleUploadImage()
+            } else {
+              handleDeleteImage()
+            }
+          }
+        } catch (error) {
+          console.error('Ошибка обновления токена: ', error)
+        } finally {
+          setErrorToken(false)
+        }
+      }
+      handleUpdateToken()
+    }
+  }, [errorToken])
 
   return (
     <>

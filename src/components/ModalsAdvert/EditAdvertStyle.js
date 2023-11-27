@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { BtnHoverMixin, BtnRegularMixin } from '../../style/AppStyle'
 
 const ModalFormEditAdvInputMixin = css`
   padding: 13px 19px;
@@ -138,19 +139,10 @@ export const ModalEditAdvPhotoSpan = styled.span`
 
 export const ModalFormEditAdvBarImg = styled.div`
   width: 500px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-bottom: 10px;
   overflow: hidden;
 `
@@ -161,6 +153,7 @@ export const ModalFormEditAdvImgBlock = styled.div`
   margin-right: 10px;
   position: relative;
   z-index: 0;
+  cursor: pointer;
 `
 
 export const ModalFormEditAdvImgBlockImage = styled.img`
@@ -266,19 +259,21 @@ export const ModalFormEditAdvInputPriceCover = styled.div`
 `
 
 export const ModalFormEditAdvBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${BtnRegularMixin}
   margin-top: 10px;
   width: 181px;
   height: 50px;
-  background: #d9d9d9;
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  font-size: 16px;
-  line-height: 24px;
-  color: #ffffff;
-  cursor: pointer;
+
+  &:hover {
+    ${BtnHoverMixin}
+  }
+`
+
+export const ModalInfoMessage = styled.p`
+  font-size: 18px;
+  margin: 20px 0;
+  color: ${(props) => props.$colorText};
+  text-align: center;
 `
 
 export const FileInput = styled.input`
