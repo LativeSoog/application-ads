@@ -51,7 +51,6 @@ export const ReviewsAdvert = ({ closeModalWindow, params }) => {
       if (response.error) {
         switch (response.error.status) {
           case 401:
-            console.log('Сработала 401 ошибка')
             setErrorToken(true)
         }
       }
@@ -77,7 +76,6 @@ export const ReviewsAdvert = ({ closeModalWindow, params }) => {
         }
       }
       handleUpdateToken()
-      console.log(token)
     }
   }, [errorToken])
 
