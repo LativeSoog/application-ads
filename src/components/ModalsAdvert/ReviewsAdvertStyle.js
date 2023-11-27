@@ -1,46 +1,28 @@
 import styled from 'styled-components'
 
-export const Wrapper = styled.div`
+export const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  min-height: 100%;
-  overflow: hidden;
-`
-
-export const ContainerBg = styled.div`
-  max-width: 100%;
-  height: 100vh;
-  margin: 0 auto;
-  position: relative;
-  background-color: rgb(244 245 246 / 70%);
-`
-
-export const ModalBlock = styled.div`
-  position: absolute;
-  z-index: 5;
-  left: calc(50% - (800px / 2));
-  opacity: 1;
+  z-index: 10;
 `
 
 export const ModalContent = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-align: start;
-  -ms-flex-align: start;
   align-items: flex-start;
   width: 800px;
-  height: auto;
+  height: 90%;
   padding: 20px 92px 57px 50px;
   background-color: #ffffff;
   border-radius: 12px;
-  position: relative;
+  overflow-y: auto;
 `
 
 export const ModalContentTitle = styled.h3`
@@ -51,45 +33,18 @@ export const ModalContentTitle = styled.h3`
   margin-bottom: 15px;
 `
 
-export const ModalContentBtnClose = styled.div`
-  width: 23px;
-  height: 23px;
-  position: absolute;
-  top: 47px;
-  right: 50px;
-  z-index: 3;
-  cursor: pointer;
-`
-
-export const ModalContentBtnCloseLine = styled.div`
+export const ModalBtnClosedSvg = styled.svg`
   position: relative;
-  width: 100%;
-  height: 100%;
+  left: 105%;
+  top: -60px;
+  width: 30px;
+  height: 30px;
+  fill: transparent;
+  stroke: #696969;
+  cursor: pointer;
 
-  &::before {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    border-radius: 2px;
-    background-color: #d9d9d9;
-    top: 47%;
-    right: -4px;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    border-radius: 2px;
-    background-color: #d9d9d9;
-    top: 47%;
-    right: -4px;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+  &:hover {
+    stroke: #009ee4;
   }
 `
 
@@ -264,6 +219,7 @@ export const ReviewItemLeftImgBlock = styled.div`
   height: 40px;
   border-radius: 50%;
   background-color: #f0f0f0;
+  overflow: hidden;
 `
 
 export const ReviewItemLeftImage = styled.img`

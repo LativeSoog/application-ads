@@ -86,7 +86,7 @@ export const AdvertPage = () => {
     setModalWindowEditAdvert(true)
   }
 
-  const closeWindow = () => {
+  const closeModalWindow = () => {
     if (modalWindowReview) {
       setModalWindowReview(false)
       document.body.style.overflow = 'unset'
@@ -102,7 +102,7 @@ export const AdvertPage = () => {
     <>
       {modalWindowEditAdvert && (
         <EditAdvert
-          closeWindow={closeWindow}
+          closeWindow={closeModalWindow}
           token={token}
           id={params.id}
           currentTitle={currentAdvertData.title}
@@ -113,7 +113,7 @@ export const AdvertPage = () => {
         />
       )}
       {modalWindowReview ? (
-        <ReviewsAdvert closeWindow={closeWindow} params={params} />
+        <ReviewsAdvert closeModalWindow={closeModalWindow} params={params} />
       ) : (
         <>
           <S.MainContainer>

@@ -7,7 +7,7 @@ import {
 import * as S from './ReviewsAdvertStyle'
 import { useUpdateUserTokenMutation } from '../../services/user'
 
-export const ReviewsAdvert = ({ closeWindow, params }) => {
+export const ReviewsAdvert = ({ closeModalWindow, params }) => {
   const [token, setToken] = useState(
     JSON.parse(localStorage.getItem('token_user')),
   )
@@ -82,64 +82,60 @@ export const ReviewsAdvert = ({ closeWindow, params }) => {
   }
 
   return (
-    <S.Wrapper>
-      <S.ContainerBg>
-        <S.ModalBlock>
-          <S.ModalContent>
-            <S.ModalContentTitle>Отзывы о товаре</S.ModalContentTitle>
-            <S.ModalContentBtnClose onClick={closeWindow}>
-              <S.ModalContentBtnCloseLine />
-            </S.ModalContentBtnClose>
+    <S.ModalWrapper>
+      <S.ModalContent>
+        <S.ModalContentTitle>Отзывы о товаре</S.ModalContentTitle>
+        <S.ModalBtnClosedSvg onClick={closeModalWindow}>
+          <use xlinkHref="/img/icon/sprite.svg#icon-close"></use>
+        </S.ModalBtnClosedSvg>
 
-            <S.ModalScroll>
-              <S.ModalFormNewRew id="formNewRew">
-                <S.ModalFormNewRewBlock>
-                  <S.ModalFormNewRewLabel htmlFor="formArea">
-                    Добавить отзыв
-                  </S.ModalFormNewRewLabel>
-                  {errorMessageComment}
-                  <S.ModalFormNewRewArea
-                    name="text"
-                    id="formArea"
-                    cols="auto"
-                    rows="5"
-                    placeholder="Введите описание"
-                    onChange={(e) => {
-                      setTextAddComment(e.target.value)
-                    }}
-                    value={textAddComment}
-                  />
-                </S.ModalFormNewRewBlock>
-                <S.ModalFormNewRewBtn
-                  onClick={handleAddComment}
-                  $buttonActive={textAddComment}
-                >
-                  Опубликовать
-                </S.ModalFormNewRewBtn>
-              </S.ModalFormNewRew>
+        <S.ModalScroll>
+          <S.ModalFormNewRew>
+            <S.ModalFormNewRewBlock>
+              <S.ModalFormNewRewLabel htmlFor="formArea">
+                Добавить отзыв
+              </S.ModalFormNewRewLabel>
+              {errorMessageComment}
+              <S.ModalFormNewRewArea
+                name="text"
+                id="formArea"
+                cols="auto"
+                rows="5"
+                placeholder="Введите описание"
+                onChange={(e) => {
+                  setTextAddComment(e.target.value)
+                }}
+                value={textAddComment}
+              />
+            </S.ModalFormNewRewBlock>
+            <S.ModalFormNewRewBtn
+              onClick={handleAddComment}
+              $buttonActive={textAddComment}
+            >
+              Опубликовать
+            </S.ModalFormNewRewBtn>
+          </S.ModalFormNewRew>
 
-              <S.ModalReviews>
-                {advertCommentsLoading
-                  ? 'Комментарии загружаются, пожалуйста подождите'
-                  : advertComments.length > 0
-                  ? advertComments.map((comment) => {
-                      return (
-                        <Review
-                          key={comment.id}
-                          imgUser={`${host}${comment.author.avatar}`}
-                          nameUser={comment.author.name}
-                          dateComment={comment.created_on}
-                          textComment={comment.text}
-                        />
-                      )
-                    })
-                  : 'Комментариев нет'}
-              </S.ModalReviews>
-            </S.ModalScroll>
-          </S.ModalContent>
-        </S.ModalBlock>
-      </S.ContainerBg>
-    </S.Wrapper>
+          <S.ModalReviews>
+            {advertCommentsLoading
+              ? 'Комментарии загружаются, пожалуйста подождите'
+              : advertComments.length > 0
+              ? advertComments.map((comment) => {
+                  return (
+                    <Review
+                      key={comment.id}
+                      imgUser={`${host}${comment.author.avatar}`}
+                      nameUser={comment.author.name}
+                      dateComment={comment.created_on}
+                      textComment={comment.text}
+                    />
+                  )
+                })
+              : 'Комментариев нет'}
+          </S.ModalReviews>
+        </S.ModalScroll>
+      </S.ModalContent>
+    </S.ModalWrapper>
   )
 }
 
