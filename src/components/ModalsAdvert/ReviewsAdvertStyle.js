@@ -1,4 +1,9 @@
 import styled from 'styled-components'
+import {
+  BtnHoverMixin,
+  BtnNotActiveMixin,
+  BtnRegularMixin,
+} from '../../style/AppStyle'
 
 export const ModalWrapper = styled.div`
   position: fixed;
@@ -159,22 +164,18 @@ export const ModalFormNewRewArea = styled.textarea`
 `
 
 export const ModalFormNewRewBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${(props) => (props.$buttonActive ? BtnRegularMixin : BtnNotActiveMixin)}
   width: 181px;
   height: 50px;
-  background: ${(props) => (props.$buttonActive ? '#009EE4' : '#D9D9D9')};
-  border: 1px solid ${(props) => (props.$buttonActive ? '#009EE4' : '#D9D9D9')};
-  border-radius: 6px;
-  font-size: 16px;
-  line-height: 24px;
-  color: #ffffff;
-  cursor: pointer;
 
-  &:hover {
-    background: ${(props) => (props.$buttonActive ? '#0080C1' : '#D9D9D9')};
-  }
+  ${(props) => (props.$buttonActive ? `&:hover { ${BtnHoverMixin} }` : null)}
+`
+
+export const ModalInfoMessage = styled.p`
+  font-size: 18px;
+  margin: 20px 0;
+  color: ${(props) => props.$colorText};
+  text-align: center;
 `
 
 export const ModalReviews = styled.div`

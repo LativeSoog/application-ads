@@ -6,80 +6,80 @@ import {
 } from '../../services/advert'
 import * as S from './ReviewsAdvertStyle'
 import { useUpdateUserTokenMutation } from '../../services/user'
+import { useDispatch, useSelector } from 'react-redux'
+import { currentUser, userToken } from '../../store/selectors/users'
+import { useUpdateToken } from '../../hooks/updateToken'
+import { setUserToken } from '../../store/actions/creators/users'
 
 export const ReviewsAdvert = ({ closeModalWindow, params }) => {
-  const [token, setToken] = useState(
-    JSON.parse(localStorage.getItem('token_user')),
-  )
-  const [errorMessageComment, setErrorMessageComment] = useState(false)
+  const dispatch = useDispatch()
+  const user = useSelector(currentUser)
+  const token = useSelector(userToken)
+  const updateToken = useUpdateToken()
+
+  const [errorToken, setErrorToken] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(false)
   const [textAddComment, setTextAddComment] = useState('')
+
   const {
     data: advertComments,
     isLoading: advertCommentsLoading,
     refetch: advertCommentsRefetch,
   } = useGetCommentsAdvertQuery(params.id)
-
-  const [updateUserToken] = useUpdateUserTokenMutation()
   const [addComment] = useAddCommentAdvertMutation()
 
-  useEffect(() => {
-    const getUpdateUserToken = async () => {
-      try {
-        const responseNewToken = await updateUserToken({
-          accessToken: token.access_token,
-          refreshToken: token.refresh_token,
-        })
-
-        if (responseNewToken.data) {
-          localStorage.setItem(
-            'token_user',
-            JSON.stringify(responseNewToken.data),
-          )
-          setToken(responseNewToken.data)
-        }
-
-        if (responseNewToken.error) {
-          switch (responseNewToken.error.status) {
-            case 401:
-              throw new Error(
-                'Произошла ошибка. Пожалуйста, авторизируйтесь заново',
-              )
-            //localStorage.clear()
-          }
-        }
-      } catch (error) {
-        setErrorMessage(error.message)
-      }
-    }
-    getUpdateUserToken()
-  }, [])
-
   const handleAddComment = async () => {
-    if (textAddComment.length > 1) {
-      try {
-        const responseAddComment = await addComment({
-          textAddComment,
-          id: params.id,
-          token: token.access_token,
-        })
-
-        if (responseAddComment.data) {
-          await advertCommentsRefetch()
-          setTextAddComment('')
-        }
-
-        if (responseAddComment.error) {
-          throw new Error('Произошла ошибка, попробуйте позже')
-        }
-      } catch (error) {
-        setErrorMessageComment(error.message)
-      }
-    } else {
-      setErrorMessageComment(
+    if (textAddComment.length < 2) {
+      return setErrorMessage(
         'Комментарий не должен быть пустым или содержать менее 2-х символов',
       )
     }
+
+    try {
+      const response = await addComment({
+        textAddComment,
+        id: params.id,
+        token: token.access_token,
+      })
+
+      if (response.data) {
+        await advertCommentsRefetch()
+        setTextAddComment('')
+        setErrorMessage(false)
+      }
+
+      if (response.error) {
+        switch (response.error.status) {
+          case 401:
+            console.log('Сработала 401 ошибка')
+            setErrorToken(true)
+        }
+      }
+    } catch (error) {
+      setErrorMessage(error.message)
+    }
   }
+
+  useEffect(() => {
+    if (errorToken) {
+      const handleUpdateToken = async () => {
+        try {
+          const response = await updateToken({
+            accessToken: token.access_token,
+            refreshToken: token.refresh_token,
+          })
+          dispatch(setUserToken(response))
+          handleAddComment()
+        } catch (error) {
+          console.error('Ошибка обновления токена: ', error)
+        } finally {
+          setErrorToken(false)
+        }
+      }
+      handleUpdateToken()
+      console.log(token)
+    }
+  }, [errorToken])
 
   return (
     <S.ModalWrapper>
@@ -90,31 +90,41 @@ export const ReviewsAdvert = ({ closeModalWindow, params }) => {
         </S.ModalBtnClosedSvg>
 
         <S.ModalScroll>
-          <S.ModalFormNewRew>
-            <S.ModalFormNewRewBlock>
-              <S.ModalFormNewRewLabel htmlFor="formArea">
-                Добавить отзыв
-              </S.ModalFormNewRewLabel>
-              {errorMessageComment}
-              <S.ModalFormNewRewArea
-                name="text"
-                id="formArea"
-                cols="auto"
-                rows="5"
-                placeholder="Введите описание"
-                onChange={(e) => {
-                  setTextAddComment(e.target.value)
-                }}
-                value={textAddComment}
-              />
-            </S.ModalFormNewRewBlock>
-            <S.ModalFormNewRewBtn
-              onClick={handleAddComment}
-              $buttonActive={textAddComment}
-            >
-              Опубликовать
-            </S.ModalFormNewRewBtn>
-          </S.ModalFormNewRew>
+          {user ? (
+            <S.ModalFormNewRew>
+              {errorMessage && (
+                <S.ModalInfoMessage $colorText={'#750000'}>
+                  {errorMessage}
+                </S.ModalInfoMessage>
+              )}
+              <S.ModalFormNewRewBlock>
+                <S.ModalFormNewRewLabel htmlFor="formArea">
+                  Добавить отзыв
+                </S.ModalFormNewRewLabel>
+                <S.ModalFormNewRewArea
+                  name="text"
+                  id="formArea"
+                  cols="auto"
+                  rows="5"
+                  placeholder="Введите описание"
+                  onChange={(e) => {
+                    setTextAddComment(e.target.value)
+                  }}
+                  value={textAddComment}
+                />
+              </S.ModalFormNewRewBlock>
+              <S.ModalFormNewRewBtn
+                onClick={handleAddComment}
+                $buttonActive={textAddComment.length > 1}
+              >
+                Опубликовать
+              </S.ModalFormNewRewBtn>
+            </S.ModalFormNewRew>
+          ) : (
+            <S.ModalInfoMessage $colorText={'#000'}>
+              Только авторизованные пользователи могут оставлять комментарии
+            </S.ModalInfoMessage>
+          )}
 
           <S.ModalReviews>
             {advertCommentsLoading
@@ -131,7 +141,7 @@ export const ReviewsAdvert = ({ closeModalWindow, params }) => {
                     />
                   )
                 })
-              : 'Комментариев нет'}
+              : 'Комментариев пока нет'}
           </S.ModalReviews>
         </S.ModalScroll>
       </S.ModalContent>
