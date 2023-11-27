@@ -1,4 +1,4 @@
-import { formatDateAndTime } from '../../helper'
+import { formatDateAndTime, host } from '../../helper'
 import * as S from './style'
 
 export const CardItem = ({
@@ -9,7 +9,7 @@ export const CardItem = ({
   dateItem,
   imgItem,
 }) => {
-  const imgItemLink = 'http://127.0.0.1:8090/' + imgItem
+  const imgItemLink = imgItem ? host + imgItem : '/img/no-photo.jpg'
 
   return (
     <S.CardsItem>
