@@ -67,8 +67,10 @@ export const ReviewsAdvert = ({ closeModalWindow, params }) => {
             accessToken: token.access_token,
             refreshToken: token.refresh_token,
           })
-          dispatch(setUserToken(response))
-          handleAddComment()
+          if (response) {
+            dispatch(setUserToken(response))
+            handleAddComment()
+          }
         } catch (error) {
           console.error('Ошибка обновления токена: ', error)
         } finally {
