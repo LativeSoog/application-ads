@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { BtnHoverMixin, BtnRegularMixin } from '../../style/AppStyle'
 
 const ModalFormEditAdvInputMixin = css`
   padding: 13px 19px;
@@ -9,45 +10,29 @@ const ModalFormEditAdvInputMixin = css`
   line-height: 1;
 `
 
-export const Wrapper = styled.div`
+export const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  min-height: 100%;
-  overflow: hidden;
-`
-
-export const ContainerBg = styled.div`
-  max-width: 100%;
-  height: 110vh;
-  margin: 0 auto;
-  position: relative;
-  background-color: #f4f5f6;
-`
-
-export const ModalBlock = styled.div`
-  position: absolute;
-  z-index: 5;
-  left: calc(50% - (600px / 2));
-  top: 60px;
-  opacity: 1;
+  height: 100%;
+  background: rgb(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 `
 
 export const ModalContent = styled.div`
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-align: start;
-  -ms-flex-align: start;
   align-items: flex-start;
   width: 600px;
-  height: auto;
+  height: 99%;
   padding: 32px 50px 42px;
   background-color: #ffffff;
   border-radius: 12px;
-  position: relative;
+  overflow-y: auto;
 `
 
 export const ModalContentTitle = styled.h3`
@@ -56,46 +41,23 @@ export const ModalContentTitle = styled.h3`
   font-weight: 500;
   color: #000000;
 `
-
-export const ModalContentBtnClose = styled.div`
-  width: 23px;
-  height: 23px;
-  position: absolute;
-  top: 47px;
-  right: 50px;
-  z-index: 3;
-  cursor: pointer;
-`
-
-export const ModalContentBtnCloseLine = styled.div`
+export const ModalBtnClosedContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
+`
 
-  &::before {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    border-radius: 2px;
-    background-color: #d9d9d9;
-    top: 47%;
-    right: -4px;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
-  }
+export const ModalBtnClosedSvg = styled.svg`
+  position: absolute;
+  top: -50px;
+  left: 99%;
+  width: 30px;
+  height: 30px;
+  fill: transparent;
+  stroke: #696969;
+  cursor: pointer;
 
-  &::after {
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 2px;
-    border-radius: 2px;
-    background-color: #d9d9d9;
-    top: 47%;
-    right: -4px;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+  &:hover {
+    stroke: #009ee4;
   }
 `
 
@@ -177,19 +139,10 @@ export const ModalEditAdvPhotoSpan = styled.span`
 
 export const ModalFormEditAdvBarImg = styled.div`
   width: 500px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-bottom: 10px;
   overflow: hidden;
 `
@@ -200,6 +153,7 @@ export const ModalFormEditAdvImgBlock = styled.div`
   margin-right: 10px;
   position: relative;
   z-index: 0;
+  cursor: pointer;
 `
 
 export const ModalFormEditAdvImgBlockImage = styled.img`
@@ -250,7 +204,7 @@ export const ModalFormEditAdvImgBlockDel = styled.span`
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 100px;
-  color: #0080C1;
+  color: #0080c1;
   opacity: 0;
   cursor: pointer;
 
@@ -305,19 +259,21 @@ export const ModalFormEditAdvInputPriceCover = styled.div`
 `
 
 export const ModalFormEditAdvBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${BtnRegularMixin}
   margin-top: 10px;
   width: 181px;
   height: 50px;
-  background: #d9d9d9;
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  font-size: 16px;
-  line-height: 24px;
-  color: #ffffff;
-  cursor: pointer;
+
+  &:hover {
+    ${BtnHoverMixin}
+  }
+`
+
+export const ModalInfoMessage = styled.p`
+  font-size: 18px;
+  margin: 20px 0;
+  color: ${(props) => props.$colorText};
+  text-align: center;
 `
 
 export const FileInput = styled.input`

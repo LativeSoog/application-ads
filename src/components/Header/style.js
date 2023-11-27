@@ -33,4 +33,8 @@ export const HeaderButtonMain = styled.button`
   font-size: 16px;
   line-height: 1;
   margin-left: ${(props) => props.$marginLeft};
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
 `

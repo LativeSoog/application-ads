@@ -1,5 +1,18 @@
 import { createGlobalStyle } from 'styled-components'
 
+export const BtnNotActiveMixin = `
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    line-height: 1;
+    color: #ffffff;
+    background-color: #D9D9D9;
+    border-radius: 6px;
+    border: 1px solid #D9D9D9;
+    cursor: default;
+`
+
 export const BtnRegularMixin = `
     display: flex;
     align-items: center;
@@ -14,9 +27,9 @@ export const BtnRegularMixin = `
 `
 
 export const BtnHoverMixin = `
-color: #ffffff;
-background-color: #0080C1;
-border: 1px solid #0080C1;
+    color: #ffffff;
+    background-color: #0080C1;
+    border: 1px solid #0080C1;
 `
 
 export const StyleGlobal = createGlobalStyle`

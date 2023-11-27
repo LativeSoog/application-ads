@@ -15,4 +15,5 @@ export const AdvertImgBarImage = styled.img`
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
+  cursor: pointer;
 `
