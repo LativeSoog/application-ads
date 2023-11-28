@@ -4,10 +4,12 @@ import * as S from './style'
 import { AddAdvert } from '../ModalsAdvert/AddAdvert'
 import { currentUser } from '../../store/selectors/users'
 import { useSelector } from 'react-redux'
+import { Logout } from '../Logout/Logout'
 
 export const Header = () => {
   const [isModalAuth, setIsModalAuth] = useState(false)
   const [isModalAddAdvert, setIsModalAddAdvert] = useState(false)
+  const [isModalLogout, setIsModalLogout] = useState(false)
   const isUser = useSelector(currentUser)
 
   const handleOpenModalAuth = () => {
@@ -17,6 +19,11 @@ export const Header = () => {
 
   const handleOpenModalAddAdv = () => {
     setIsModalAddAdvert(true)
+    document.body.style.overflow = 'hidden'
+  }
+
+  const handleOpenModalLogout = () => {
+    setIsModalLogout(true)
     document.body.style.overflow = 'hidden'
   }
 
@@ -30,12 +37,18 @@ export const Header = () => {
       setIsModalAddAdvert(false)
       document.body.style.overflow = 'unset'
     }
+
+    if (isModalLogout) {
+      setIsModalLogout(false)
+      document.body.style.overflow = 'unset'
+    }
   }
 
   return (
     <>
       {isModalAuth && <Authorization closeModalWindow={closeModalWindow} />}
       {isModalAddAdvert && <AddAdvert closeModalWindow={closeModalWindow} />}
+      {isModalLogout && <Logout closeModalWindow={closeModalWindow} />}
 
       <S.Header>
         <S.HeaderNav>
@@ -52,6 +65,13 @@ export const Header = () => {
                   Личный кабинет
                 </S.HeaderButtonMain>
               </S.HeaderButtonLink>
+              <S.HeaderButtonLogout
+                $width="120px"
+                $marginLeft="10px"
+                onClick={handleOpenModalLogout}
+              >
+                <use xlinkHref="/img/icon/sprite.svg#icon-logout"></use>
+              </S.HeaderButtonLogout>
             </>
           ) : (
             <S.HeaderButtonMain onClick={handleOpenModalAuth} $width="224px">

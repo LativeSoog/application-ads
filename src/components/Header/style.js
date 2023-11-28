@@ -38,3 +38,15 @@ export const HeaderButtonMain = styled.button`
     background-color: rgba(255, 255, 255, 0.15);
   }
 `
+
+export const HeaderButtonLogout = styled.svg`
+  width: 40px;
+  height: 40px;
+  fill: transparent;
+  stroke: #696969;
+  cursor: pointer;
+  margin-left: 10px;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  padding: 5px;
+`
