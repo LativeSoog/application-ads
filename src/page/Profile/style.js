@@ -15,7 +15,6 @@ export const MainContainer = styled.div`
 `
 export const MainCenterBlock = styled.div``
 
-
 export const MainTitleH2 = styled.h2`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
   font-family: 'Roboto', sans-serif;
@@ -41,6 +40,12 @@ export const ProfileTitle = styled.h3`
   font-weight: 500;
   color: #000000;
   margin-bottom: 20px;
+`
+
+export const ModalInfoMessage = styled.p`
+  font-size: 18px;
+  margin: 20px 0;
+  color: ${(props) => props.$colorText};
 `
 
 export const ProfileSettings = styled.div`

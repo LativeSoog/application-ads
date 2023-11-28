@@ -1,72 +1,44 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { CardItem } from '../../components/CardItem/CardItem'
 import * as S from './style'
-import { currentUser } from '../../store/selectors/users'
+import { currentUser, userToken } from '../../store/selectors/users'
 import { useEffect, useRef, useState } from 'react'
 import {
   useEditCurrentUserMutation,
   useUpdateUserTokenMutation,
   useUploadUserPhotoMutation,
 } from '../../services/user'
-import { setUserData } from '../../store/actions/creators/users'
+import { setUserData, setUserToken } from '../../store/actions/creators/users'
 import { useGetAdvertsCurrentUserQuery } from '../../services/advert'
 import { ChangePassword } from '../../components/ChangePassword/ChangePassword'
 import { MainMenu } from '../../components/MainMenu/MainMenu'
+import { host } from '../../helper'
+import { useUpdateToken } from '../../hooks/updateToken'
 
 export const ProfilePage = () => {
-  const host = 'http://127.0.0.1:8090/'
   const dispatch = useDispatch()
   const user = useSelector(currentUser)
+  const token = useSelector(userToken)
+  const updateToken = useUpdateToken()
   const refFile = useRef(false)
-  const [token, setToken] = useState(
-    JSON.parse(localStorage.getItem('token_user')),
-  )
-  const [isModalChangePassword, setIsModalChangePassword] = useState(false)
 
-  const [errorMessage, setErrorMessage] = useState('')
+  const [isModalChangePassword, setIsModalChangePassword] = useState(false)
+  const [errorToken, setErrorToken] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(false)
   const [userName, setNameUser] = useState(user.name)
   const [userSurname, setSurnameUser] = useState(user.surname)
   const [userCity, setCityUser] = useState(user.city)
   const [userPhone, setPhoneUser] = useState(user.phone)
   const [isUploadPhoto, setIsUploadPhoto] = useState(false)
 
-  const [updateUserToken] = useUpdateUserTokenMutation()
   const [editUserProfile] = useEditCurrentUserMutation()
   const [uploadAvatarProfile] = useUploadUserPhotoMutation()
-  const { data: advertsCurrentUser, isLoading: loadingAdvertsUser } =
-    useGetAdvertsCurrentUserQuery(token?.access_token)
-
-  useEffect(() => {
-    const getUpdateUserToken = async () => {
-      try {
-        const responseNewToken = await updateUserToken({
-          accessToken: token.access_token,
-          refreshToken: token.refresh_token,
-        })
-
-        if (responseNewToken.data) {
-          localStorage.setItem(
-            'token_user',
-            JSON.stringify(responseNewToken.data),
-          )
-          setToken(responseNewToken.data)
-        }
-
-        if (responseNewToken.error) {
-          switch (responseNewToken.error.status) {
-            case 401:
-              throw new Error(
-                'Произошла ошибка. Пожалуйста, авторизируйтесь заново',
-              )
-            //localStorage.clear()
-          }
-        }
-      } catch (error) {
-        setErrorMessage(error.message)
-      }
-    }
-    getUpdateUserToken()
-  }, [])
+  const {
+    data: advertsCurrentUser,
+    isLoading: loadingAdvertsUser,
+    error: errorAdvertsCurrentUser,
+    refetch: refetchAdvertsCurrentUser,
+  } = useGetAdvertsCurrentUserQuery(token?.access_token)
 
   const closeModalWindow = () => {
     if (isModalChangePassword) {
@@ -74,9 +46,22 @@ export const ProfilePage = () => {
     }
   }
 
-  const saveProfileChanges = async () => {
+  const handleChangesProfile = async () => {
+    if (!userName) {
+      return setErrorMessage('Пожалуйста, укажите имя пользователя')
+    }
+    if (!userSurname) {
+      return setErrorMessage('Пожалуйста, укажите фамилию пользователя')
+    }
+    if (!userCity) {
+      return setErrorMessage('Пожалуйста, укажите город')
+    }
+    if (!userPhone) {
+      return setErrorMessage('Пожалуйста, укажите телефон')
+    }
+
     try {
-      const responseUpdateData = await editUserProfile({
+      const response = await editUserProfile({
         userName,
         userSurname,
         userCity,
@@ -84,54 +69,79 @@ export const ProfilePage = () => {
         token: token.access_token,
       })
 
-      if (responseUpdateData.data) {
-        dispatch(setUserData(responseUpdateData.data))
-        localStorage.setItem('user', JSON.stringify(responseUpdateData.data))
+      if (response.data) {
+        dispatch(setUserData(response.data))
+        localStorage.setItem('user', JSON.stringify(response.data))
+        setErrorMessage(false)
       }
 
-      if (responseUpdateData.error) {
-        switch (responseUpdateData.error.status) {
+      if (response.error) {
+        switch (response.error.status) {
           case 401:
-            throw new Error(
-              'Превышено время ожидания. Пожалуйста, авторизируйтесь заново и повторите попытку',
-            )
-          //localStorage.clear()
+            setErrorToken(true)
         }
       }
     } catch (error) {
+      console.error(error)
       setErrorMessage(error.message)
     }
   }
 
-  const uploadAvatarUser = async () => {
+  const handleUploadAvatar = async () => {
     const file = refFile?.current.files[0]
     const formData = new FormData()
     formData.append('file', file)
 
     try {
-      const responseUpload = await uploadAvatarProfile({
+      const response = await uploadAvatarProfile({
         image: formData,
         token: token.access_token,
       })
 
-      if (responseUpload.data) {
-        dispatch(setUserData(responseUpload.data))
-        localStorage.setItem('user', JSON.stringify(responseUpload.data))
+      if (response.data) {
+        dispatch(setUserData(response.data))
+        localStorage.setItem('user', JSON.stringify(response.data))
         setIsUploadPhoto(!isUploadPhoto)
       }
 
-      if (responseUpload.error) {
-        switch (responseUpload.error.status) {
+      if (response.error) {
+        switch (response.error.status) {
           case 401:
-            throw new Error(
-              'Превышено время ожидания. Пожалуйста, авторизируйтесь заново и повторите попытку',
-            )
+            setErrorToken(true)
         }
       }
     } catch (error) {
+      console.error(error)
       setErrorMessage(error.message)
     }
   }
+
+  useEffect(() => {
+    if (errorToken || errorAdvertsCurrentUser) {
+      const handleUpdateToken = async () => {
+        try {
+          const response = await updateToken({
+            accessToken: token.access_token,
+            refreshToken: token.refresh_token,
+          })
+          if (response) {
+            dispatch(setUserToken(response))
+            isUploadPhoto ? handleUploadAvatar() : handleChangesProfile()
+          }
+
+          if (errorAdvertsCurrentUser?.data) {
+            console.log('ok, if in UE')
+            await refetchAdvertsCurrentUser()
+          }
+        } catch (error) {
+          console.error('Ошибка обновления токена: ', error)
+        } finally {
+          setErrorToken(false)
+        }
+      }
+      handleUpdateToken()
+    }
+  }, [errorToken, errorAdvertsCurrentUser])
 
   return (
     <S.MainWrapper $isModalChangePassword={isModalChangePassword}>
@@ -148,12 +158,19 @@ export const ProfilePage = () => {
           <S.MainProfile>
             <S.ProfileContent>
               <S.ProfileTitle>Настройки профиля</S.ProfileTitle>
+              {errorMessage && (
+                <S.ModalInfoMessage $colorText={'#750000'}>
+                  Произошла ошибка: {errorMessage}
+                </S.ModalInfoMessage>
+              )}
               <S.ProfileSettings>
                 <S.ProfileSettingsLeft>
                   <S.ProfileSettingsImg>
                     <S.ProfileLink>
                       <S.ProfileSettingsImgImage
-                        src={user.avatar ? host + user.avatar : ''}
+                        src={
+                          user.avatar ? host + user.avatar : '/img/no-photo.jpg'
+                        }
                       />
                     </S.ProfileLink>
                   </S.ProfileSettingsImg>
@@ -166,7 +183,7 @@ export const ProfilePage = () => {
                     <S.ProfileSettingsPhotoUpload
                       type="file"
                       ref={refFile}
-                      onChange={uploadAvatarUser}
+                      onChange={handleUploadAvatar}
                     />
                   </S.ProfileSettingsPhotoBlock>
                 </S.ProfileSettingsLeft>
@@ -226,7 +243,7 @@ export const ProfilePage = () => {
                         onChange={(e) => setPhoneUser(e.target.value)}
                       />
                     </S.ProfileSettingsDiv>
-                    <S.ProfileSettingsBtn onClick={saveProfileChanges}>
+                    <S.ProfileSettingsBtn onClick={handleChangesProfile}>
                       Сохранить
                     </S.ProfileSettingsBtn>
                   </S.ProfileSettingsForm>
