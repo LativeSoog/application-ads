@@ -107,7 +107,9 @@ export const ProfileSettingsPhotoBlock = styled.div`
   align-items: center;
 `
 
-export const ProfileSettingsPhotoUpload = styled.input``
+export const ProfileSettingsPhotoUpload = styled.input`
+  display: none;
+`
 
 export const ProfileSettingsRight = styled.div`
   width: 630px;

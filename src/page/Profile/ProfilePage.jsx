@@ -101,7 +101,7 @@ export const ProfilePage = () => {
       if (response.data) {
         dispatch(setUserData(response.data))
         localStorage.setItem('user', JSON.stringify(response.data))
-        setIsUploadPhoto(!isUploadPhoto)
+        setIsUploadPhoto(false)
       }
 
       if (response.error) {
@@ -175,17 +175,17 @@ export const ProfilePage = () => {
                     </S.ProfileLink>
                   </S.ProfileSettingsImg>
                   <S.ProfileSettingsChangePhoto
-                    onClick={() => setIsUploadPhoto(!isUploadPhoto)}
+                    onClick={() => refFile.current.click()}
                   >
                     Заменить
                   </S.ProfileSettingsChangePhoto>
-                  <S.ProfileSettingsPhotoBlock $uploadPhoto={isUploadPhoto}>
-                    <S.ProfileSettingsPhotoUpload
-                      type="file"
-                      ref={refFile}
-                      onChange={handleUploadAvatar}
-                    />
-                  </S.ProfileSettingsPhotoBlock>
+
+                  <S.ProfileSettingsPhotoUpload
+                    type="file"
+                    accept="image/*"
+                    ref={refFile}
+                    onChange={handleUploadAvatar}
+                  />
                 </S.ProfileSettingsLeft>
 
                 <S.ProfileSettingsRight>
