@@ -57,6 +57,12 @@ export const ModalInfoMessage = styled.p`
   background: ${(props) => props.$colorBackground};
 `
 
+export const ModalNoUserMessage = styled.p`
+  font-size: 40px;
+  text-align: center;
+  font-weight: 500;
+`
+
 export const ProfileSettings = styled.div`
   display: -webkit-box;
   display: -ms-flexbox;
