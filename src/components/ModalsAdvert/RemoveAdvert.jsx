@@ -1,28 +1,35 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useDeleteAdvertMutation } from '../../services/advert'
-import * as S from './RemovePublicationStyle'
+import {
+  useDeleteAdvertMutation,
+  useGetAllAdvertsQuery,
+} from '../../services/advert'
+import * as S from './RemoveAdvertStyle'
 import { userToken } from '../../store/selectors/users'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { setUserToken } from '../../store/actions/creators/users'
+import { useUpdateToken } from '../../hooks/updateToken'
 
-export const RemovePublication = ({ closeModalWindow, id }) => {
+export const RemoveAdvert = ({ closeModalWindow, id }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const token = useSelector(userToken)
+  const updateToken = useUpdateToken()
 
   const [errorToken, setErrorToken] = useState(false)
   const [successMessage, setSuccessMessage] = useState(false)
 
   const [deleteAdvert] = useDeleteAdvertMutation()
+  const { refetch: refetchAllAdverts } = useGetAllAdvertsQuery()
 
   const handleDeleteAdvert = async () => {
     try {
-      const response = deleteAdvert({ id, token: token.access_token })
+      const response = await deleteAdvert({ id, token: token.access_token })
 
       if (!response.data) {
         setSuccessMessage(true)
         document.body.style.overflow = 'unset'
+        await refetchAllAdverts()
       }
 
       if (response.error) {

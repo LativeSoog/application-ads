@@ -3,6 +3,7 @@ import * as S from './EditAdvertStyle'
 import {
   useDeletePhotoAdvertMutation,
   useEditAdvertMutation,
+  useGetAllAdvertsQuery,
   useUploadPhotoAdvertMutation,
 } from '../../services/advert'
 import { host } from '../../helper'
@@ -31,6 +32,7 @@ export const EditAdvert = ({
   const [priceAdvert, setPriceAdvert] = useState(currentPrice)
   const [imagesAdvert, setImagesAdvert] = useState(currentImages)
   const [editAdvert] = useEditAdvertMutation()
+  const { refetch: refetchAllAdverts } = useGetAllAdvertsQuery()
 
   const handleAdvertEdit = async () => {
     if (!titleAdvert) {
@@ -57,6 +59,7 @@ export const EditAdvert = ({
       if (response.data) {
         setErrorMessage(false)
         await advertDataRefetch()
+        await refetchAllAdverts()
         closeModalWindow()
       }
 

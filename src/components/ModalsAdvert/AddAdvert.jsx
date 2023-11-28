@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 import * as S from './AddAdvertStyle'
 import { useDispatch, useSelector } from 'react-redux'
 import { currentUser, userToken } from '../../store/selectors/users'
-import { useAddTextAdvertMutation } from '../../services/advert'
+import {
+  useAddTextAdvertMutation,
+  useGetAllAdvertsQuery,
+} from '../../services/advert'
 import { useNavigate } from 'react-router-dom'
 import { useUpdateToken } from '../../hooks/updateToken'
 import { setUserToken } from '../../store/actions/creators/users'
@@ -23,7 +26,7 @@ export const AddAdvert = ({ closeModalWindow }) => {
   const [idNewAdvert, setIdNewAdvert] = useState('')
 
   const [addTextAdvert] = useAddTextAdvertMutation()
-
+  const { refetch: refetchAllAdverts } = useGetAllAdvertsQuery()
 
   const handleAddTextAdvert = async () => {
     if (!titleAdvert) {
@@ -45,6 +48,7 @@ export const AddAdvert = ({ closeModalWindow }) => {
       if (response.data) {
         setSuccessMessage(true)
         setIdNewAdvert(response.data.id)
+        await refetchAllAdverts()
       }
 
       if (response.error) {
