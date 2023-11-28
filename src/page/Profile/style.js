@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { BtnHoverMixin, BtnRegularMixin } from '../../style/AppStyle'
+import {
+  BtnHoverMixin,
+  BtnNotActiveMixin,
+  BtnRegularMixin,
+} from '../../style/AppStyle'
 
 export const MainWrapper = styled.div`
   position: relative;
@@ -45,7 +49,11 @@ export const ProfileTitle = styled.h3`
 export const ModalInfoMessage = styled.p`
   font-size: 18px;
   margin: 20px 0;
-  color: ${(props) => props.$colorText};
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  background: ${(props) => props.$colorBackground};
 `
 
 export const ProfileSettings = styled.div`
@@ -167,14 +175,12 @@ export const ProfileSettingsDivBtn = styled.div`
 `
 
 export const ProfileSettingsBtn = styled.div`
-  ${BtnRegularMixin}
+  ${({ $isChange }) => ($isChange ? BtnRegularMixin : BtnNotActiveMixin)}
   width: 154px;
   height: 50px;
   margin: 10px 7px 0;
 
-  &:hover {
-    ${BtnHoverMixin}
-  }
+  ${({ $isChange }) => ($isChange ? `&:hover {${BtnHoverMixin}}` : null)}
 `
 
 export const MainContent = styled.div`

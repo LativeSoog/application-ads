@@ -25,11 +25,13 @@ export const ProfilePage = () => {
   const [isModalChangePassword, setIsModalChangePassword] = useState(false)
   const [errorToken, setErrorToken] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
+  const [successMessage, setSuccessMessage] = useState(false)
   const [userName, setNameUser] = useState(user.name)
   const [userSurname, setSurnameUser] = useState(user.surname)
   const [userCity, setCityUser] = useState(user.city)
   const [userPhone, setPhoneUser] = useState(user.phone)
   const [isUploadPhoto, setIsUploadPhoto] = useState(false)
+  const [isChangeProfile, setIsChangeProfile] = useState(false)
 
   const [editUserProfile] = useEditCurrentUserMutation()
   const [uploadAvatarProfile] = useUploadUserPhotoMutation()
@@ -73,6 +75,11 @@ export const ProfilePage = () => {
         dispatch(setUserData(response.data))
         localStorage.setItem('user', JSON.stringify(response.data))
         setErrorMessage(false)
+        setSuccessMessage(true)
+
+        setTimeout(() => {
+          setSuccessMessage(false)
+        }, 5000)
       }
 
       if (response.error) {
@@ -143,6 +150,25 @@ export const ProfilePage = () => {
     }
   }, [errorToken, errorAdvertsCurrentUser])
 
+  useEffect(() => {
+    const isChangesProfile =
+      userName !== user.name ||
+      userSurname !== user.surname ||
+      userCity !== user.city ||
+      userPhone !== user.phone
+
+    setIsChangeProfile(isChangesProfile)
+  }, [
+    userName,
+    user.name,
+    userSurname,
+    user.surname,
+    userCity,
+    user.city,
+    userPhone,
+    user.phone,
+  ])
+
   return (
     <S.MainWrapper $isModalChangePassword={isModalChangePassword}>
       <S.MainContainer>
@@ -159,8 +185,13 @@ export const ProfilePage = () => {
             <S.ProfileContent>
               <S.ProfileTitle>Настройки профиля</S.ProfileTitle>
               {errorMessage && (
-                <S.ModalInfoMessage $colorText={'#750000'}>
+                <S.ModalInfoMessage $colorBackground={'#750000'}>
                   Произошла ошибка: {errorMessage}
+                </S.ModalInfoMessage>
+              )}
+              {successMessage && (
+                <S.ModalInfoMessage $colorBackground={'#019ee4'}>
+                  Профиль успешно обновлён
                 </S.ModalInfoMessage>
               )}
               <S.ProfileSettings>
@@ -243,7 +274,10 @@ export const ProfilePage = () => {
                         onChange={(e) => setPhoneUser(e.target.value)}
                       />
                     </S.ProfileSettingsDiv>
-                    <S.ProfileSettingsBtn onClick={handleChangesProfile}>
+                    <S.ProfileSettingsBtn
+                      onClick={() => isChangeProfile && handleChangesProfile()}
+                      $isChange={isChangeProfile}
+                    >
                       Сохранить
                     </S.ProfileSettingsBtn>
                   </S.ProfileSettingsForm>
