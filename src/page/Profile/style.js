@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { BtnHoverMixin, BtnRegularMixin } from '../../style/AppStyle'
+import {
+  BtnHoverMixin,
+  BtnNotActiveMixin,
+  BtnRegularMixin,
+} from '../../style/AppStyle'
+import ReactInputMask from 'react-input-mask'
 
 export const MainWrapper = styled.div`
   position: relative;
@@ -14,7 +19,6 @@ export const MainContainer = styled.div`
   padding: 0px 10px 79px;
 `
 export const MainCenterBlock = styled.div``
-
 
 export const MainTitleH2 = styled.h2`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
@@ -41,6 +45,16 @@ export const ProfileTitle = styled.h3`
   font-weight: 500;
   color: #000000;
   margin-bottom: 20px;
+`
+
+export const ModalInfoMessage = styled.p`
+  font-size: 18px;
+  margin: 20px 0;
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  background: ${(props) => props.$colorBackground};
 `
 
 export const ProfileSettings = styled.div`
@@ -102,7 +116,9 @@ export const ProfileSettingsPhotoBlock = styled.div`
   align-items: center;
 `
 
-export const ProfileSettingsPhotoUpload = styled.input``
+export const ProfileSettingsPhotoUpload = styled.input`
+  display: none;
+`
 
 export const ProfileSettingsRight = styled.div`
   width: 630px;
@@ -148,6 +164,23 @@ export const ProfileSettingsDivInput = styled.input`
   }
 `
 
+export const ProfileSettingsDivInputMask = styled(ReactInputMask)`
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 13px 19px;
+  width: ${(props) => props.width};
+
+  &::placeholder {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.3);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+`
+
 export const ProfileSettingsDivBtn = styled.div`
   ${BtnRegularMixin}
   width: 300px;
@@ -160,14 +193,12 @@ export const ProfileSettingsDivBtn = styled.div`
 `
 
 export const ProfileSettingsBtn = styled.div`
-  ${BtnRegularMixin}
+  ${({ $isChange }) => ($isChange ? BtnRegularMixin : BtnNotActiveMixin)}
   width: 154px;
   height: 50px;
   margin: 10px 7px 0;
 
-  &:hover {
-    ${BtnHoverMixin}
-  }
+  ${({ $isChange }) => ($isChange ? `&:hover {${BtnHoverMixin}}` : null)}
 `
 
 export const MainContent = styled.div`
