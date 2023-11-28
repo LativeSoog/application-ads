@@ -12,7 +12,7 @@ import { formatDateAndTime, formatDateSells, host } from '../../helper'
 import { useSelector } from 'react-redux'
 import { currentUser } from '../../store/selectors/users'
 import { EditAdvert } from '../../components/ModalsAdvert/EditAdvert'
-import { RemovePublication } from '../../components/ModalsAdvert/RemovePublication'
+import { RemoveAdvert } from '../../components/ModalsAdvert/RemoveAdvert'
 
 export const AdvertPage = () => {
   const params = useParams()
@@ -90,7 +90,7 @@ export const AdvertPage = () => {
         />
       )}
       {modalWindowPublication && (
-        <RemovePublication closeModalWindow={closeModalWindow} id={params.id} />
+        <RemoveAdvert closeModalWindow={closeModalWindow} id={params.id} />
       )}
 
       <S.MainContainer>
