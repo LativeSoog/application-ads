@@ -5,6 +5,7 @@ import {
   BtnNotActiveMixin,
   BtnRegularMixin,
 } from '../../style/AppStyle'
+import ReactInputMask from 'react-input-mask'
 
 export const MainWrapper = styled.div`
   position: relative;
@@ -147,6 +148,23 @@ export const ProfileSettingsDivLabel = styled.label`
 `
 
 export const ProfileSettingsDivInput = styled.input`
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  padding: 13px 19px;
+  width: ${(props) => props.width};
+
+  &::placeholder {
+    background-color: transparent;
+    color: rgba(0, 0, 0, 0.3);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+`
+
+export const ProfileSettingsDivInputMask = styled(ReactInputMask)`
   background-color: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;

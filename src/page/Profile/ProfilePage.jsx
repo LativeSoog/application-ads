@@ -267,9 +267,10 @@ export const ProfilePage = () => {
                       <S.ProfileSettingsDivLabel>
                         Телефон
                       </S.ProfileSettingsDivLabel>
-                      <S.ProfileSettingsDivInput
+                      <S.ProfileSettingsDivInputMask
                         width={'614px'}
-                        placeholder="+79161234567"
+                        placeholder="+7 (___) __-__-__"
+                        mask="+7 (999) 999-99-99"
                         defaultValue={user.phone}
                         onChange={(e) => setPhoneUser(e.target.value)}
                       />
