@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom';
-import * as S from './style';
-import { Header } from '../Header/Header';
+import { Outlet } from 'react-router-dom'
+import * as S from './style'
+import { Header } from '../Header/Header'
 
 export const PageLayout = () => {
   return (
@@ -11,5 +11,5 @@ export const PageLayout = () => {
         <Outlet />
       </S.Container>
     </S.Wrapper>
-  );
-};
+  )
+}
