@@ -5,7 +5,6 @@ import { currentUser, userToken } from '../../store/selectors/users'
 import { useEffect, useRef, useState } from 'react'
 import {
   useEditCurrentUserMutation,
-  useUpdateUserTokenMutation,
   useUploadUserPhotoMutation,
 } from '../../services/user'
 import { setUserData, setUserToken } from '../../store/actions/creators/users'

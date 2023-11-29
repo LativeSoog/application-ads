@@ -1,6 +1,6 @@
 import * as S from './style'
 
-export const AdvertImageBar = ({ link, host, setCurrentImageAdvert }) => {
+export const AdvertImageBar = ({ link, setCurrentImageAdvert }) => {
   return (
     <S.AdvertImgBarDiv>
       <S.AdvertImgBarImage

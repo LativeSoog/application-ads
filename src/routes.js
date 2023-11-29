@@ -4,7 +4,6 @@ import { PageLayout } from './components/PageLayout/PageLayout'
 import { ProfilePage } from './page/Profile/ProfilePage'
 import { AdvertPage } from './page/Advert/AdvertPage'
 import { ProfileSellerPage } from './page/Profile-Seller/ProfileSellerPage'
-import { MyAdvertPage } from './page/My-Advert/MyAdvertPage'
 import { NotFound } from './page/NotFound/NotFound'
 
 export const AppRoutes = () => {
@@ -16,7 +15,6 @@ export const AppRoutes = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile-seller/:id" element={<ProfileSellerPage />} />
         <Route path="/advert/:id" element={<AdvertPage />} />
-        <Route path="/my-advert" element={<MyAdvertPage />} />
       </Route>
     </Routes>
   )

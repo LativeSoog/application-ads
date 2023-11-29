@@ -1,4 +1,4 @@
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CardItem } from '../../components/CardItem/CardItem'
 import * as S from './style'
 import { useGetAllAdvertsQuery } from '../../services/advert'

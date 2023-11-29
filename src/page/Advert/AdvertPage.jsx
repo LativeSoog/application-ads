@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux'
 import { currentUser } from '../../store/selectors/users'
 import { EditAdvert } from '../../components/ModalsAdvert/EditAdvert'
 import { RemoveAdvert } from '../../components/ModalsAdvert/RemoveAdvert'
+import { MainMenu } from '../../components/MainMenu/MainMenu'
 
 export const AdvertPage = () => {
   const params = useParams()
@@ -98,16 +99,7 @@ export const AdvertPage = () => {
       )}
 
       <S.MainContainer>
-        <S.MainMenu>
-          <S.MainMenuLogoLink to={'/'}>
-            <S.MainMenuLogoImg src="/img/logo.png" />
-          </S.MainMenuLogoLink>
-          <S.MainMenuForm>
-            <S.MainMenuFormBtnLink to={'/'}>
-              <S.MainMenuFormBtn>Вернуться на&nbsp;главную</S.MainMenuFormBtn>
-            </S.MainMenuFormBtnLink>
-          </S.MainMenuForm>
-        </S.MainMenu>
+        <MainMenu />
       </S.MainContainer>
 
       {currentAdvertLoading ? (

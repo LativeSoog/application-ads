@@ -5,7 +5,6 @@ import {
   useGetCommentsAdvertQuery,
 } from '../../services/advert'
 import * as S from './ReviewsAdvertStyle'
-import { useUpdateUserTokenMutation } from '../../services/user'
 import { useDispatch, useSelector } from 'react-redux'
 import { currentUser, userToken } from '../../store/selectors/users'
 import { useUpdateToken } from '../../hooks/updateToken'
