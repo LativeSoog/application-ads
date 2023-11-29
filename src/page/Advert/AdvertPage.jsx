@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AdvertImageBar } from '../../components/AdvertImageBar/AdvertImageBar'
 import * as S from './style'
 import { ReviewsAdvert } from '../../components/ModalsAdvert/ReviewsAdvert'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import {
   useGetCommentsAdvertQuery,
   useGetCurrentAdvertQuery,
@@ -71,6 +71,10 @@ export const AdvertPage = () => {
       setModalWindowPublication(false)
       document.body.style.overflow = 'unset'
     }
+  }
+
+  if (!currentAdvertLoading && !currentAdvertData) {
+    return <Navigate to="/not-found" />
   }
 
   return (
@@ -186,7 +190,7 @@ export const AdvertPage = () => {
                         src={
                           currentAdvertData.user.avatar
                             ? host + currentAdvertData.user.avatar
-                            : ''
+                            : '/img/no-photo.jpg'
                         }
                       />
                     </S.AdvertRightBlockAuthorImgBlock>
