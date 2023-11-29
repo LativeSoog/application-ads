@@ -190,7 +190,7 @@ export const AdvertPage = () => {
                         src={
                           currentAdvertData.user.avatar
                             ? host + currentAdvertData.user.avatar
-                            : ''
+                            : '/img/no-photo.jpg'
                         }
                       />
                     </S.AdvertRightBlockAuthorImgBlock>
