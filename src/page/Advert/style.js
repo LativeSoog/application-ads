@@ -211,7 +211,7 @@ export const AdvertRightBlockAuthorImgBlock = styled.div`
 
 export const AdvertRightBlockAuthorImgBlockImage = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;

@@ -113,13 +113,14 @@ export const ProfileSellerImgBlock = styled.div`
   height: 170px;
   border-radius: 50%;
   background-color: #f0f0f0;
+  overflow: hidden;
 `
 
 export const ProfileLink = styled(Link)``
 
 export const ProfileSellerImgBlockImage = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
