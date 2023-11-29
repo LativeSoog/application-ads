@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { formatDateAndTime, host } from '../../helper'
+import { host } from '../../helper'
 import {
   useAddCommentAdvertMutation,
   useGetCommentsAdvertQuery,
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { currentUser, userToken } from '../../store/selectors/users'
 import { useUpdateToken } from '../../hooks/updateToken'
 import { setUserToken } from '../../store/actions/creators/users'
+import { useDateFormatter } from '../../hooks/dateFormat'
 
 export const ReviewsAdvert = ({ closeModalWindow, params }) => {
   const dispatch = useDispatch()
@@ -155,6 +156,7 @@ export const ReviewsAdvert = ({ closeModalWindow, params }) => {
 }
 
 export const Review = ({ imgUser, nameUser, dateComment, textComment }) => {
+  const { dateFormatter } = useDateFormatter()
   return (
     <S.Review>
       <S.ReviewItem>
@@ -167,7 +169,7 @@ export const Review = ({ imgUser, nameUser, dateComment, textComment }) => {
           <S.ReviewItemRightName>
             {nameUser}
             <S.ReviewItemRightNameSpan>
-              {formatDateAndTime(dateComment)}
+              {dateFormatter(dateComment)}
             </S.ReviewItemRightNameSpan>
           </S.ReviewItemRightName>
           <S.ReviewItemRightTitle>Комментарий</S.ReviewItemRightTitle>

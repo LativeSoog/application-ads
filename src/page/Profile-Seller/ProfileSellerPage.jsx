@@ -5,10 +5,12 @@ import { useGetAllAdvertsQuery } from '../../services/advert'
 import { useEffect, useState } from 'react'
 import { formatDateSells, host } from '../../helper'
 import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
+import { useDateFormatter } from '../../hooks/dateFormat'
 
 export const ProfileSellerPage = () => {
   const params = useParams()
   const navigate = useNavigate()
+  const { dateSellsFormatter } = useDateFormatter()
   const [profileSeller, setProfileSeller] = useState(false)
   const [advertsSeller, setAdvertsSeller] = useState([])
 
@@ -72,7 +74,8 @@ export const ProfileSellerPage = () => {
                 </S.ProfileSellerTitle>
                 <S.ProfileSellerCity>{profileSeller.city}</S.ProfileSellerCity>
                 <S.ProfileSellerInfo>
-                  Продает товары с {formatDateSells(profileSeller.sells_from)}
+                  Продает товары с{' '}
+                  {dateSellsFormatter(profileSeller.sells_from)}
                 </S.ProfileSellerInfo>
 
                 {profileSeller.phone && (
