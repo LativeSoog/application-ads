@@ -1,14 +1,14 @@
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { CardItem } from '../../components/CardItem/CardItem'
 import * as S from './style'
 import { useGetAllAdvertsQuery } from '../../services/advert'
 import { useEffect, useState } from 'react'
-import { formatDateSells } from '../../helper'
+import { formatDateSells, host } from '../../helper'
 import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
 
 export const ProfileSellerPage = () => {
-  const host = 'http://127.0.0.1:8090/'
   const params = useParams()
+  const navigate = useNavigate()
   const [profileSeller, setProfileSeller] = useState(false)
   const [advertsSeller, setAdvertsSeller] = useState([])
 
@@ -20,7 +20,11 @@ export const ProfileSellerPage = () => {
       const findUser = allAdvertsData.find(
         (user) => String(user.user.id) === params.id,
       )
-      setProfileSeller(findUser.user)
+      if (findUser) {
+        setProfileSeller(findUser.user)
+      } else {
+        return navigate('/not-found')
+      }
 
       const findUserAdverts = allAdvertsData.filter(
         (userAdverts) => String(userAdverts.user_id) === params.id,
@@ -53,7 +57,9 @@ export const ProfileSellerPage = () => {
                   <S.ProfileLink>
                     <S.ProfileSellerImgBlockImage
                       src={
-                        profileSeller.avatar ? host + profileSeller.avatar : ''
+                        profileSeller.avatar
+                          ? host + profileSeller.avatar
+                          : '/img/no-photo.jpg'
                       }
                     />
                   </S.ProfileLink>
