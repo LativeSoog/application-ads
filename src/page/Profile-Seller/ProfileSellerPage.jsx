@@ -75,7 +75,9 @@ export const ProfileSellerPage = () => {
                   Продает товары с {formatDateSells(profileSeller.sells_from)}
                 </S.ProfileSellerInfo>
 
-                <ButtonPhone userPhoneNumber={profileSeller.phone} />
+                {profileSeller.phone && (
+                  <ButtonPhone userPhoneNumber={profileSeller.phone} />
+                )}
               </S.ProfileSellerRight>
             </S.ProfileSeller>
           </S.ProfileContent>

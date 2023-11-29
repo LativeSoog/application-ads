@@ -171,9 +171,11 @@ export const AdvertPage = () => {
                       </S.AdvertRightButton>
                     </S.AdvertRightButtonBlock>
                   ) : (
-                    <ButtonPhone
-                      userPhoneNumber={currentAdvertData.user.phone}
-                    />
+                    currentAdvertData.user.phone && (
+                      <ButtonPhone
+                        userPhoneNumber={currentAdvertData.user.phone}
+                      />
+                    )
                   )}
 
                   <S.AdvertRightBlockAuthor>
