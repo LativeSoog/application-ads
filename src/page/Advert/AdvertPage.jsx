@@ -123,6 +123,7 @@ export const AdvertPage = () => {
                           key={image.id}
                           link={host + image.url}
                           setCurrentImageAdvert={setCurrentImageAdvert}
+                          currentImageUrl={currentImageAdvert}
                         />
                       )
                     })}
