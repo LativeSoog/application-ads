@@ -135,7 +135,11 @@ export const ReviewsAdvert = ({ closeModalWindow, params }) => {
                   return (
                     <Review
                       key={comment.id}
-                      imgUser={`${host}${comment.author.avatar}`}
+                      imgUser={
+                        comment.author.avatar
+                          ? `${host}${comment.author.avatar}`
+                          : `/img/no-photo.jpg`
+                      }
                       nameUser={comment.author.name}
                       dateComment={comment.created_on}
                       textComment={comment.text}
