@@ -7,13 +7,23 @@ export const ChangePassword = ({ closeModalWindow, token }) => {
   const [successMessage, setSuccessMessage] = useState('')
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
+  const [repeatNewPassword, setRepeatNewPassword] = useState('')
 
   const [changePassword] = useChangeUserPasswordMutation()
 
   const handleUpdatePassword = async () => {
     if (newPassword.length < 5) {
-      setErrorMessage('Минимальная длина пароля - 5 символов')
-      return
+      return setErrorMessage('Минимальная длина пароля - 5 символов')
+    }
+
+    if (newPassword !== repeatNewPassword) {
+      return setErrorMessage('Указанные пароли не совпадают')
+    }
+
+    if (currentPassword === newPassword) {
+      return setErrorMessage(
+        'Указанный новый пароль используется в данный момент. Пожалуйста, укажите другой',
+      )
     }
 
     try {
@@ -60,6 +70,12 @@ export const ChangePassword = ({ closeModalWindow, token }) => {
           type="password"
           placeholder="Укажите новый пароль"
           onChange={(e) => setNewPassword(e.target.value)}
+        />
+
+        <S.ModalInput
+          type="password"
+          placeholder="Подтвердите новый пароль"
+          onChange={(e) => setRepeatNewPassword(e.target.value)}
         />
 
         {errorMessage && (

@@ -97,6 +97,7 @@ export const ProfilePage = () => {
     const file = refFile?.current.files[0]
     const formData = new FormData()
     formData.append('file', file)
+    setIsUploadPhoto(true)
 
     try {
       const response = await uploadAvatarProfile({
@@ -179,7 +180,7 @@ export const ProfilePage = () => {
 
           {user ? (
             <>
-              <S.MainTitleH2>Здравствуйте, {user.name}</S.MainTitleH2>
+              <S.MainTitleH2>Здравствуйте, {user.name}!</S.MainTitleH2>
 
               <S.MainProfile>
                 <S.ProfileContent>
