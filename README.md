@@ -9,9 +9,9 @@ SkyAds is a web application, serving as a straightforward and efficient platform
 | ------------ | ------------ |
 | JavaScript  | Date-fns  |
 | React  | React-input-mask  |
-| Styled Components  | 2  |
-| Redux, RTQ  | 2  |
-| React-Router  | 2  |
+| Styled Components  |   |
+| Redux, RTQ  |   |
+| React-Router  |   |
 
 ## Web application functionality
 
@@ -41,7 +41,7 @@ To launch the application, use the command:
 npm run start
 ```
 ### Application Build
-"To build the application, use the command:
+To build the application, use the command:
 ```bash
 npm run build
 ```
