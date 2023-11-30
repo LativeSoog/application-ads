@@ -1,5 +1,6 @@
-import { formatDateAndTime, host } from '../../helper'
+import { host } from '../../helper'
 import * as S from './style'
+import { useDateFormatter } from '../../hooks/dateFormat'
 
 export const CardItem = ({
   linkItem,
@@ -9,6 +10,8 @@ export const CardItem = ({
   dateItem,
   imgItem,
 }) => {
+  const { dateFormatter } = useDateFormatter()
+
   const imgItemLink = imgItem ? host + imgItem : '/img/no-photo.jpg'
 
   return (
@@ -27,7 +30,7 @@ export const CardItem = ({
 
           <S.CardContentPrice>{priceItem}&nbsp;₽</S.CardContentPrice>
           <S.CardContentPlace>{cityItem}</S.CardContentPlace>
-          <S.CardContentDate>{formatDateAndTime(dateItem)}</S.CardContentDate>
+          <S.CardContentDate>{dateFormatter(dateItem)}</S.CardContentDate>
         </S.CardContent>
       </S.CardsCard>
     </S.CardsItem>

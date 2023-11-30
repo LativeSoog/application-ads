@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+<p align='center'>![](https://github.com/lativesoog/skyads-application/raw/master/public/img/logo.png)</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About SkyAds
 
-## Available Scripts
+SkyAds is a web application, serving as a straightforward and efficient platform for posting sale advertisements. The application features a modern design, user-friendly interface, and powerful tools for ad search.
 
-In the project directory, you can run:
+## Stack
+| Main technologies  | Other libraries  |
+| ------------ | ------------ |
+| JavaScript  | Date-fns  |
+| React  | React-input-mask  |
+| Styled Components  |   |
+| Redux, RTQ  |   |
+| React-Router  |   |
 
-### `npm start`
+## Web application functionality
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Authentication (user login and registration)
+- Account password change
+- User profile, ability to edit profile
+- Viewing other users profiles
+- Viewing advertisements
+- Posting an advertisement
+- Editing and deleting Own advertisement
+- Adding and removing photos to/from advertisement
+- Viewing comments on advertisement
+- Adding a comment to advertisement
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Launch requirements
+Make sure you have the latest version of **Node Package Manager** installed
 
-### `npm test`
+## Installation and Launch
+Before launching the application, install the required packages by executing the following command:
+```bash
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Application launch
+To launch the application, use the command:
+```bash
+npm run start
+```
+### Application Build
+To build the application, use the command:
+```bash
+npm run build
+```

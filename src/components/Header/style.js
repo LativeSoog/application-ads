@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { BtnHoverMixin } from '../../style/AppStyle'
 
 export const Header = styled.header`
   background-color: #009ee4;
@@ -49,4 +50,8 @@ export const HeaderButtonLogout = styled.svg`
   border: 1px solid #fff;
   border-radius: 20px;
   padding: 5px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
 `

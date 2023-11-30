@@ -230,7 +230,7 @@ export const ReviewItemLeftImgBlock = styled.div`
 export const ReviewItemLeftImage = styled.img`
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   -o-object-fit: cover;
   object-fit: cover;
 `

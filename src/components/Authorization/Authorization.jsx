@@ -8,9 +8,11 @@ import {
 import { setUserData, setUserToken } from '../../store/actions/creators/users'
 import { useDispatch, useSelector } from 'react-redux'
 import { userToken } from '../../store/selectors/users'
+import { useNavigate } from 'react-router-dom'
 
 export const Authorization = ({ closeModalWindow }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [regMode, setRegMode] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [isFormProcess, setIsFormProcess] = useState(false)
@@ -51,6 +53,7 @@ export const Authorization = ({ closeModalWindow }) => {
       if (response.data) {
         dispatch(setUserToken(response.data))
         localStorage.setItem('token_user', JSON.stringify(response.data))
+        navigate('/')
       }
 
       if (response.error) {
@@ -97,6 +100,7 @@ export const Authorization = ({ closeModalWindow }) => {
       if (response.data) {
         setRegMode(false)
         handleLogin({ email, password })
+        navigate('/')
       }
 
       if (response.error) {

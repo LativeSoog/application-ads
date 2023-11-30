@@ -5,7 +5,8 @@ export const AdvertImgBarDiv = styled.div`
   min-width: 88px;
   height: 88px;
   background-color: #f0f0f0;
-  border: 2px solid #f0f0f0;
+  border: 2px solid
+    ${({ $currentBorder }) => ($currentBorder ? '#009ee4' : '#f0f0f0')};
   margin: 0 5px;
 `
 

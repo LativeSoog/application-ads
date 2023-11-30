@@ -10,15 +10,17 @@ import {
   setFilterAdverts,
   setFilterAdvertsList,
 } from '../../store/actions/creators/adverts'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export const MainPage = () => {
   const dispatch = useDispatch()
+  const [textSearch, setTextSearch] = useState(false)
   const stateFilters = useSelector(getFilterAdverts)
   const advertListFiltered = useSelector(getFilteredListAdverts)
   const { data: advertList, error: advertError } = useGetAllAdvertsQuery()
 
-  const performSearch = (e) => {
+  const handleSearch = (e) => {
+    setTextSearch(e.target.value)
     dispatch(
       setFilterAdverts({
         ...stateFilters,
@@ -32,7 +34,7 @@ export const MainPage = () => {
     if (advertList) {
       let filteredAdvertList = [...advertList]
 
-      if (stateFilters.textSearchAdvert.length) {
+      if (stateFilters.textSearchAdvert?.length) {
         filteredAdvertList = [
           ...advertList.filter((advert) =>
             advert.title
@@ -57,7 +59,7 @@ export const MainPage = () => {
           <S.MainSearchFormText
             placeholder="Поиск по объявлениям"
             onChange={(e) => {
-              performSearch(e)
+              handleSearch(e)
             }}
           />
           <S.MainSearchFormBtn>Найти</S.MainSearchFormBtn>

@@ -47,6 +47,10 @@ export const EditAdvert = ({
       return setErrorMessage('Укажите изменённую стоимость')
     }
 
+    if (priceAdvert < 0) {
+      return setErrorMessage('Стоимость не может быть отрицательной')
+    }
+
     try {
       const response = await editAdvert({
         id,
@@ -189,6 +193,7 @@ export const EditAdvert = ({
               type="number"
               name="price"
               id="formPrice"
+              min="0"
               value={priceAdvert}
               onChange={(e) => {
                 setPriceAdvert(e.target.value)

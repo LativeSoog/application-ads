@@ -8,15 +8,18 @@ import {
   useGetCurrentAdvertQuery,
 } from '../../services/advert'
 import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
-import { formatDateAndTime, formatDateSells, host } from '../../helper'
+import { host } from '../../helper'
 import { useSelector } from 'react-redux'
 import { currentUser } from '../../store/selectors/users'
 import { EditAdvert } from '../../components/ModalsAdvert/EditAdvert'
 import { RemoveAdvert } from '../../components/ModalsAdvert/RemoveAdvert'
+import { MainMenu } from '../../components/MainMenu/MainMenu'
+import { useDateFormatter } from '../../hooks/dateFormat'
 
 export const AdvertPage = () => {
   const params = useParams()
   const user = useSelector(currentUser)
+  const { dateFormatter, dateSellsFormatter } = useDateFormatter()
 
   const [modalWindowReview, setModalWindowReview] = useState(false)
   const [modalWindowEditAdvert, setModalWindowEditAdvert] = useState(false)
@@ -98,16 +101,7 @@ export const AdvertPage = () => {
       )}
 
       <S.MainContainer>
-        <S.MainMenu>
-          <S.MainMenuLogoLink to={'/'}>
-            <S.MainMenuLogoImg src="/img/logo.png" />
-          </S.MainMenuLogoLink>
-          <S.MainMenuForm>
-            <S.MainMenuFormBtnLink to={'/'}>
-              <S.MainMenuFormBtn>Вернуться на&nbsp;главную</S.MainMenuFormBtn>
-            </S.MainMenuFormBtnLink>
-          </S.MainMenuForm>
-        </S.MainMenu>
+        <MainMenu />
       </S.MainContainer>
 
       {currentAdvertLoading ? (
@@ -129,6 +123,7 @@ export const AdvertPage = () => {
                           key={image.id}
                           link={host + image.url}
                           setCurrentImageAdvert={setCurrentImageAdvert}
+                          currentImageUrl={currentImageAdvert}
                         />
                       )
                     })}
@@ -143,7 +138,7 @@ export const AdvertPage = () => {
                   </S.AdvertRightBlockTitle>
                   <S.AdvertRightBlockInfo>
                     <S.AdvertRightBlockInfoItem $color="#5F5F5F">
-                      {formatDateAndTime(currentAdvertData.created_on)}
+                      {dateFormatter(currentAdvertData.created_on)}
                     </S.AdvertRightBlockInfoItem>
                     <S.AdvertRightBlockInfoItem $color="#5F5F5F">
                       {currentAdvertData.user.city}
@@ -153,7 +148,9 @@ export const AdvertPage = () => {
                         $color="#009EE4"
                         onClick={handleOpenReview}
                       >
-                        {advertComments?.length} отзыва
+                        {advertComments?.length > 0
+                          ? `Отзывы: ${advertComments?.length}`
+                          : 'Отзывов нет'}
                       </S.AdvertRightBlockInfoItem>
                     </S.AdvertRightBlockInfoLink>
                   </S.AdvertRightBlockInfo>
@@ -179,9 +176,11 @@ export const AdvertPage = () => {
                       </S.AdvertRightButton>
                     </S.AdvertRightButtonBlock>
                   ) : (
-                    <ButtonPhone
-                      userPhoneNumber={currentAdvertData.user.phone}
-                    />
+                    currentAdvertData.user.phone && (
+                      <ButtonPhone
+                        userPhoneNumber={currentAdvertData.user.phone}
+                      />
+                    )
                   )}
 
                   <S.AdvertRightBlockAuthor>
@@ -205,7 +204,7 @@ export const AdvertPage = () => {
                       </S.MainMenuFormBtnLink>
                       <S.AdvertRightBlockAuthorContactAbout>
                         Продает товары с{' '}
-                        {formatDateSells(currentAdvertData.user.sells_from)}
+                        {dateSellsFormatter(currentAdvertData.user.sells_from)}
                       </S.AdvertRightBlockAuthorContactAbout>
                     </S.AdvertRightBlockAuthorContact>
                   </S.AdvertRightBlockAuthor>
