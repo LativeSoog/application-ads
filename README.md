@@ -1,7 +1,5 @@
 <p align="center"><img src="https://raw.githubusercontent.com/lativesoog/skyads-application/master/public/img/logo.png" alt="SkyAds"></p>
 
-https://raw.githubusercontent.com/lativesoog/skyads-application/master/public/img/logo.png
-
 ## About SkyAds
 
 SkyAds is a web application, serving as a straightforward and efficient platform for posting sale advertisements. The application features a modern design, user-friendly interface, and powerful tools for ad search.
