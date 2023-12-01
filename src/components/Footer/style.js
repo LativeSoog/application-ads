@@ -26,6 +26,10 @@ export const FooterContainer = styled.div`
   justify-content: space-between;
 `
 
+export const FooterImgCenterButton = styled.div`
+  display: ${({ $display }) => ($display ? 'block' : 'none')};
+`
+
 export const FooterImgBlock = styled.div`
   width: 42px;
   height: 42px;
