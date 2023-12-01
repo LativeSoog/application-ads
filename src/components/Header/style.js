@@ -5,8 +5,16 @@ import { BtnHoverMixin } from '../../style/AppStyle'
 export const Header = styled.header`
   background-color: #009ee4;
 
-  @media (max-width: 590px) {
-    display: none;
+  @media (max-width: 768px) {
+    padding: 0 20px;
+    width: 100%;
+    height: 55px;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.05);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    padding: 0 20px;
   }
 `
 
@@ -24,6 +32,38 @@ export const HeaderNav = styled.nav`
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: end;
+
+  @media (max-width: 768px) {
+    height: 55px;
+    justify-content: start;
+    padding: 0;
+  }
+`
+
+export const HeaderLogoBlockMobile = styled.div`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+  }
+`
+
+export const HeaderLogoLinkMobile = styled(Link)`
+  display: none;
+  @media (max-width: 768px) {
+    display: block;
+    width: 32px;
+    height: 32px;
+  }
+`
+
+export const HeaderLogoImgMobile = styled.img`
+  display: none;
+  @media (max-width: 768px) {
+    width: 32px;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
 `
 
 export const HeaderButtonLink = styled(Link)``
@@ -41,6 +81,10 @@ export const HeaderButtonMain = styled.button`
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `
 

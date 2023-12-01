@@ -128,6 +128,9 @@ export const AdvertPage = () => {
                       )
                     })}
                   </S.AdvertImgBar>
+                  <S.AdvertImgBarMobile>
+                    
+                  </S.AdvertImgBarMobile>
                 </S.AdvertLeftFillImg>
               </S.AdvertLeft>
 

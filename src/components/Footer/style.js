@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const Footer = styled.div`
   display: none;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     position: fixed;
     bottom: 0;
     left: 0;
