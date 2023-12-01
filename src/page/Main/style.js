@@ -20,7 +20,7 @@ export const MainSearch = styled.div`
   margin: 0 auto;
   padding: 31px 10px 0px;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     height: 55px;
     background-color: #009ee4;
     -webkit-box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.05);
@@ -35,7 +35,7 @@ export const MainSearch = styled.div`
 `
 
 export const MainSearchLogoLink = styled(Link)`
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     display: none;
   }
 `
@@ -43,7 +43,7 @@ export const MainSearchLogoLink = styled(Link)`
 export const MainSearchLogoLinkMobile = styled(Link)`
   display: none;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     display: block;
     width: 32px;
     height: 32px;
@@ -58,7 +58,7 @@ export const MainSearchLogoLinkImg = styled.img`
 export const MainSearchLogoLinkImgMobile = styled.img`
   display: none;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     width: 32px;
     height: auto;
     display: block;
@@ -74,7 +74,7 @@ export const MainSearchForm = styled.form`
   display: -ms-flexbox;
   display: flex;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     margin-left: 10px;
     max-width: 1044px;
     width: 100%;
@@ -105,7 +105,7 @@ export const MainSearchFormText = styled.input`
     line-height: 24px;
   }
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     display: none;
   }
 `
@@ -113,7 +113,7 @@ export const MainSearchFormText = styled.input`
 export const MainSearchFormTextMobile = styled.input`
   display: none;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     display: inline-block;
     width: 100%;
     height: 32px;
@@ -146,7 +146,7 @@ export const MainSearchFormBtn = styled.div`
     ${BtnHoverMixin}
   }
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     display: none;
   }
 `
@@ -156,7 +156,7 @@ export const MainContainer = styled.div`
   margin: 0 auto;
   padding: 52px 10px 37px;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     padding: 85px 10px 84px;
   }
 `
@@ -169,7 +169,7 @@ export const MainTitle = styled.h2`
   color: #000000;
   margin-bottom: 30px;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     font-size: 24px;
     line-height: 28px;
     margin-bottom: 20px;
@@ -180,7 +180,7 @@ export const MainContent = styled.div`
   width: 100%;
   margin: 0 auto;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     overflow: hidden;
     position: fixed;
     right: 0;
@@ -214,12 +214,13 @@ export const Cards = styled.div`
     grid-template-columns: repeat(2, 270px);
   }
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     grid-template-columns: repeat(2, 137px);
     grid-auto-rows: 293px;
     grid-gap: 10px 10px;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: space-evenly;
+    height: 510px;
   }
 `
