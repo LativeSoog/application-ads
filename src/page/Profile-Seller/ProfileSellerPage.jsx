@@ -70,6 +70,18 @@ export const ProfileSellerPage = () => {
                   {dateSellsFormatter(profileSeller.sells_from)}
                 </S.ProfileSellerInfo>
 
+                <S.ProfileSellerBlockMobile>
+                  <S.ProfileSellerImgBlockMobile>
+                    <S.ProfileSellerImgBlockImageMobile
+                      src={
+                        profileSeller.avatar
+                          ? host + profileSeller.avatar
+                          : '/img/no-photo.jpg'
+                      }
+                    />
+                  </S.ProfileSellerImgBlockMobile>
+                </S.ProfileSellerBlockMobile>
+
                 {profileSeller.phone && (
                   <ButtonPhone userPhoneNumber={profileSeller.phone} />
                 )}
