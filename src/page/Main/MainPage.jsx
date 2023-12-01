@@ -55,7 +55,7 @@ export const MainPage = () => {
           <S.MainSearchLogoLinkImg src="/img/logo.png" />
         </S.MainSearchLogoLink>
         <S.MainSearchLogoLinkMobile>
-          <S.MainSearchLogoLinkImgMobile src='/img/logo-mob.png' />
+          <S.MainSearchLogoLinkImgMobile src="/img/logo-mob.png" />
         </S.MainSearchLogoLinkMobile>
 
         <S.MainSearchForm>
@@ -65,7 +65,12 @@ export const MainPage = () => {
               handleSearch(e)
             }}
           />
-          <S.MainSearchFormTextMobile placeholder='Поиск по объявлениям' />
+          <S.MainSearchFormTextMobile
+            placeholder="Поиск по объявлениям"
+            onChange={(e) => {
+              handleSearch(e)
+            }}
+          />
           <S.MainSearchFormBtn>Найти</S.MainSearchFormBtn>
         </S.MainSearchForm>
       </S.MainSearch>
