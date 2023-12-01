@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const CardsItem = styled.div`
   margin: 0;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     margin: 0;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
     border-radius: 6px;
@@ -22,7 +22,7 @@ export const CardsCard = styled.div`
   -ms-flex-direction: column;
   flex-direction: column;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     width: 137px;
     height: 293px;
   }
@@ -33,7 +33,7 @@ export const CardImage = styled.div`
   height: 270px;
   background-color: #f0f0f0;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
     width: 137px;
@@ -51,7 +51,7 @@ export const CardImageImg = styled.img`
   -o-object-fit: cover;
   object-fit: cover;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     object-fit: cover;
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
@@ -73,7 +73,7 @@ export const CardContentTitle = styled.h3`
   overflow: hidden;
   text-overflow: ellipsis;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     font-size: 14px;
     line-height: 17px;
     margin-bottom: 10px;
@@ -88,7 +88,7 @@ export const CardContentPrice = styled.p`
   line-height: 33px;
   margin-bottom: 10px;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     font-size: 16px;
     line-height: 24px;
   }
@@ -100,7 +100,7 @@ export const CardContentPlace = styled.p`
   color: #5f5f5f;
   margin-bottom: 4px;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     font-size: 12px;
     line-height: 16px;
     color: #5f5f5f;
@@ -112,7 +112,7 @@ export const CardContentDate = styled.p`
   line-height: 21px;
   color: #5f5f5f;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     font-size: 12px;
     line-height: 16px;
     color: #5f5f5f;

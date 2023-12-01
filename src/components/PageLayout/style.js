@@ -20,7 +20,7 @@ export const Container = styled.div`
   margin: 0 auto;
   background-color: #ffffff;
 
-  @media (max-width: 590px) {
+  @media (max-width: 768px) {
     min-width: 320px;
     min-height: 100vh;
     background-color: #ffffff;
