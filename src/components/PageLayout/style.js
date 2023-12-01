@@ -19,4 +19,10 @@ export const Container = styled.div`
   width: 100%;
   margin: 0 auto;
   background-color: #ffffff;
+
+  @media (max-width: 590px) {
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: #ffffff;
+  }
 `

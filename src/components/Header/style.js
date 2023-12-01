@@ -4,6 +4,10 @@ import { BtnHoverMixin } from '../../style/AppStyle'
 
 export const Header = styled.header`
   background-color: #009ee4;
+
+  @media (max-width: 590px) {
+    display: none;
+  }
 `
 
 export const HeaderNav = styled.nav`
