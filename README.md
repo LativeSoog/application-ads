@@ -1,4 +1,4 @@
-<p align='center'>![](https://github.com/lativesoog/skyads-application/raw/master/public/img/logo.png)</p>
+<p align="center"><img src="https://raw.githubusercontent.com/lativesoog/skyads-application/master/public/img/logo.png" alt="SkyAds"></p>
 
 ## About SkyAds
 

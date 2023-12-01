@@ -52,6 +52,11 @@ export const Header = () => {
 
       <S.Header>
         <S.HeaderNav>
+          <S.HeaderLogoBlockMobile>
+            <S.HeaderLogoLinkMobile to={'/'}>
+              <S.HeaderLogoImgMobile src="/img/logo-mob.png" />
+            </S.HeaderLogoLinkMobile>
+          </S.HeaderLogoBlockMobile>
           {isUser ? (
             <>
               <S.HeaderButtonMain

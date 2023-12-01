@@ -6,6 +6,10 @@ export const MainContainer = styled.div`
   max-width: 1178px;
   margin: 0 auto;
   padding: 0px 5px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px 0;
+  }
 `
 
 export const MainTitle = styled.h3`
@@ -15,12 +19,24 @@ export const MainTitle = styled.h3`
   color: #000000;
   margin-bottom: 32px;
   padding: 0 5px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 14px;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1;
+  }
 `
 
 export const MainContent = styled.div`
   max-width: 792px;
   width: 100%;
   padding: 0 5px 117px;
+
+  @media (max-width: 768px) {
+    margin: 0 auto;
+    padding: 0 0 84px;
+  }
 `
 
 export const MainText = styled.p`
@@ -35,6 +51,11 @@ export const MainAdvert = styled.div`
   padding: 0 0 70px;
   margin: 0 auto;
   padding: 0 5px 70px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 55px 0 0px;
+  }
 `
 
 export const AdvertContent = styled.div`
@@ -47,11 +68,32 @@ export const AdvertContent = styled.div`
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 export const AdvertLeft = styled.div`
   max-width: 480px;
   margin-right: 54px;
+
+  @media (max-width: 890px) {
+    margin-right: 20px;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    width: 100%;
+    min-width: 320px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
 `
 
 export const AdvertLeftFillImg = styled.div`
@@ -66,6 +108,28 @@ export const AdvertLeftFillImg = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    overflow: hidden;
+    justify-content: center;
+    position: relative;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 23px;
+      height: 23px;
+      background-color: transparent;
+      border-top: 2px solid #000000;
+      border-left: 2px solid #000000;
+      transform: rotate(-45deg);
+      position: absolute;
+      top: 24px;
+      left: 32px;
+      cursor: pointer;
+    }
+  }
 `
 
 export const AdvertLeftImgBlock = styled.div`
@@ -73,6 +137,14 @@ export const AdvertLeftImgBlock = styled.div`
   height: 480px;
   background-color: #f0f0f0;
   margin: 0 5px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-width: 320px;
+    height: auto;
+    min-height: 320px;
+    margin: 0 0px;
+  }
 `
 
 export const AdvertLeftImgBlockImage = styled.img`
@@ -101,6 +173,21 @@ export const AdvertImgBar = styled.div`
   justify-content: left;
   overflow: hidden;
   margin-left: -5px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+
+export const AdvertImgBarMobile = styled.div`
+  display: block;
+  width: 68px;
+  height: 8px;
+  position: absolute;
+  bottom: 20px;
+  left: calc(50% - (68px / 2));
+  display: flex;
+  justify-content: space-between;
 `
 
 export const AdvertImgBarDiv = styled.div`
@@ -122,6 +209,12 @@ export const AdvertImgBarImage = styled.img`
 
 export const AdvertRight = styled.div`
   width: 621px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 20px;
+  }
 `
 export const AdvertRightBlock = styled.div`
   display: -webkit-box;
@@ -139,10 +232,20 @@ export const AdvertRightBlockTitle = styled.h3`
   font-weight: 500;
   color: #000000;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 10px;
+    font-size: 18px;
+    line-height: 1;
+  }
 `
 
 export const AdvertRightBlockInfo = styled.div`
   margin-bottom: 34px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
 `
 
 export const AdvertRightBlockInfoLink = styled(Link)``
@@ -152,6 +255,13 @@ export const AdvertRightBlockInfoItem = styled.p`
   line-height: 21px;
   color: ${(props) => props.$color};
   margin-bottom: 4px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 17px;
+    color: ${(props) => props.$color};
+    margin-bottom: 4px;
+  }
 `
 
 export const AdvertRightBlockPrice = styled.p`
@@ -162,6 +272,11 @@ export const AdvertRightBlockPrice = styled.p`
 
   &::after {
     content: ' ₽';
+  }
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 25px;
   }
 `
 
@@ -183,6 +298,14 @@ export const AdvertRightButton = styled.button`
   &:hover {
     ${BtnHoverMixin}
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 57px;
+    font-size: 14px;
+    line-height: 20px;
+    margin-right: 0;
+  }
 `
 
 export const AdvertRightBlockAuthor = styled.div`
@@ -198,6 +321,11 @@ export const AdvertRightBlockAuthor = styled.div`
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
+
+  @media (max-width: 768px) {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
 `
 
 export const AdvertRightBlockAuthorImgBlock = styled.div`
@@ -225,10 +353,20 @@ export const AdvertRightBlockAuthorContactName = styled.p`
   line-height: 26px;
   font-weight: 600;
   color: #009ee4;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 23px;
+  }
 `
 
 export const AdvertRightBlockAuthorContactAbout = styled.p`
   font-size: 16px;
   line-height: 32px;
   color: #5f5f5f;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 28px;
+  }
 `
