@@ -12,8 +12,6 @@ export const Footer = () => {
   const [isModalLogout, setIsModalLogout] = useState(false)
   const isUser = useSelector(currentUser)
 
-  console.log(isUser)
-
   const handleOpenModalAuth = () => {
     setIsModalAuth(true)
     document.body.style.overflow = 'hidden'
