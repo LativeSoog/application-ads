@@ -38,6 +38,13 @@ export const ModalContent = styled.div`
   border-radius: 12px;
   max-width: 80%;
   overflow-y: auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-width: 320px;
+    height: auto;
+    padding: 30px 20px 30px;
+  }
 `
 
 export const ModalContentTitle = styled.h3`
@@ -45,6 +52,13 @@ export const ModalContentTitle = styled.h3`
   line-height: 46px;
   font-weight: 500;
   color: #000000;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    line-height: 29px;
+    padding: 0 0 0 26px;
+    position: relative;
+  }
 `
 
 export const ModalBtnClosedSvg = styled.svg`
@@ -59,6 +73,11 @@ export const ModalBtnClosedSvg = styled.svg`
 
   &:hover {
     stroke: #009ee4;
+  }
+
+  @media (max-width: 768px) {
+    left: 90%;
+    top: -40px;
   }
 `
 
@@ -84,6 +103,10 @@ export const ModalFormNewAdvBlock = styled.div`
   -ms-flex-direction: column;
   flex-direction: column;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 18px;
+  }
 `
 
 export const ModalFormNewAdvLabel = styled.label`
@@ -91,6 +114,12 @@ export const ModalFormNewAdvLabel = styled.label`
   font-size: 16px;
   line-height: 24px;
   color: #000000;
+
+  @media (max-width: 768px) {
+    margin-bottom: 5px;
+    font-size: 14px;
+    line-height: 21px;
+  }
 `
 
 export const ModalFormNewAdvInput = styled.input`
@@ -105,6 +134,20 @@ export const ModalFormNewAdvInput = styled.input`
     font-size: 16px;
     line-height: 24px;
     color: #0000004d;
+  }
+
+  @media (max-width: 768px) {
+    padding: 9px 17px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    line-height: 1;
+
+    &::placeholder {
+      font-size: 14px;
+      line-height: 21px;
+      color: #c4c4c4;
+    }
   }
 `
 
@@ -124,6 +167,17 @@ export const ModalFormNewAdvArea = styled.textarea`
     line-height: 24px;
     color: #0000004d;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-height: 107px;
+
+    &::placeholder {
+      font-size: 14px;
+      line-height: 21px;
+      color: #c4c4c4;
+    }
+  }
 `
 
 export const ModalFormNewAdvPhoto = styled.p`
@@ -131,11 +185,21 @@ export const ModalFormNewAdvPhoto = styled.p`
   line-height: 24px;
   color: #000000;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 21px;
+  }
 `
 
 export const ModalNewAdvPhotoSpan = styled.span`
   margin-left: 10px;
   color: rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 768px) {
+    display: block;
+    margin-left: 0px;
+  }
 `
 
 export const ModalFormNewAdvBarImg = styled.div`
@@ -155,6 +219,12 @@ export const ModalFormNewAdvBarImg = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 278px;
+    justify-content: start;
+    margin: 0px -5px 10px;
+  }
 `
 
 export const ModalFormNewAdvImgBlock = styled.div`
@@ -163,6 +233,12 @@ export const ModalFormNewAdvImgBlock = styled.div`
   margin-right: 10px;
   position: relative;
   z-index: 0;
+
+  @media (max-width: 768px) {
+    min-width: 90px;
+    background-color: #f0f0f0;
+    margin: 0 5px;
+  }
 `
 
 export const ModalFormNewAdvImgBlockImage = styled.img`
@@ -228,6 +304,15 @@ export const ModalFormNewAdvInputPrice = styled.input`
     line-height: 24px;
     color: #000000;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+
+    &::placeholder {
+      font-size: 14px;
+      line-height: 21px;
+    }
+  }
 `
 
 export const ModalFormNewAdvInputPriceCover = styled.div`
@@ -251,6 +336,21 @@ export const ModalFormNewAdvInputPriceCover = styled.div`
     line-height: 24px;
     color: #000000;
     z-index: 2;
+  }
+
+  @media (max-width: 768px) {
+    width: 21px;
+    height: 21px;
+    font-size: 14px;
+    line-height: 21px;
+    bottom: 12px;
+    left: auto;
+    right: 18px;
+
+    &::after {
+      font-size: 14px;
+      line-height: 21px;
+    }
   }
 `
 
@@ -286,4 +386,9 @@ export const ModalFormNewAdvBtn = styled.div`
   height: 50px;
 
   ${({ $condition }) => ($condition ? `&:hover { ${BtnHoverMixin} }` : null)}
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 46px;
+  }
 `

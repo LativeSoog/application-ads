@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { formatDateSells, host } from '../../helper'
 import { ButtonPhone } from '../../components/ButtonPhoneAdvert/ButtonPhone'
 import { useDateFormatter } from '../../hooks/dateFormat'
+import { MainMenu } from '../../components/MainMenu/MainMenu'
 
 export const ProfileSellerPage = () => {
   const params = useParams()
@@ -38,16 +39,7 @@ export const ProfileSellerPage = () => {
   return (
     <S.MainContainer>
       <S.MainCenterBlock>
-        <S.MainMenu>
-          <S.MainMenuLogoLink to={'/'}>
-            <S.MainMenuLogoImg src="/img/logo.png" />
-          </S.MainMenuLogoLink>
-          <S.MainMenuForm>
-            <S.MainMenuFormBtnLink to={'/'}>
-              <S.MainMenuFormBtn>Вернуться на&nbsp;главную</S.MainMenuFormBtn>
-            </S.MainMenuFormBtnLink>
-          </S.MainMenuForm>
-        </S.MainMenu>
+        <MainMenu />
 
         <S.MainTitleH2>Профиль продавца</S.MainTitleH2>
 
@@ -77,6 +69,18 @@ export const ProfileSellerPage = () => {
                   Продает товары с{' '}
                   {dateSellsFormatter(profileSeller.sells_from)}
                 </S.ProfileSellerInfo>
+
+                <S.ProfileSellerBlockMobile>
+                  <S.ProfileSellerImgBlockMobile>
+                    <S.ProfileSellerImgBlockImageMobile
+                      src={
+                        profileSeller.avatar
+                          ? host + profileSeller.avatar
+                          : '/img/no-photo.jpg'
+                      }
+                    />
+                  </S.ProfileSellerImgBlockMobile>
+                </S.ProfileSellerBlockMobile>
 
                 {profileSeller.phone && (
                   <ButtonPhone userPhoneNumber={profileSeller.phone} />

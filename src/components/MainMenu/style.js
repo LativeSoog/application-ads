@@ -8,6 +8,10 @@ export const MainMenu = styled.div`
   align-items: center;
   justify-content: start;
   padding: 31px 10px 64px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `
 
 export const MainMenuLogoLink = styled(Link)`

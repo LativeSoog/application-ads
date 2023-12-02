@@ -17,8 +17,17 @@ export const MainContainer = styled.div`
   max-width: 1178px;
   margin: 0 auto;
   padding: 0px 10px 79px;
+
+  @media (max-width: 890px) {
+    padding: 85px 0px 84px;
+  }
 `
-export const MainCenterBlock = styled.div``
+export const MainCenterBlock = styled.div`
+  @media (max-width: 890px) {
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+`
 
 export const MainTitleH2 = styled.h2`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
@@ -28,15 +37,33 @@ export const MainTitleH2 = styled.h2`
   line-height: 42px;
   color: #000000;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    line-height: 29px;
+    margin-bottom: 20px;
+  }
 `
 
 export const MainProfile = styled.div`
   width: 100%;
   padding: 0 0 70px;
+
+  @media (max-width: 768px) {
+    padding: 0 0 40px;
+  }
 `
 
 export const ProfileContent = styled.div`
   max-width: 834px;
+
+  @media (max-width: 890px) {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 auto;
+  }
 `
 
 export const ProfileTitle = styled.h3`
@@ -45,6 +72,12 @@ export const ProfileTitle = styled.h3`
   font-weight: 500;
   color: #000000;
   margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 1;
+    margin-bottom: 30px;
+  }
 `
 
 export const ModalInfoMessage = styled.p`
@@ -73,6 +106,10 @@ export const ProfileSettings = styled.div`
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+
+  @media (max-width: 890px) {
+    flex-wrap: wrap;
+  }
 `
 
 export const ProfileSettingsLeft = styled.div`
@@ -87,6 +124,10 @@ export const ProfileSettingsLeft = styled.div`
   -ms-flex-align: center;
   align-items: center;
   margin-right: 43px;
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+  }
 `
 
 export const ProfileSettingsImg = styled.div`
@@ -95,6 +136,11 @@ export const ProfileSettingsImg = styled.div`
   border-radius: 50%;
   background-color: #f0f0f0;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 132px;
+    height: 132px;
+  }
 `
 
 export const ProfileLink = styled(Link)``
@@ -128,6 +174,10 @@ export const ProfileSettingsPhotoUpload = styled.input`
 
 export const ProfileSettingsRight = styled.div`
   width: 630px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 export const ProfileSettingsForm = styled.form`
@@ -137,6 +187,11 @@ export const ProfileSettingsForm = styled.form`
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column;
+  }
 `
 
 export const ProfileSettingsDiv = styled.div`
@@ -151,6 +206,12 @@ export const ProfileSettingsDivLabel = styled.label`
   color: #c4c4c4;
   margin-bottom: 4px;
   display: block;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 6px;
+  }
 `
 
 export const ProfileSettingsDivInput = styled.input`
@@ -167,6 +228,17 @@ export const ProfileSettingsDivInput = styled.input`
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    border-radius: 30px;
+    padding: 9px 17px;
+
+    &::placeholder {
+      font-size: 14px;
+      line-height: 21px;
+    }
   }
 `
 
@@ -185,6 +257,17 @@ export const ProfileSettingsDivInputMask = styled(ReactInputMask)`
     font-size: 16px;
     line-height: 24px;
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    border-radius: 30px;
+    padding: 9px 17px;
+
+    &::placeholder {
+      font-size: 14px;
+      line-height: 21px;
+    }
+  }
 `
 
 export const ProfileSettingsDivBtn = styled.div`
@@ -196,6 +279,11 @@ export const ProfileSettingsDivBtn = styled.div`
   &:hover {
     ${BtnHoverMixin}
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    order: 1;
+  }
 `
 
 export const ProfileSettingsBtn = styled.div`
@@ -205,6 +293,15 @@ export const ProfileSettingsBtn = styled.div`
   margin: 10px 7px 0;
 
   ${({ $isChange }) => ($isChange ? `&:hover {${BtnHoverMixin}}` : null)}
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    line-height: 1;
+    width: 100%;
+    height: 46px;
+    margin: 8px 0px 0;
+    order: 2;
+  }
 `
 
 export const MainContent = styled.div`
@@ -238,5 +335,20 @@ export const ContentCards = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: #0080c1;
     border-radius: 3px;
+  }
+
+  @media (max-width: 1158px) {
+    grid-template-columns: repeat(3, 270px);
+  }
+
+  @media (max-width: 890px) {
+    grid-template-columns: repeat(2, 270px);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 137px);
+    grid-auto-rows: 293px;
+    grid-gap: 10px 10px;
+    height: 596px;
   }
 `

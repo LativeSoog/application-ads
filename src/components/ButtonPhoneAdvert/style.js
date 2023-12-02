@@ -11,6 +11,14 @@ export const AdvertRightBlockBtn = styled.button`
   line-height: 22px;
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 57px;
+    font-size: 14px;
+    line-height: 20px;
+    margin-right: 0;
+  }
 `
 
 export const AdvertRightBlockBtnSpan = styled.span`
@@ -18,4 +26,8 @@ export const AdvertRightBlockBtnSpan = styled.span`
   font-size: 14px;
   font-weight: 400;
   color: #ffffff;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `
