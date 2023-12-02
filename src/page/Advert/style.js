@@ -149,7 +149,7 @@ export const AdvertLeftImgBlock = styled.div`
 
 export const AdvertLeftImgBlockImage = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;

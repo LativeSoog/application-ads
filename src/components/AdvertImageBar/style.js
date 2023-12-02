@@ -12,7 +12,7 @@ export const AdvertImgBarDiv = styled.div`
 
 export const AdvertImgBarImage = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
