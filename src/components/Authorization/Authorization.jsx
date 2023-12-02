@@ -82,6 +82,11 @@ export const Authorization = ({ closeModalWindow }) => {
       return
     }
 
+    if (password.length < 5) {
+      setErrorMessage('Минимальная длина пароля - 5 символов')
+      return
+    }
+
     if (password !== repeatPassword) {
       setErrorMessage('Указанные пароли не совпадают')
       return
