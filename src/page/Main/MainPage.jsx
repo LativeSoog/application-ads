@@ -15,9 +15,11 @@ import { useEffect, useState } from 'react'
 export const MainPage = () => {
   const dispatch = useDispatch()
   const [textSearch, setTextSearch] = useState(false)
+  const [sortAdvList, setSortAdvList] = useState([])
   const stateFilters = useSelector(getFilterAdverts)
   const advertListFiltered = useSelector(getFilteredListAdverts)
-  const { data: advertList, error: advertError } = useGetAllAdvertsQuery()
+  const { data: advertList, isLoading: advertListLoad } =
+    useGetAllAdvertsQuery()
 
   const handleSearch = (e) => {
     setTextSearch(e.target.value)
@@ -47,6 +49,15 @@ export const MainPage = () => {
       dispatch(setFilterAdvertsList(filteredAdvertList))
     }
   }, [advertList, stateFilters])
+
+  useEffect(() => {
+    if (advertList) {
+      const sortedAdvertList = advertList
+        .slice()
+        .sort((a, b) => new Date(b.created_on) - new Date(a.created_on))
+      setSortAdvList(sortedAdvertList)
+    }
+  }, [advertList])
 
   return (
     <S.Main>
@@ -79,7 +90,7 @@ export const MainPage = () => {
         <S.MainTitle>Объявления</S.MainTitle>
         <S.MainContent>
           <S.Cards>
-            {(stateFilters.status ? advertListFiltered : advertList)?.map(
+            {(stateFilters.status ? advertListFiltered : sortAdvList)?.map(
               (advert) => {
                 return (
                   <CardItem
