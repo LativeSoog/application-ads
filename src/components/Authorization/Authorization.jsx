@@ -124,7 +124,7 @@ export const Authorization = ({ closeModalWindow }) => {
     <S.ModalWrapper>
       <S.ModalContent>
         <S.ModalBtnClosedSvg onClick={closeModalWindow}>
-          <use xlinkHref="img/icon/sprite.svg#icon-close"></use>
+          <use xlinkHref="/img/icon/sprite.svg#icon-close"></use>
         </S.ModalBtnClosedSvg>
 
         <S.ModalLogo>
