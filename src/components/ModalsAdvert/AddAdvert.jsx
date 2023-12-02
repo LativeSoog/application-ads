@@ -37,6 +37,10 @@ export const AddAdvert = ({ closeModalWindow }) => {
       return setErrorMessage('Укажите цену объявления')
     }
 
+    if (priceAdvert < 0) {
+      return setErrorMessage('Стоимость не может быть отрицательной')
+    }
+
     try {
       const response = await addTextAdvert({
         titleAdvert,
